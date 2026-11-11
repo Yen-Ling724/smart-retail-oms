@@ -85,6 +85,17 @@ function StockTab({ stores, categories, onAdjust, onTransfer, refreshKey }) {
       </div>
       {error && <p className="form-error" role="alert">庫存載入失敗：{error}</p>}
 
+      {!store && (
+        <div className="legend" aria-label="顏色說明">
+          <span className="legend-title">可售數量：</span>
+          <span><i className="swatch" />正常（3 以上）</span>
+          <span><i className="swatch warn" />偏低（1～{STORE_LOW}）</span>
+          <span><i className="swatch danger" />缺貨（0）</span>
+          <span><b className="transit-sample">在途 N</b>＝已出發、還沒到店</span>
+          <span className="legend-tip">點數字可以調整庫存</span>
+        </div>
+      )}
+
       {!store ? (
         <div className="table-wrap card">
           <table className="data-table stock-matrix">
@@ -125,7 +136,6 @@ function StockTab({ stores, categories, onAdjust, onTransfer, refreshKey }) {
               {!loading && !lowMatrix.length && <tr><td colSpan={stores.length + 4} className="empty">沒有符合條件的商品</td></tr>}
             </tbody>
           </table>
-          <p className="hint table-hint">數字是各門市可售數量；紅色＝缺貨、橘色＝偏低（≤ {STORE_LOW}）、小字「在途 N」＝已出發但還沒到店的數量（到貨後才算可售）。點數字可以調整庫存。</p>
         </div>
       ) : (
         <div className="table-wrap card">
