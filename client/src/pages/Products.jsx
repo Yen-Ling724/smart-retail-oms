@@ -26,6 +26,17 @@ function PriceCell({ list, sale }) {
   )
 }
 
+// 依範本順序把規格整理成 [欄位名, 顯示文字]，數字欄位加上單位
+function formatSpecs(specs = {}, template = []) {
+  const known = template
+    .filter((f) => specs[f.key] !== undefined && specs[f.key] !== '')
+    .map((f) => [f.key, f.unit ? `${specs[f.key]} ${f.unit}` : String(specs[f.key])])
+  const extra = Object.entries(specs)
+    .filter(([k]) => !template.some((f) => f.key === k))
+    .map(([k, v]) => [k, String(v)])
+  return [...known, ...extra]
+}
+
 function useEscape(onClose) {
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose() }
@@ -35,7 +46,7 @@ function useEscape(onClose) {
 }
 
 // ===== 商品詳情側欄 =====
-function ProductDetail({ id, onClose, onEdit }) {
+function ProductDetail({ id, templates, onClose, onEdit }) {
   const [product, setProduct] = useState(null)
   const [error, setError] = useState('')
   useEscape(onClose)
@@ -71,8 +82,8 @@ function ProductDetail({ id, onClose, onEdit }) {
             <h3 className="drawer-heading">規格</h3>
             {Object.keys(product.specs ?? {}).length ? (
               <dl className="spec-list">
-                {Object.entries(product.specs).map(([k, v]) => (
-                  <div key={k}><dt>{k}</dt><dd>{String(v)}</dd></div>
+                {formatSpecs(product.specs, templates[product.category]).map(([k, v]) => (
+                  <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
                 ))}
               </dl>
             ) : <p className="muted">尚未填寫規格</p>}
@@ -117,18 +128,41 @@ function ProductDetail({ id, onClose, onEdit }) {
 }
 
 // ===== 新增／編輯表單 =====
-const specsToText = (specs) => Object.entries(specs ?? {}).map(([k, v]) => `${k}：${v}`).join('\n')
-
-function textToSpecs(text) {
-  const specs = {}
-  for (const line of text.split('\n')) {
-    const m = line.match(/^\s*([^:：]+?)\s*[:：]\s*(.+?)\s*$/)
-    if (m) specs[m[1]] = m[2]
-  }
-  return specs
+// 依分類範本畫出規格欄位
+function SpecFields({ template, specs, onChange }) {
+  if (!template) return <p className="hint span-2">先選擇分類，就會出現該分類的規格欄位。</p>
+  return template.map((field) => {
+    const id = `spec-${field.key}`
+    const value = specs[field.key] ?? ''
+    const set = (e) => onChange(field.key, e.target.value)
+    let input
+    if (field.type === 'select') {
+      input = (
+        <select id={id} value={value} onChange={set} required={field.required}>
+          <option value="">{field.required ? '請選擇' : '（不填）'}</option>
+          {field.options.map((o) => <option key={o} value={o}>{o}</option>)}
+        </select>
+      )
+    } else if (field.type === 'number') {
+      input = (
+        <span className="unit-input">
+          <input id={id} type="number" step="any" min={field.min} max={field.max} value={value} onChange={set} required={field.required} />
+          <span>{field.unit}</span>
+        </span>
+      )
+    } else {
+      input = <input id={id} value={value} onChange={set} required={field.required} placeholder={field.placeholder} maxLength={100} />
+    }
+    return (
+      <label key={field.key} htmlFor={id} className={field.type === 'text' && !field.required ? 'span-2' : ''}>
+        <span>{field.key}{field.required && <em className="req" aria-label="必填">*</em>}</span>
+        {input}
+      </label>
+    )
+  })
 }
 
-function ProductForm({ product, categories, onClose, onSaved }) {
+function ProductForm({ product, templates, onClose, onSaved }) {
   const isNew = !product
   const [form, setForm] = useState(() => ({
     name: product?.name ?? '',
@@ -139,8 +173,18 @@ function ProductForm({ product, categories, onClose, onSaved }) {
     list_price: product?.list_price ?? '',
     sale_price: product?.sale_price ?? '',
     is_active: product?.is_active ?? true,
-    specs: specsToText(product?.specs),
   }))
+  const [specs, setSpecs] = useState(() => ({ ...(product?.specs ?? {}) }))
+  const template = templates[form.category]
+  const setSpec = (key, value) => setSpecs((s) => ({ ...s, [key]: value }))
+
+  // 換分類時只保留新分類也有的欄位
+  function changeCategory(e) {
+    const next = e.target.value
+    const keys = new Set((templates[next] ?? []).map((f) => f.key))
+    setSpecs((s) => Object.fromEntries(Object.entries(s).filter(([k]) => keys.has(k))))
+    setForm((f) => ({ ...f, category: next }))
+  }
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const firstField = useRef(null)
@@ -158,7 +202,7 @@ function ProductForm({ product, categories, onClose, onSaved }) {
         ...form,
         list_price: Number(form.list_price),
         sale_price: Number(form.sale_price),
-        specs: textToSpecs(form.specs),
+        specs,
       }
       const { product: saved } = isNew
         ? await api('/products', { method: 'POST', body })
@@ -183,17 +227,24 @@ function ProductForm({ product, categories, onClose, onSaved }) {
           <label>品牌<input value={form.brand} onChange={set('brand')} required /></label>
           <label>型號<input value={form.model} onChange={set('model')} required placeholder="例：QC-R480" /></label>
           <label>分類
-            <input value={form.category} onChange={set('category')} required list="category-options" />
-            <datalist id="category-options">{categories.map((c) => <option key={c.category} value={c.category} />)}</datalist>
+            <select value={form.category} onChange={changeCategory} required>
+              <option value="">請選擇</option>
+              {Object.keys(templates).map((c) => <option key={c} value={c}>{c}</option>)}
+            </select>
           </label>
           <label>保固<input value={form.warranty} onChange={set('warranty')} placeholder="例：3 年" /></label>
           <label>原價（元）<input type="number" min="0" step="1" value={form.list_price} onChange={set('list_price')} required /></label>
           <label>售價（元）<input type="number" min="0" step="1" value={form.sale_price} onChange={set('sale_price')} required /></label>
-          <label className="span-2">規格<span className="hint">一行一項，格式「項目：內容」</span>
-            <textarea rows="4" value={form.specs} onChange={set('specs')} placeholder={'容量：480L\n能效：1 級'} />
-          </label>
           <label className="checkbox span-2"><input type="checkbox" checked={form.is_active} onChange={set('is_active')} /> 上架中</label>
         </div>
+
+        <fieldset className="spec-fieldset">
+          <legend>規格{form.category && `（${form.category}）`}</legend>
+          <div className="form-grid">
+            <SpecFields template={template} specs={specs} onChange={setSpec} />
+          </div>
+          {template && <p className="hint">標 * 為必填。不同分類有各自固定的規格欄位。</p>}
+        </fieldset>
         {!isNew && <p className="hint">修改價格會自動留下一筆價格歷史。</p>}
         {error && <p className="form-error" role="alert">{error}</p>}
 
@@ -215,6 +266,7 @@ export default function Products() {
   const [result, setResult] = useState({ key: null, products: [], error: '' })
   const [reloadTick, setReloadTick] = useState(0)
   const [categories, setCategories] = useState([])
+  const [templates, setTemplates] = useState({})
   const [selectedId, setSelectedId] = useState(null)
   const [editing, setEditing] = useState(undefined) // undefined=關閉, null=新增, 物件=編輯
   const [toast, setToast] = useState('')
@@ -241,6 +293,9 @@ export default function Products() {
     api('/categories').then((d) => setCategories(d.categories)).catch(() => {})
   }, [])
   useEffect(loadCategories, [loadCategories])
+  useEffect(() => {
+    api('/spec-templates').then((d) => setTemplates(d.templates)).catch(() => {})
+  }, [])
 
   useEffect(() => {
     if (!toast) return
@@ -325,10 +380,10 @@ export default function Products() {
       </div>
 
       {selectedId && editing === undefined && (
-        <ProductDetail key={selectedId} id={selectedId} onClose={closeDetail} onEdit={(p) => setEditing(p)} />
+        <ProductDetail key={selectedId} id={selectedId} templates={templates} onClose={closeDetail} onEdit={(p) => setEditing(p)} />
       )}
       {editing !== undefined && (
-        <ProductForm product={editing} categories={categories} onClose={closeForm} onSaved={handleSaved} />
+        <ProductForm product={editing} templates={templates} onClose={closeForm} onSaved={handleSaved} />
       )}
       {toast && <div className="toast" role="status">{toast}</div>}
     </section>

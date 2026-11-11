@@ -56,6 +56,8 @@ npm run dev
 - **設定了 `DATABASE_URL`**（Supabase 連線字串）：改連 Supabase，程式不用改。
 - 重置示範資料：後端關掉後執行 `npm run db:reset`，或在後端執行中呼叫 `POST /api/demo/reset`。
 
+**商品規格範本**：每個分類有固定的規格欄位（設定在 `server/src/specTemplates.js`），例如冰箱必填容量、門數、能效。數字欄位存純數字（如 `容量: 480`），單位在範本裡；新增或修改商品時後端會依範本檢查，示範資料也一樣要通過檢查。要新增分類或欄位，改這個檔案就好。
+
 示範資料：5 家虛構門市、30 項商品（6 個虛構品牌：晴川、森和、冬嶼、光禾、海拓、禾風），其中 1 項已停售並由新款取代、4 項低庫存。
 
 ## API
@@ -66,6 +68,7 @@ npm run dev
 | GET | `/api/stats` | 營運快照數字 |
 | GET | `/api/stores` | 門市清單 |
 | GET | `/api/categories` | 分類與商品數 |
+| GET | `/api/spec-templates` | 各分類的固定規格欄位 |
 | GET | `/api/products?q=&category=&status=` | 商品清單（含目前價格、全門市可售） |
 | GET | `/api/products/:id` | 商品詳情（規格、各店庫存、價格歷史） |
 | POST | `/api/products` | 新增商品（自動編號、各店建立 0 庫存） |

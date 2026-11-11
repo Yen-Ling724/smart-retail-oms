@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { query, transaction } from '../db/index.js';
+import { SPEC_TEMPLATES, validateSpecs } from '../specTemplates.js';
 
 const router = Router();
 
@@ -9,6 +10,18 @@ class HttpError extends Error {
     this.status = status;
   }
 }
+
+function checkSpecs(category, specs) {
+  try {
+    return validateSpecs(category, specs);
+  } catch (err) {
+    throw new HttpError(400, err.message);
+  }
+}
+
+router.get('/spec-templates', (req, res) => {
+  res.json({ ok: true, templates: SPEC_TEMPLATES });
+});
 
 // 目前價格 + 全門市可售總數
 const PRODUCT_LIST_SQL = `
@@ -106,11 +119,12 @@ function readProductBody(body, { partial = false } = {}) {
   }
   if (!partial || body.warranty !== undefined) out.warranty = text(body.warranty) || null;
   if (!partial || body.is_active !== undefined) out.is_active = body.is_active !== false;
-  if (!partial || body.specs !== undefined) {
-    const specs = body.specs ?? {};
-    if (typeof specs !== 'object' || Array.isArray(specs)) throw new HttpError(400, '規格格式不正確');
-    out.specs = specs;
+  if (out.category && !SPEC_TEMPLATES[out.category]) {
+    throw new HttpError(400, `分類必須是：${Object.keys(SPEC_TEMPLATES).join('、')}`);
   }
+  // 規格要依分類檢查；新增時在這裡檢查，修改時要等讀到原本的分類才檢查
+  if (!partial) out.specs = checkSpecs(out.category, body.specs ?? {});
+  else if (body.specs !== undefined) out.specs = body.specs;
   if (!partial || body.list_price !== undefined || body.sale_price !== undefined) {
     const list = Number(body.list_price);
     const sale = Number(body.sale_price);
@@ -159,6 +173,10 @@ router.put('/products/:id', async (req, res) => {
   try {
     const product = await transaction(async (tx) => {
       const current = await loadProduct(req.params.id, tx.query);
+      // 換分類或改規格時，用（新的）分類範本重新檢查規格
+      if ('category' in data || 'specs' in data) {
+        data.specs = checkSpecs(data.category ?? current.category, data.specs ?? current.specs);
+      }
       const fields = ['category', 'brand', 'model', 'name', 'warranty', 'is_active', 'specs'].filter((f) => f in data);
       if (fields.length) {
         const sets = fields.map((f, i) => `${f} = $${i + 2}`);

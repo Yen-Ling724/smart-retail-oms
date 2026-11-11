@@ -238,6 +238,40 @@ a.stat-card:hover,
 .form-grid .span-2 { grid-column: span 2; }
 .form-grid textarea { resize: vertical; }
 .form-grid .checkbox { flex-direction: row; align-items: center; gap: 8px; }
+.form-grid select {
+  padding: 8px 11px;
+  border: 1px solid #dfe5e0;
+  border-radius: 8px;
+  background: white;
+  color: var(--ink);
+  font: inherit;
+  font-size: 12px;
+}
+.form-grid select:focus { border-color: #8dbb9d; outline: 2px solid #e2f0e6; }
+.req { margin-left: 3px; color: #c0593f; font-style: normal; }
+
+.unit-input { display: flex; align-items: center; }
+.unit-input input { flex: 1; min-width: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.unit-input span {
+  padding: 8px 10px;
+  border: 1px solid #dfe5e0;
+  border-left: 0;
+  border-radius: 0 8px 8px 0;
+  background: #f4f7f4;
+  color: #6f7a73;
+  font-size: 12px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.spec-fieldset {
+  margin: 16px 0 0;
+  padding: 14px 14px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fafcfa;
+}
+.spec-fieldset legend { padding: 0 6px; color: #39463e; font-size: 12px; font-weight: 700; }
 .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
 
 .toast {
