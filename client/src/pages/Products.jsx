@@ -162,7 +162,7 @@ function SpecFields({ template, specs, onChange }) {
   })
 }
 
-function ProductForm({ product, templates, brands, onClose, onSaved }) {
+function ProductForm({ product, templates, brands, configError, onRetryConfig, onClose, onSaved }) {
   const isNew = !product
   const [form, setForm] = useState(() => ({
     name: product?.name ?? '',
@@ -224,6 +224,13 @@ function ProductForm({ product, templates, brands, onClose, onSaved }) {
           <button type="button" className="icon-btn" onClick={onClose} aria-label="關閉">×</button>
         </div>
 
+        {(configError || !Object.keys(templates).length) && (
+          <div className="form-error config-error" role="alert">
+            <span>{configError ? `分類與品牌清單載入失敗：${configError}` : '分類與品牌清單載入中…'}</span>
+            {configError && <button type="button" className="btn ghost" onClick={onRetryConfig}>重新載入</button>}
+          </div>
+        )}
+
         <div className="form-grid">
           <label className="span-2">品名<input ref={firstField} value={form.name} onChange={set('name')} required placeholder="例：Panasonic 480L 變頻雙門冰箱" /></label>
           <label>分類
@@ -274,7 +281,7 @@ export default function Products() {
   const [result, setResult] = useState({ key: null, products: [], error: '' })
   const [reloadTick, setReloadTick] = useState(0)
   const [categories, setCategories] = useState([])
-  const [config, setConfig] = useState({ templates: {}, brands: {} })
+  const [config, setConfig] = useState({ templates: {}, brands: {}, error: '' })
   const [selectedId, setSelectedId] = useState(null)
   const [editing, setEditing] = useState(undefined) // undefined=關閉, null=新增, 物件=編輯
   const [toast, setToast] = useState('')
@@ -312,9 +319,13 @@ export default function Products() {
     api('/categories').then((d) => setCategories(d.categories)).catch(() => {})
   }, [])
   useEffect(loadCategories, [loadCategories])
-  useEffect(() => {
-    api('/catalog-config').then((d) => setConfig({ templates: d.templates, brands: d.brands })).catch(() => {})
+  // 分類、規格欄位、品牌清單；載入失敗時表單會顯示「重新載入」
+  const loadConfig = useCallback(() => {
+    api('/catalog-config')
+      .then((d) => setConfig({ templates: d.templates, brands: d.brands, error: '' }))
+      .catch((e) => setConfig((c) => ({ ...c, error: e.message })))
   }, [])
+  useEffect(loadConfig, [loadConfig])
 
   useEffect(() => {
     if (!toast) return
@@ -406,7 +417,15 @@ export default function Products() {
         <ProductDetail key={selectedId} id={selectedId} templates={config.templates} onClose={closeDetail} onEdit={(p) => setEditing(p)} />
       )}
       {editing !== undefined && (
-        <ProductForm product={editing} templates={config.templates} brands={config.brands} onClose={closeForm} onSaved={handleSaved} />
+        <ProductForm
+          product={editing}
+          templates={config.templates}
+          brands={config.brands}
+          configError={config.error}
+          onRetryConfig={loadConfig}
+          onClose={closeForm}
+          onSaved={handleSaved}
+        />
       )}
       {toast && <div className="toast" role="status">{toast}</div>}
     </section>
