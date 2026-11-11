@@ -65,7 +65,8 @@ app.use((err, req, res, next) => {
 });
 
 const db = await getDb();
-const seeded = await seed();
+// 公開展示用：DEMO_RESET_ON_START=true 時每次啟動（例如 Render 休眠後喚醒）都重建示範資料
+const seeded = await seed({ reset: process.env.DEMO_RESET_ON_START === 'true' });
 console.log(`資料庫：${db.kind === 'local' ? '本機 PGlite' : 'Supabase'}${seeded ? '，已建立示範資料' : ''}`);
 if (existsSync(CLIENT_DIST)) console.log('前端：提供 client/dist 的打包檔案');
 

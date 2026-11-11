@@ -35,7 +35,9 @@
 - `npm run build`（根目錄）：安裝並打包前端，安裝後端套件。
 - `npm start`：啟動後端；後端偵測到 `client/dist` 就一起提供網頁，所以網頁和 API 是同一個網址，不需要另外設定 CORS。
 - `render.yaml` 是 Render 的設定檔（免費方案、新加坡、健康檢查 `/api/health`）。
-- 沒有設定 `DATABASE_URL` 時用 PGlite，Render 免費方案閒置約 15 分鐘會休眠，重新喚醒（約 30～60 秒）時會重建示範資料 —— 對公開展示來說等於自動重置。要保留資料就在 Render 設定 `DATABASE_URL` 連 Supabase。
+- **線上一定要用 Supabase**：PGlite 一啟動就要約 600MB 記憶體，超過 Render 免費方案的 512MB；改連 Supabase 後後端只用約 80MB。在 Render 的 Environment 設定 `DATABASE_URL`（Supabase → Connect → Session pooler 的連線字串，把 `[YOUR-PASSWORD]` 換成資料庫密碼），不要寫進程式碼。
+- `DEMO_RESET_ON_START=true`：每次啟動（Render 免費方案閒置約 15 分鐘會休眠，下次開啟約需 1 分鐘喚醒）都重建示範資料，訪客改亂了也沒關係。
+- 本機想測「連外部資料庫」的路徑，可以用 `@electric-sql/pglite-socket` 開一個假的 Postgres 伺服器，再把 `DATABASE_URL` 指到 `127.0.0.1`（本機連線不加密）。
 
 ## 本機開發
 

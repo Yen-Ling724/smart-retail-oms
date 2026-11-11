@@ -1,6 +1,6 @@
 # Render 部署設定（Blueprint）
 # 一個 Web Service：先打包前端，再由 Express 同時提供 API 和網頁。
-# 沒有設定 DATABASE_URL 時使用 PGlite：伺服器重新啟動（免費方案閒置會休眠）就會重建示範資料。
+# 資料庫用 Supabase（PGlite 需要約 600MB 記憶體，超過免費方案的 512MB）。
 services:
   - type: web
     name: ccc-retail-demo
@@ -13,3 +13,9 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "22"
+      # Supabase 連線字串（Session pooler）。sync: false = 在 Render 網頁上手動填，不寫進程式碼
+      - key: DATABASE_URL
+        sync: false
+      # 公開展示：每次啟動（休眠後喚醒）都重建示範資料，訪客改亂了也沒關係
+      - key: DEMO_RESET_ON_START
+        value: "true"

@@ -13,7 +13,13 @@ let driver;
 async function connect() {
   if (process.env.DATABASE_URL) {
     const { default: pg } = await import('pg');
-    const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } });
+    // 雲端資料庫（Supabase）要加密連線；連本機測試用的資料庫則不用
+    const isLocal = /@(localhost|127\.0\.0\.1)[:/]/.test(process.env.DATABASE_URL);
+    const pool = new pg.Pool({
+      connectionString: process.env.DATABASE_URL,
+      ssl: isLocal ? false : { rejectUnauthorized: false },
+      max: Number(process.env.DATABASE_POOL_SIZE) || 5, // Supabase 免費方案連線數有限
+    });
     return {
       kind: 'supabase',
       query: async (text, params) => (await pool.query(text, params)).rows,
