@@ -4,9 +4,12 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch --env-file-if-exists=.env src/index.js",
-    "start": "node --env-file-if-exists=.env src/index.js"
+    "start": "node --env-file-if-exists=.env src/index.js",
+    "db:reset": "node --env-file-if-exists=.env src/db/reset.js"
   },
   "dependencies": {
-    "express": "^5.3.0"
+    "@electric-sql/pglite": "^0.5.16",
+    "express": "^5.3.0",
+    "pg": "^8.23.1"
   }
 }
