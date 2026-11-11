@@ -79,15 +79,29 @@ function stockFor(storeId, product) {
 
 export const productId = (i) => `P${String(i + 1).padStart(4, '0')}`;
 
+// 舊版資料庫有「在途」數量卻沒有調貨單：補建成總倉補貨單（只在還沒有任何調貨單時執行）
+async function backfillTransfers(db) {
+  const [{ count }] = await db.query('SELECT count(*)::int AS count FROM stock_transfers');
+  if (count > 0) return;
+  await db.query(
+    `INSERT INTO stock_transfers (product_id, from_store_id, to_store_id, qty, status, note, created_at, updated_at)
+     SELECT product_id, NULL, store_id, in_transit, 'in_transit', '總倉例行補貨', now() - interval '2 days', now() - interval '2 days'
+     FROM inventory WHERE in_transit > 0`,
+  );
+}
+
 export async function seed({ reset = false } = {}) {
   const db = await getDb();
   if (reset) {
-    await db.exec('DROP TABLE IF EXISTS inventory, product_prices, products, stores CASCADE;');
+    await db.exec('DROP TABLE IF EXISTS inventory_transactions, stock_transfers, inventory, product_prices, products, stores CASCADE;');
   }
   await db.exec(SCHEMA);
 
   const [{ count }] = await db.query('SELECT count(*)::int AS count FROM stores');
-  if (count > 0) return false;
+  if (count > 0) {
+    await backfillTransfers(db);
+    return false;
+  }
 
   await db.transaction(async (tx) => {
     for (const s of STORES) {
@@ -124,6 +138,14 @@ export async function seed({ reset = false } = {}) {
            VALUES ($1, $2, $3, $4, $5, $6, $7)`,
           [storeId, id, st.onHand, st.reserved, st.display, st.damaged, st.inTransit],
         );
+        // 在途數量要有對應的調貨單：示範資料一律是「總倉補貨」，兩天前出發
+        if (st.inTransit > 0) {
+          await tx.query(
+            `INSERT INTO stock_transfers (product_id, from_store_id, to_store_id, qty, status, note, created_at, updated_at)
+             VALUES ($1, NULL, $2, $3, 'in_transit', '總倉例行補貨', now() - interval '2 days', now() - interval '2 days')`,
+            [id, storeId, st.inTransit],
+          );
+        }
       }
     }
     for (const [oldModel, newModel] of Object.entries(REPLACED_BY)) {

@@ -60,6 +60,7 @@ router.get('/stats', async (req, res) => {
       (SELECT count(*)::int FROM products WHERE is_active) AS active_products,
       (SELECT count(*)::int FROM stores) AS stores,
       (SELECT COALESCE(SUM(on_hand - reserved - display - damaged), 0)::int FROM inventory) AS available_units,
+      (SELECT count(*)::int FROM stock_transfers WHERE status = 'in_transit') AS transfers_in_transit,
       (SELECT count(*)::int FROM (
          SELECT i.product_id FROM inventory i JOIN products p USING (product_id)
          WHERE p.is_active GROUP BY i.product_id
@@ -111,10 +112,16 @@ async function loadProduct(id, q = query) {
      ORDER BY s.store_id`,
     [id],
   );
+  const movements = await q(
+    `SELECT t.id, t.type, t.qty, t.qty_change, t.available_after, t.note, t.created_at, s.name AS store_name
+     FROM inventory_transactions t JOIN stores s ON s.store_id = t.store_id
+     WHERE t.product_id = $1 ORDER BY t.created_at DESC, t.id DESC LIMIT 10`,
+    [id],
+  );
   const replacedBy = product.replaced_by
     ? (await q('SELECT product_id, name, model FROM products WHERE product_id = $1', [product.replaced_by]))[0]
     : null;
-  return { ...product, ...detail, prices, inventory, replaced_by_product: replacedBy };
+  return { ...product, ...detail, prices, inventory, movements, replaced_by_product: replacedBy };
 }
 
 router.get('/products/:id', async (req, res) => {

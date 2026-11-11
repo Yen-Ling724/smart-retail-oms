@@ -5,7 +5,8 @@
 import { mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-const DATA_DIR = fileURLToPath(new URL('../../.data/pglite', import.meta.url));
+// PGLITE_DIR 可以指定別的資料夾（例如測試用），不影響平常的資料
+const DATA_DIR = process.env.PGLITE_DIR || fileURLToPath(new URL('../../.data/pglite', import.meta.url));
 
 let driver;
 

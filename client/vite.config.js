@@ -5,9 +5,9 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [react()],
   server: {
-    // 開發時把 /api 開頭的請求轉給本機後端（server/，預設 port 3001）
+    // 開發時把 /api 開頭的請求轉給本機後端（server/，預設 port 3001；API_PROXY 可改成別的，例如測試用後端）
     proxy: {
-      '/api': 'http://localhost:3001',
+      '/api': process.env.API_PROXY || 'http://localhost:3001',
     },
   },
 })

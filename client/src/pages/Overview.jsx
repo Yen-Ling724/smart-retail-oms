@@ -56,7 +56,12 @@ export default function Overview() {
           <div className="stat-grid">
             <StatCard label="上架商品" value={stats.active_products} hint={`共 ${stats.products} 項商品`} href="#products" />
             <StatCard label="門市" value={stats.stores} hint="台南、高雄、台中、台北" />
-            <StatCard label="全門市可售量" value={stats.available_units.toLocaleString('zh-TW')} hint="件" />
+            <StatCard
+              label="全門市可售量"
+              value={stats.available_units.toLocaleString('zh-TW')}
+              hint={`件｜在途調貨 ${stats.transfers_in_transit ?? 0} 張`}
+              href="#inventory"
+            />
             <StatCard
               label="低庫存商品"
               value={stats.low_stock_products}

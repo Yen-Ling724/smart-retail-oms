@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { api, formatDate, formatPrice, stockLevel } from '../api.js'
+import AdjustForm from '../components/AdjustForm.jsx'
+import { useEscape } from '../hooks.js'
+import { MOVEMENT_LABELS, formatDateTime } from '../inventoryLabels.js'
 
 const STATUS_OPTIONS = [
   { value: 'all', label: '全部狀態' },
@@ -37,24 +40,24 @@ function formatSpecs(specs = {}, template = []) {
   return [...known, ...extra]
 }
 
-function useEscape(onClose) {
-  useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') onClose() }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [onClose])
-}
-
 // ===== 商品詳情側欄 =====
-function ProductDetail({ id, templates, onClose, onEdit }) {
+function ProductDetail({ id, templates, stores, onClose, onEdit, onStockChanged }) {
   const [product, setProduct] = useState(null)
   const [error, setError] = useState('')
+  const [tick, setTick] = useState(0)
+  const [notice, setNotice] = useState('')
   useEscape(onClose)
 
-  // 換商品時元件會用 key 重新建立，所以這裡只需要載入一次
+  // 換商品時元件會用 key 重新建立；tick 改變（調整庫存後）就重新載入
   useEffect(() => {
     api(`/products/${id}`).then((d) => setProduct(d.product)).catch((e) => setError(e.message))
-  }, [id])
+  }, [id, tick])
+
+  function stockChanged(message) {
+    setNotice(message)
+    setTick((t) => t + 1)
+    onStockChanged?.()
+  }
 
   return (
     <div className="overlay" onClick={onClose}>
@@ -110,6 +113,28 @@ function ProductDetail({ id, templates, onClose, onEdit }) {
               </table>
             </div>
             <p className="hint">可售 = 實體 − 預留 − 展示 − 瑕疵（在途尚未到店，不計入）</p>
+
+            <h3 className="drawer-heading">調整庫存</h3>
+            {notice && <p className="success-note" role="status">✓ {notice}</p>}
+            {stores.length > 0 && (
+              <AdjustForm productId={product.product_id} stores={stores} inventory={product.inventory} onDone={stockChanged} compact />
+            )}
+
+            {product.movements?.length > 0 && (
+              <>
+                <h3 className="drawer-heading">最近庫存異動</h3>
+                <ul className="movement-list">
+                  {product.movements.map((m) => (
+                    <li key={m.id}>
+                      <span className="muted-num">{formatDateTime(m.created_at)}</span>
+                      <span>{m.store_name}・{MOVEMENT_LABELS[m.type] ?? m.type} {m.qty}{m.note ? `（${m.note}）` : ''}</span>
+                      <span className="muted-num">可售 {m.available_after}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a className="hint link" href="#inventory">到「門市庫存」看完整紀錄 →</a>
+              </>
+            )}
 
             <h3 className="drawer-heading">價格歷史</h3>
             <ul className="price-history">
@@ -281,6 +306,7 @@ export default function Products() {
   const [result, setResult] = useState({ key: null, products: [], error: '' })
   const [reloadTick, setReloadTick] = useState(0)
   const [categories, setCategories] = useState([])
+  const [stores, setStores] = useState([])
   const [config, setConfig] = useState({ templates: {}, brands: {}, error: '' })
   const [selectedId, setSelectedId] = useState(null)
   const [editing, setEditing] = useState(undefined) // undefined=關閉, null=新增, 物件=編輯
@@ -326,6 +352,9 @@ export default function Products() {
       .catch((e) => setConfig((c) => ({ ...c, error: e.message })))
   }, [])
   useEffect(loadConfig, [loadConfig])
+  useEffect(() => {
+    api('/stores').then((d) => setStores(d.stores)).catch(() => {})
+  }, [])
 
   useEffect(() => {
     if (!toast) return
@@ -414,7 +443,15 @@ export default function Products() {
       </div>
 
       {selectedId && editing === undefined && (
-        <ProductDetail key={selectedId} id={selectedId} templates={config.templates} onClose={closeDetail} onEdit={(p) => setEditing(p)} />
+        <ProductDetail
+          key={selectedId}
+          id={selectedId}
+          templates={config.templates}
+          stores={stores}
+          onClose={closeDetail}
+          onEdit={(p) => setEditing(p)}
+          onStockChanged={() => setReloadTick((t) => t + 1)}
+        />
       )}
       {editing !== undefined && (
         <ProductForm

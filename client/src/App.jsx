@@ -3,12 +3,14 @@ import './App.css'
 import './pages.css'
 import { api } from './api.js'
 import { modules } from './modules.js'
+import Inventory from './pages/Inventory.jsx'
 import Overview from './pages/Overview.jsx'
 import Products from './pages/Products.jsx'
 
 const PAGES = {
   overview: { title: '營運總覽', Component: Overview },
   products: { title: '商品管理', Component: Products },
+  inventory: { title: '門市庫存', Component: Inventory },
 }
 
 const backendLabels = {

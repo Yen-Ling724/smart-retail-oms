@@ -294,6 +294,75 @@ a.stat-card:hover,
   transform: translateX(-50%);
 }
 
+/* ===== 門市庫存 ===== */
+.tabs { display: flex; gap: 4px; margin-bottom: 14px; border-bottom: 1px solid var(--line); }
+.tab {
+  padding: 9px 14px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: #7c8780;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.tab:hover { color: #39463e; }
+.tab.active { border-bottom-color: var(--green); color: #276843; }
+
+.toggle { display: inline-flex; align-items: center; gap: 6px; color: #59645f; font-size: 12px; cursor: pointer; }
+.toolbar .btn { margin-left: 4px; }
+
+.btn.small { padding: 4px 10px; font-size: 11px; }
+.row-actions { display: flex; justify-content: flex-end; gap: 6px; white-space: nowrap; }
+
+.stock-matrix td.num { padding-top: 6px; padding-bottom: 6px; }
+.cell-btn {
+  min-width: 46px;
+  padding: 5px 8px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: #f4f8f5;
+  color: #2e3932;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  cursor: pointer;
+}
+.cell-btn:hover { border-color: #b9d3c1; background: #eaf3ed; }
+.cell-btn.warn { background: #fdf3e3; color: #a8661c; }
+.cell-btn.danger { background: #fbe9e4; color: #b84c35; }
+.cell-btn .transit { margin-left: 4px; color: #3d6596; font-size: 10px; font-weight: 600; }
+.table-hint { margin: 0; padding: 8px 12px 10px; border-top: 1px solid #f0f2f0; }
+
+.text-ok { color: #2f7a4b; }
+.text-warn { color: #a8661c; }
+.muted-num { color: #8c968f; font-size: 11px; }
+
+.success-note {
+  margin: 0 0 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #e9f4ec;
+  color: #2f7a4b;
+  font-size: 12px;
+}
+
+.adjust-form.compact { padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: #fafcfa; }
+.adjust-form.compact .modal-actions { margin-top: 10px; }
+
+.movement-list { margin: 0; padding: 0; list-style: none; font-size: 12px; }
+.movement-list li {
+  display: grid;
+  grid-template-columns: 82px 1fr auto;
+  gap: 8px;
+  padding: 7px 0;
+  border-bottom: 1px solid #f0f2f0;
+}
+.hint.link { display: inline-block; margin-top: 8px; color: #41845c; text-decoration: none; }
+.hint.link:hover { text-decoration: underline; }
+
 @media (max-width: 1050px) {
   .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
