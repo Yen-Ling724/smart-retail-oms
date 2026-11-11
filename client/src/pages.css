@@ -353,6 +353,39 @@ a.stat-card:hover,
 .swatch.danger { background: #fbe4dd; border-color: #e09a87; }
 .transit-sample { color: #3d6596; font-size: 10px; font-weight: 600; }
 
+/* 依門市／依區域 切換 */
+.segmented { display: inline-flex; padding: 3px; border: 1px solid #dfe5e0; border-radius: 9px; background: white; }
+.segmented button {
+  padding: 5px 12px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #6f7a73;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.segmented button.active { background: var(--green); color: white; }
+
+.th-sub { display: block; color: #a3aca6; font-size: 9px; font-weight: 600; }
+.region-cell { min-width: 64px; }
+.cell-btn .region-note { display: block; margin-top: 1px; font-size: 9px; font-weight: 600; white-space: nowrap; }
+
+.drill-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  background: #f6faf7;
+  color: #59645f;
+  font-size: 12px;
+}
+.drill-bar b { color: #276843; }
+.drill-bar .btn:first-of-type { margin-left: auto; }
+
 .text-ok { color: #2f7a4b; }
 .text-warn { color: #a8661c; }
 .muted-num { color: #8c968f; font-size: 11px; }

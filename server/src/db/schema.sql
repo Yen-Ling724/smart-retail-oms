@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS stores (
   city       text NOT NULL,
   address    text NOT NULL
 );
+-- 區域（北區／中區／南區／東區），舊資料庫啟動時會依縣市自動補上
+ALTER TABLE stores ADD COLUMN IF NOT EXISTS region text;
 
 CREATE TABLE IF NOT EXISTS products (
   product_id  text PRIMARY KEY,

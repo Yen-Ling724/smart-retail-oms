@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { query, transaction } from '../db/index.js';
+import { REGIONS, STORE_ORDER_SQL } from '../regions.js';
 import { BRANDS, SPEC_TEMPLATES, validateBrand, validateSpecs } from '../specTemplates.js';
 
 const router = Router();
@@ -49,8 +50,9 @@ router.get('/categories', async (req, res) => {
 });
 
 router.get('/stores', async (req, res) => {
-  const rows = await query('SELECT * FROM stores ORDER BY store_id');
-  res.json({ ok: true, stores: rows });
+  const rows = await query(`SELECT * FROM stores s ORDER BY ${STORE_ORDER_SQL('s')}`);
+  const regions = REGIONS.filter((r) => rows.some((s) => s.region === r));
+  res.json({ ok: true, stores: rows, regions });
 });
 
 router.get('/stats', async (req, res) => {
@@ -106,10 +108,10 @@ async function loadProduct(id, q = query) {
     [id],
   );
   const inventory = await q(
-    `SELECT s.store_id, s.name AS store_name, i.on_hand, i.reserved, i.display, i.damaged, i.in_transit,
+    `SELECT s.store_id, s.name AS store_name, s.region, i.on_hand, i.reserved, i.display, i.damaged, i.in_transit,
             (i.on_hand - i.reserved - i.display - i.damaged) AS available
      FROM stores s LEFT JOIN inventory i ON i.store_id = s.store_id AND i.product_id = $1
-     ORDER BY s.store_id`,
+     ORDER BY ${STORE_ORDER_SQL('s')}`,
     [id],
   );
   const movements = await q(

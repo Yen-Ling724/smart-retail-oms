@@ -33,7 +33,24 @@ function useLoad(path, deps = []) {
 }
 
 // ===== 庫存總表 =====
-function StockTab({ stores, categories, onAdjust, onTransfer, refreshKey }) {
+// 一格（某商品在某區域）的彙總：可售加總、在途加總、缺貨／偏低的門市數
+function summarize(storeRows) {
+  const sum = { available: 0, transit: 0, out: 0, low: 0, stores: storeRows.length }
+  for (const r of storeRows) {
+    const n = r?.available ?? 0
+    sum.available += n
+    sum.transit += r?.in_transit ?? 0
+    if (n <= 0) sum.out += 1
+    else if (n <= STORE_LOW) sum.low += 1
+  }
+  return sum
+}
+
+const regionTone = (s) => (s.available <= 0 ? 'danger' : s.out || s.low ? 'warn' : '')
+
+function StockTab({ stores, regions, categories, onAdjust, onTransfer, refreshKey }) {
+  const [view, setView] = useState('store') // store=依門市, region=依區域
+  const [region, setRegion] = useState('')
   const [store, setStore] = useState('')
   const [category, setCategory] = useState('')
   const [q, setQ] = useState('')
@@ -49,33 +66,70 @@ function StockTab({ stores, categories, onAdjust, onTransfer, refreshKey }) {
   const { data, error, loading } = useLoad(`/inventory?${params}`, [refreshKey])
   const rows = useMemo(() => data?.rows ?? [], [data])
 
-  // 全部門市：每個商品一列，各門市一欄
+  // 依區域篩選後要顯示的欄
+  const visibleStores = region ? stores.filter((s) => s.region === region) : stores
+  const visibleRegions = region ? [region] : regions
+  const storesByRegion = useMemo(() => {
+    const map = {}
+    for (const s of stores) (map[s.region] ??= []).push(s)
+    return map
+  }, [stores])
+
+  // 每個商品一列，存它在各門市的庫存
   const matrix = useMemo(() => {
     const byProduct = new Map()
     for (const r of rows) {
-      if (!byProduct.has(r.product_id)) byProduct.set(r.product_id, { ...r, stores: {}, total: 0, transit: 0 })
-      const p = byProduct.get(r.product_id)
-      p.stores[r.store_id] = r
-      p.total += r.available
-      p.transit += r.in_transit
+      if (!byProduct.has(r.product_id)) byProduct.set(r.product_id, { ...r, stores: {} })
+      byProduct.get(r.product_id).stores[r.store_id] = r
     }
     return [...byProduct.values()]
   }, [rows])
 
-  const lowMatrix = onlyLow ? matrix.filter((p) => Object.values(p.stores).some((s) => s.available <= STORE_LOW)) : matrix
+  const visibleIds = new Set(visibleStores.map((s) => s.store_id))
+  const lowMatrix = onlyLow
+    ? matrix.filter((p) => visibleStores.some((s) => (p.stores[s.store_id]?.available ?? 0) <= STORE_LOW))
+    : matrix
   // 切換門市時舊資料可能還是「全部門市」，先過濾掉別家店，避免同一商品出現多次
   const storeRows = store ? rows.filter((r) => r.store_id === store) : rows
   const lowRows = onlyLow ? storeRows.filter((r) => r.available <= STORE_LOW) : storeRows
   const count = store ? lowRows.length : lowMatrix.length
 
+  // 從區域檢視點進某區 → 切到依門市，只看那個區域的門市
+  function drillInto(r) {
+    setRegion(r)
+    setView('store')
+  }
+
+  function changeView(next) {
+    setView(next)
+    setStore('')
+  }
+
+  const total = (p) => visibleStores.reduce((a, s) => a + (p.stores[s.store_id]?.available ?? 0), 0)
+  const transit = (p) => visibleStores.reduce((a, s) => a + (p.stores[s.store_id]?.in_transit ?? 0), 0)
+
   return (
     <>
       <div className="toolbar">
+        <div className="segmented" role="group" aria-label="檢視方式">
+          <button type="button" className={view === 'store' ? 'active' : ''} aria-pressed={view === 'store'} onClick={() => changeView('store')}>依門市</button>
+          <button type="button" className={view === 'region' ? 'active' : ''} aria-pressed={view === 'region'} onClick={() => changeView('region')}>依區域</button>
+        </div>
         <input type="search" className="search" placeholder="搜尋品名、品牌、型號或編號" value={q} onChange={(e) => setQ(e.target.value)} aria-label="搜尋商品" />
-        <select value={store} onChange={(e) => setStore(e.target.value)} aria-label="門市">
-          <option value="">全部門市</option>
-          {stores.map((s) => <option key={s.store_id} value={s.store_id}>{s.name}</option>)}
+        <select value={region} onChange={(e) => { setRegion(e.target.value); setStore('') }} aria-label="區域">
+          <option value="">全部區域</option>
+          {regions.map((r) => <option key={r} value={r}>{r}（{storesByRegion[r]?.length ?? 0} 店）</option>)}
         </select>
+        {view === 'store' && (
+          <select value={store} onChange={(e) => setStore(e.target.value)} aria-label="門市">
+            <option value="">{region ? `${region}全部門市` : '全部門市'}</option>
+            {(region ? [region] : regions).map((r) => (
+              <optgroup key={r} label={r}>
+                {(storesByRegion[r] ?? []).map((s) => <option key={s.store_id} value={s.store_id}>{s.name}</option>)}
+              </optgroup>
+            ))}
+          </select>
+        )}
         <select value={category} onChange={(e) => setCategory(e.target.value)} aria-label="分類">
           <option value="">全部分類</option>
           {categories.map((c) => <option key={c.category} value={c.category}>{c.category}</option>)}
@@ -85,7 +139,7 @@ function StockTab({ stores, categories, onAdjust, onTransfer, refreshKey }) {
       </div>
       {error && <p className="form-error" role="alert">庫存載入失敗：{error}</p>}
 
-      {!store && (
+      {!store && view === 'store' && (
         <div className="legend" aria-label="顏色說明">
           <span className="legend-title">可售數量：</span>
           <span><i className="swatch" />正常（3 以上）</span>
@@ -95,15 +149,26 @@ function StockTab({ stores, categories, onAdjust, onTransfer, refreshKey }) {
           <span className="legend-tip">點數字可以調整庫存</span>
         </div>
       )}
+      {view === 'region' && (
+        <div className="legend" aria-label="顏色說明">
+          <span className="legend-title">區域可售加總：</span>
+          <span><i className="swatch" />區內各店都正常</span>
+          <span><i className="swatch warn" />有門市缺貨或偏低</span>
+          <span><i className="swatch danger" />整區都沒貨</span>
+          <span className="legend-tip">點數字可以展開看該區門市</span>
+        </div>
+      )}
 
-      {!store ? (
+      {view === 'region' ? (
         <div className="table-wrap card">
           <table className="data-table stock-matrix">
             <thead>
               <tr>
                 <th>編號</th>
                 <th>商品</th>
-                {stores.map((s) => <th key={s.store_id} className="num">{s.name.replace('店', '')}</th>)}
+                {visibleRegions.map((r) => (
+                  <th key={r} className="num">{r}<small className="th-sub">{storesByRegion[r]?.length ?? 0} 店</small></th>
+                ))}
                 <th className="num">合計可售</th>
                 <th className="num">在途</th>
               </tr>
@@ -113,7 +178,55 @@ function StockTab({ stores, categories, onAdjust, onTransfer, refreshKey }) {
                 <tr key={p.product_id}>
                   <td className="mono">{p.product_id}</td>
                   <td><strong>{p.name}</strong><small>{p.model}</small></td>
-                  {stores.map((s) => {
+                  {visibleRegions.map((r) => {
+                    const sum = summarize((storesByRegion[r] ?? []).map((s) => p.stores[s.store_id]))
+                    const note = sum.out ? `缺貨 ${sum.out} 店` : sum.low ? `偏低 ${sum.low} 店` : sum.transit ? `在途 ${sum.transit}` : ''
+                    return (
+                      <td key={r} className="num">
+                        <button
+                          type="button"
+                          className={`cell-btn region-cell ${regionTone(sum)}`}
+                          onClick={() => drillInto(r)}
+                          title={`${r} ${sum.stores} 家門市：可售 ${sum.available}、缺貨 ${sum.out} 店、偏低 ${sum.low} 店、在途 ${sum.transit}（點一下看各門市）`}
+                        >
+                          {sum.available}{note && <small className={sum.out || sum.low ? 'region-note' : 'transit'}>{note}</small>}
+                        </button>
+                      </td>
+                    )
+                  })}
+                  <td className="num"><strong>{total(p)}</strong></td>
+                  <td className="num muted-num">{transit(p) || '—'}</td>
+                </tr>
+              ))}
+              {!loading && !lowMatrix.length && <tr><td colSpan={visibleRegions.length + 4} className="empty">沒有符合條件的商品</td></tr>}
+            </tbody>
+          </table>
+        </div>
+      ) : !store ? (
+        <div className="table-wrap card">
+          {region && (
+            <p className="drill-bar">
+              目前只看 <b>{region}</b> 的 {visibleStores.length} 家門市
+              <button type="button" className="btn ghost small" onClick={() => setRegion('')}>看全部區域</button>
+              <button type="button" className="btn ghost small" onClick={() => changeView('region')}>回到依區域</button>
+            </p>
+          )}
+          <table className="data-table stock-matrix">
+            <thead>
+              <tr>
+                <th>編號</th>
+                <th>商品</th>
+                {visibleStores.map((s) => <th key={s.store_id} className="num">{s.name.replace('店', '')}<small className="th-sub">{s.region}</small></th>)}
+                <th className="num">合計可售</th>
+                <th className="num">在途</th>
+              </tr>
+            </thead>
+            <tbody>
+              {lowMatrix.map((p) => (
+                <tr key={p.product_id}>
+                  <td className="mono">{p.product_id}</td>
+                  <td><strong>{p.name}</strong><small>{p.model}</small></td>
+                  {visibleStores.map((s) => {
                     const r = p.stores[s.store_id]
                     const n = r?.available ?? 0
                     return (
@@ -129,11 +242,11 @@ function StockTab({ stores, categories, onAdjust, onTransfer, refreshKey }) {
                       </td>
                     )
                   })}
-                  <td className="num"><strong>{p.total}</strong></td>
-                  <td className="num muted-num">{p.transit || '—'}</td>
+                  <td className="num"><strong>{total(p)}</strong></td>
+                  <td className="num muted-num">{transit(p) || '—'}</td>
                 </tr>
               ))}
-              {!loading && !lowMatrix.length && <tr><td colSpan={stores.length + 4} className="empty">沒有符合條件的商品</td></tr>}
+              {!loading && !lowMatrix.length && <tr><td colSpan={visibleStores.length + 4} className="empty">沒有符合條件的商品</td></tr>}
             </tbody>
           </table>
         </div>
@@ -149,7 +262,7 @@ function StockTab({ stores, categories, onAdjust, onTransfer, refreshKey }) {
               </tr>
             </thead>
             <tbody>
-              {lowRows.map((r) => (
+              {lowRows.filter((r) => visibleIds.has(r.store_id)).map((r) => (
                 <tr key={`${r.product_id}-${r.store_id}`}>
                   <td className="mono">{r.product_id}</td>
                   <td><strong>{r.name}</strong><small>{r.model}</small></td>
@@ -298,6 +411,7 @@ function MovementsTab({ stores, refreshKey }) {
 export default function Inventory() {
   const [tab, setTab] = useState('stock')
   const [stores, setStores] = useState([])
+  const [regions, setRegions] = useState([])
   const [categories, setCategories] = useState([])
   const [products, setProducts] = useState([])
   const [refreshKey, setRefreshKey] = useState(0)
@@ -306,7 +420,7 @@ export default function Inventory() {
   const [toast, setToast] = useToast()
 
   useEffect(() => {
-    api('/stores').then((d) => setStores(d.stores)).catch(() => {})
+    api('/stores').then((d) => { setStores(d.stores); setRegions(d.regions ?? []) }).catch(() => {})
     api('/categories').then((d) => setCategories(d.categories)).catch(() => {})
     api('/products?status=active').then((d) => setProducts(d.products)).catch(() => {})
   }, [])
@@ -343,6 +457,7 @@ export default function Inventory() {
       {tab === 'stock' && (
         <StockTab
           stores={stores}
+          regions={regions}
           categories={categories}
           refreshKey={refreshKey}
           onAdjust={openAdjust}

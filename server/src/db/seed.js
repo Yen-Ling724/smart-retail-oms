@@ -1,6 +1,7 @@
 // 示範資料：門市地址、型號、價格、規格、庫存全部是虛構的。
 // 品牌使用真實品牌名稱，僅用於呈現零售情境，與品牌官方無關。
 import { readFileSync } from 'node:fs';
+import { regionForCity } from '../regions.js';
 import { validateBrand, validateSpecs } from '../specTemplates.js';
 import { getDb } from './index.js';
 
@@ -90,6 +91,14 @@ async function backfillTransfers(db) {
   );
 }
 
+// 舊版資料庫的門市沒有區域：依縣市補上
+async function backfillRegions(db) {
+  const missing = await db.query('SELECT store_id, city FROM stores WHERE region IS NULL');
+  for (const s of missing) {
+    await db.query('UPDATE stores SET region = $2 WHERE store_id = $1', [s.store_id, regionForCity(s.city)]);
+  }
+}
+
 export async function seed({ reset = false } = {}) {
   const db = await getDb();
   if (reset) {
@@ -100,12 +109,16 @@ export async function seed({ reset = false } = {}) {
   const [{ count }] = await db.query('SELECT count(*)::int AS count FROM stores');
   if (count > 0) {
     await backfillTransfers(db);
+    await backfillRegions(db);
     return false;
   }
 
   await db.transaction(async (tx) => {
-    for (const s of STORES) {
-      await tx.query('INSERT INTO stores (store_id, name, city, address) VALUES ($1, $2, $3, $4)', s);
+    for (const [storeId, name, city, address] of STORES) {
+      await tx.query(
+        'INSERT INTO stores (store_id, name, city, address, region) VALUES ($1, $2, $3, $4, $5)',
+        [storeId, name, city, address, regionForCity(city)],
+      );
     }
     const idByModel = Object.fromEntries(PRODUCTS.map((p, i) => [p[2], productId(i)]));
     for (const [i, p] of PRODUCTS.entries()) {
