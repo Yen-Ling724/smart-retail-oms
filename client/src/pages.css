@@ -313,7 +313,9 @@ a.stat-card:hover,
 .toolbar .btn { margin-left: 4px; }
 
 .btn.small { padding: 4px 10px; font-size: 11px; }
-.row-actions { display: flex; justify-content: flex-end; gap: 6px; white-space: nowrap; }
+/* 表格最後一格的按鈕：保持一般表格格子（不用 flex），底線才會跟整列對齊 */
+.row-actions { text-align: right; white-space: nowrap; }
+.row-actions .btn + .btn { margin-left: 6px; }
 
 .stock-matrix td.num { padding-top: 6px; padding-bottom: 6px; }
 .cell-btn {

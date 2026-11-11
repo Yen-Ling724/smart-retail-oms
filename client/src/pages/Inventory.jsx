@@ -90,6 +90,7 @@ function StockTab({ stores, categories, onAdjust, onTransfer, refreshKey }) {
           <table className="data-table stock-matrix">
             <thead>
               <tr>
+                <th>編號</th>
                 <th>商品</th>
                 {stores.map((s) => <th key={s.store_id} className="num">{s.name.replace('店', '')}</th>)}
                 <th className="num">合計可售</th>
@@ -99,7 +100,8 @@ function StockTab({ stores, categories, onAdjust, onTransfer, refreshKey }) {
             <tbody>
               {lowMatrix.map((p) => (
                 <tr key={p.product_id}>
-                  <td><strong>{p.name}</strong><small>{p.product_id} · {p.model}</small></td>
+                  <td className="mono">{p.product_id}</td>
+                  <td><strong>{p.name}</strong><small>{p.model}</small></td>
                   {stores.map((s) => {
                     const r = p.stores[s.store_id]
                     const n = r?.available ?? 0
@@ -120,7 +122,7 @@ function StockTab({ stores, categories, onAdjust, onTransfer, refreshKey }) {
                   <td className="num muted-num">{p.transit || '—'}</td>
                 </tr>
               ))}
-              {!loading && !lowMatrix.length && <tr><td colSpan={stores.length + 3} className="empty">沒有符合條件的商品</td></tr>}
+              {!loading && !lowMatrix.length && <tr><td colSpan={stores.length + 4} className="empty">沒有符合條件的商品</td></tr>}
             </tbody>
           </table>
           <p className="hint table-hint">數字是各門市可售數量；紅色＝缺貨、橘色＝偏低（≤ {STORE_LOW}）、小字 +N＝在途。點數字可以調整庫存。</p>
@@ -130,6 +132,7 @@ function StockTab({ stores, categories, onAdjust, onTransfer, refreshKey }) {
           <table className="data-table">
             <thead>
               <tr>
+                <th>編號</th>
                 <th>商品</th>
                 <th className="num">實體</th><th className="num">預留</th><th className="num">展示</th>
                 <th className="num">瑕疵</th><th className="num">在途</th><th className="num">可售</th><th />
@@ -138,7 +141,8 @@ function StockTab({ stores, categories, onAdjust, onTransfer, refreshKey }) {
             <tbody>
               {lowRows.map((r) => (
                 <tr key={`${r.product_id}-${r.store_id}`}>
-                  <td><strong>{r.name}</strong><small>{r.product_id} · {r.model}</small></td>
+                  <td className="mono">{r.product_id}</td>
+                  <td><strong>{r.name}</strong><small>{r.model}</small></td>
                   <td className="num">{r.on_hand}</td>
                   <td className="num">{r.reserved}</td>
                   <td className="num">{r.display}</td>
@@ -151,7 +155,7 @@ function StockTab({ stores, categories, onAdjust, onTransfer, refreshKey }) {
                   </td>
                 </tr>
               ))}
-              {!loading && !lowRows.length && <tr><td colSpan="8" className="empty">沒有符合條件的商品</td></tr>}
+              {!loading && !lowRows.length && <tr><td colSpan="9" className="empty">沒有符合條件的商品</td></tr>}
             </tbody>
           </table>
         </div>
@@ -205,7 +209,7 @@ function TransfersTab({ stores, onNew, refreshKey, onChanged }) {
       <div className="table-wrap card">
         <table className="data-table">
           <thead>
-            <tr><th>單號</th><th>商品</th><th>調出 → 調入</th><th className="num">數量</th><th>狀態</th><th>建立時間</th><th /></tr>
+            <tr><th>單號</th><th>編號</th><th>商品</th><th>調出 → 調入</th><th className="num">數量</th><th>狀態</th><th>建立時間</th><th /></tr>
           </thead>
           <tbody>
             {transfers.map((t) => {
@@ -213,7 +217,8 @@ function TransfersTab({ stores, onNew, refreshKey, onChanged }) {
               return (
                 <tr key={t.id}>
                   <td className="mono">#{t.id}</td>
-                  <td><strong>{t.product_name}</strong><small>{t.product_id} · {t.model}{t.note ? ` · ${t.note}` : ''}</small></td>
+                  <td className="mono">{t.product_id}</td>
+                  <td><strong>{t.product_name}</strong><small>{t.model}{t.note ? ` · ${t.note}` : ''}</small></td>
                   <td>{t.from_store_name ?? '總倉'} → {t.to_store_name}</td>
                   <td className="num">{t.qty}</td>
                   <td><span className={`badge ${st.tone}`}>{st.label}</span></td>
@@ -229,7 +234,7 @@ function TransfersTab({ stores, onNew, refreshKey, onChanged }) {
                 </tr>
               )
             })}
-            {!loading && !transfers.length && <tr><td colSpan="7" className="empty">沒有調貨單</td></tr>}
+            {!loading && !transfers.length && <tr><td colSpan="8" className="empty">沒有調貨單</td></tr>}
           </tbody>
         </table>
       </div>
@@ -255,14 +260,15 @@ function MovementsTab({ stores, refreshKey }) {
       <div className="table-wrap card">
         <table className="data-table">
           <thead>
-            <tr><th>時間</th><th>門市</th><th>商品</th><th>動作</th><th className="num">數量</th><th className="num">實體變化</th><th className="num">異動後可售</th><th>備註</th></tr>
+            <tr><th>時間</th><th>門市</th><th>編號</th><th>商品</th><th>動作</th><th className="num">數量</th><th className="num">實體變化</th><th className="num">異動後可售</th><th>備註</th></tr>
           </thead>
           <tbody>
             {movements.map((m) => (
               <tr key={m.id}>
                 <td className="muted-num">{formatDateTime(m.created_at)}</td>
                 <td>{m.store_name}</td>
-                <td><strong>{m.product_name}</strong><small>{m.product_id}</small></td>
+                <td className="mono">{m.product_id}</td>
+                <td><strong>{m.product_name}</strong><small>{m.model}</small></td>
                 <td>{MOVEMENT_LABELS[m.type] ?? m.type}</td>
                 <td className="num">{m.qty}</td>
                 <td className={`num ${m.qty_change > 0 ? 'text-ok' : m.qty_change < 0 ? 'text-danger' : ''}`}>{m.qty_change > 0 ? `+${m.qty_change}` : m.qty_change || '—'}</td>
@@ -270,7 +276,7 @@ function MovementsTab({ stores, refreshKey }) {
                 <td className="muted-num">{m.note}</td>
               </tr>
             ))}
-            {!loading && !movements.length && <tr><td colSpan="8" className="empty">還沒有庫存異動。到「庫存總表」點數字就能調整庫存。</td></tr>}
+            {!loading && !movements.length && <tr><td colSpan="9" className="empty">還沒有庫存異動。到「庫存總表」點數字就能調整庫存。</td></tr>}
           </tbody>
         </table>
       </div>
