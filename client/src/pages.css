@@ -335,7 +335,7 @@ a.stat-card:hover,
 .cell-btn:hover { border-color: #b9d3c1; background: #eaf3ed; }
 .cell-btn.warn { background: #fdf3e3; color: #a8661c; }
 .cell-btn.danger { background: #fbe9e4; color: #b84c35; }
-.cell-btn .transit { margin-left: 4px; color: #3d6596; font-size: 10px; font-weight: 600; }
+.cell-btn .transit { display: block; margin-top: 1px; color: #3d6596; font-size: 9px; font-weight: 600; white-space: nowrap; }
 .table-hint { margin: 0; padding: 8px 12px 10px; border-top: 1px solid #f0f2f0; }
 
 .text-ok { color: #2f7a4b; }

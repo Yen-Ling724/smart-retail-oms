@@ -113,7 +113,7 @@ function StockTab({ stores, categories, onAdjust, onTransfer, refreshKey }) {
                           onClick={() => onAdjust(p.product_id, s.store_id)}
                           title={`${s.name}：實體 ${r?.on_hand ?? 0}、展示 ${r?.display ?? 0}、瑕疵 ${r?.damaged ?? 0}、在途 ${r?.in_transit ?? 0}（點一下調整）`}
                         >
-                          {n}{r?.in_transit > 0 && <small className="transit">+{r.in_transit}</small>}
+                          {n}{r?.in_transit > 0 && <small className="transit">在途 {r.in_transit}</small>}
                         </button>
                       </td>
                     )
@@ -125,7 +125,7 @@ function StockTab({ stores, categories, onAdjust, onTransfer, refreshKey }) {
               {!loading && !lowMatrix.length && <tr><td colSpan={stores.length + 4} className="empty">沒有符合條件的商品</td></tr>}
             </tbody>
           </table>
-          <p className="hint table-hint">數字是各門市可售數量；紅色＝缺貨、橘色＝偏低（≤ {STORE_LOW}）、小字 +N＝在途。點數字可以調整庫存。</p>
+          <p className="hint table-hint">數字是各門市可售數量；紅色＝缺貨、橘色＝偏低（≤ {STORE_LOW}）、小字「在途 N」＝已出發但還沒到店的數量（到貨後才算可售）。點數字可以調整庫存。</p>
         </div>
       ) : (
         <div className="table-wrap card">
