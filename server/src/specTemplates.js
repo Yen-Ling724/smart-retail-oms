@@ -60,6 +60,27 @@ export const SPEC_TEMPLATES = {
 
 export const CATEGORIES = Object.keys(SPEC_TEMPLATES);
 
+// 各分類可選的品牌（參考台灣家電通路常見品牌）。
+// 品牌名稱僅用於情境示範；示範資料的型號、價格、庫存都是虛構的。
+const OTHER = '其他品牌';
+export const BRANDS = {
+  冰箱: ['Panasonic 國際', 'HITACHI 日立', '三菱電機', 'TOSHIBA 東芝', 'LG 樂金', 'SAMSUNG 三星', 'SAMPO 聲寶', 'TECO 東元', OTHER],
+  洗衣機: ['Panasonic 國際', 'HITACHI 日立', 'LG 樂金', 'SAMSUNG 三星', 'TOSHIBA 東芝', 'Whirlpool 惠而浦', 'SAMPO 聲寶', 'TECO 東元', OTHER],
+  冷氣: ['HITACHI 日立', 'Panasonic 國際', '三菱電機', '三菱重工', '日本將軍', 'DAIKIN 大金', 'LG 樂金', 'SAMPO 聲寶', 'TECO 東元', 'HERAN 禾聯', OTHER],
+  電視: ['SONY 索尼', 'Panasonic 國際', 'LG 樂金', 'SAMSUNG 三星', 'Philips 飛利浦', 'SAMPO 聲寶', 'HERAN 禾聯', 'TCL', OTHER],
+  除濕機: ['Panasonic 國際', 'HITACHI 日立', '三菱電機', 'LG 樂金', 'SAMPO 聲寶', 'TECO 東元', OTHER],
+  空氣清淨機: ['Panasonic 國際', 'SHARP 夏普', 'HITACHI 日立', 'dyson', 'Blueair', '3M', 'LG 樂金', OTHER],
+  吸塵器: ['dyson', 'Panasonic 國際', 'HITACHI 日立', 'LG 樂金', 'iRobot', 'Electrolux 伊萊克斯', OTHER],
+  廚房家電: ['TATUNG 大同', 'Panasonic 國際', 'ZOJIRUSHI 象印', 'TIGER 虎牌', 'Philips 飛利浦', 'SHARP 夏普', OTHER],
+};
+
+export function validateBrand(category, brand) {
+  const list = BRANDS[category];
+  if (!list) throw new Error(`分類必須是：${CATEGORIES.join('、')}`);
+  if (!list.includes(brand)) throw new Error(`「${category}」的品牌只能選：${list.join('、')}`);
+  return brand;
+}
+
 // 依分類檢查並整理規格；有問題就丟出錯誤訊息（中文，直接給使用者看）
 export function validateSpecs(category, specs = {}) {
   const template = SPEC_TEMPLATES[category];

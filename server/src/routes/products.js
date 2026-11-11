@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { query, transaction } from '../db/index.js';
-import { SPEC_TEMPLATES, validateSpecs } from '../specTemplates.js';
+import { BRANDS, SPEC_TEMPLATES, validateBrand, validateSpecs } from '../specTemplates.js';
 
 const router = Router();
 
@@ -19,8 +19,17 @@ function checkSpecs(category, specs) {
   }
 }
 
-router.get('/spec-templates', (req, res) => {
-  res.json({ ok: true, templates: SPEC_TEMPLATES });
+function checkBrand(category, brand) {
+  try {
+    return validateBrand(category, brand);
+  } catch (err) {
+    throw new HttpError(400, err.message);
+  }
+}
+
+// 各分類的規格欄位與品牌清單（前端表單用）
+router.get('/catalog-config', (req, res) => {
+  res.json({ ok: true, templates: SPEC_TEMPLATES, brands: BRANDS });
 });
 
 // 目前價格 + 全門市可售總數
@@ -60,7 +69,7 @@ router.get('/stats', async (req, res) => {
 });
 
 router.get('/products', async (req, res) => {
-  const { q = '', category = '', status = 'all' } = req.query;
+  const { q = '', category = '', brand = '', status = 'all' } = req.query;
   const where = [];
   const params = [];
   if (q.trim()) {
@@ -70,6 +79,10 @@ router.get('/products', async (req, res) => {
   if (category) {
     params.push(category);
     where.push(`p.category = $${params.length}`);
+  }
+  if (brand) {
+    params.push(brand);
+    where.push(`p.brand = $${params.length}`);
   }
   if (status === 'active') where.push('p.is_active');
   if (status === 'inactive') where.push('NOT p.is_active');
@@ -122,8 +135,11 @@ function readProductBody(body, { partial = false } = {}) {
   if (out.category && !SPEC_TEMPLATES[out.category]) {
     throw new HttpError(400, `分類必須是：${Object.keys(SPEC_TEMPLATES).join('、')}`);
   }
-  // 規格要依分類檢查；新增時在這裡檢查，修改時要等讀到原本的分類才檢查
-  if (!partial) out.specs = checkSpecs(out.category, body.specs ?? {});
+  // 品牌、規格要依分類檢查；新增時在這裡檢查，修改時要等讀到原本的分類才檢查
+  if (!partial) {
+    checkBrand(out.category, out.brand);
+    out.specs = checkSpecs(out.category, body.specs ?? {});
+  }
   else if (body.specs !== undefined) out.specs = body.specs;
   if (!partial || body.list_price !== undefined || body.sale_price !== undefined) {
     const list = Number(body.list_price);
@@ -173,7 +189,10 @@ router.put('/products/:id', async (req, res) => {
   try {
     const product = await transaction(async (tx) => {
       const current = await loadProduct(req.params.id, tx.query);
-      // 換分類或改規格時，用（新的）分類範本重新檢查規格
+      // 換分類、改品牌或改規格時，用（新的）分類重新檢查
+      if ('category' in data || 'brand' in data) {
+        checkBrand(data.category ?? current.category, data.brand ?? current.brand);
+      }
       if ('category' in data || 'specs' in data) {
         data.specs = checkSpecs(data.category ?? current.category, data.specs ?? current.specs);
       }

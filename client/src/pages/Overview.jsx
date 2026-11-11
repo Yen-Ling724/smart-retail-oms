@@ -40,7 +40,7 @@ export default function Overview() {
 
       <section className="notice" aria-label="模擬資料聲明">
         <span className="notice-icon" aria-hidden="true">i</span>
-        <p><strong>個人作品集模擬專案</strong><br />使用虛構商品、門市、價格與庫存資料，不代表全國電子官方產品，也不連接任何企業內部系統。</p>
+        <p><strong>個人作品集模擬專案</strong><br />品牌名稱僅用於呈現零售情境；商品型號、規格、價格、門市與庫存皆為虛構資料，與各品牌及全國電子官方無關，也不連接任何企業內部系統。</p>
       </section>
 
       <section className="overview-section" aria-labelledby="snapshot-heading">

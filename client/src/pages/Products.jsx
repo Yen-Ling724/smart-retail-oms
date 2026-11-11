@@ -162,7 +162,7 @@ function SpecFields({ template, specs, onChange }) {
   })
 }
 
-function ProductForm({ product, templates, onClose, onSaved }) {
+function ProductForm({ product, templates, brands, onClose, onSaved }) {
   const isNew = !product
   const [form, setForm] = useState(() => ({
     name: product?.name ?? '',
@@ -178,12 +178,14 @@ function ProductForm({ product, templates, onClose, onSaved }) {
   const template = templates[form.category]
   const setSpec = (key, value) => setSpecs((s) => ({ ...s, [key]: value }))
 
-  // 換分類時只保留新分類也有的欄位
+  const brandOptions = brands[form.category] ?? []
+
+  // 換分類時只保留新分類也有的規格欄位；品牌不在新分類清單裡就清空
   function changeCategory(e) {
     const next = e.target.value
     const keys = new Set((templates[next] ?? []).map((f) => f.key))
     setSpecs((s) => Object.fromEntries(Object.entries(s).filter(([k]) => keys.has(k))))
-    setForm((f) => ({ ...f, category: next }))
+    setForm((f) => ({ ...f, category: next, brand: (brands[next] ?? []).includes(f.brand) ? f.brand : '' }))
   }
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
@@ -223,15 +225,20 @@ function ProductForm({ product, templates, onClose, onSaved }) {
         </div>
 
         <div className="form-grid">
-          <label className="span-2">品名<input ref={firstField} value={form.name} onChange={set('name')} required placeholder="例：晴川 480L 變頻雙門冰箱" /></label>
-          <label>品牌<input value={form.brand} onChange={set('brand')} required /></label>
-          <label>型號<input value={form.model} onChange={set('model')} required placeholder="例：QC-R480" /></label>
+          <label className="span-2">品名<input ref={firstField} value={form.name} onChange={set('name')} required placeholder="例：Panasonic 480L 變頻雙門冰箱" /></label>
           <label>分類
             <select value={form.category} onChange={changeCategory} required>
               <option value="">請選擇</option>
               {Object.keys(templates).map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
           </label>
+          <label>品牌
+            <select value={form.brand} onChange={set('brand')} required disabled={!form.category}>
+              <option value="">{form.category ? '請選擇' : '請先選分類'}</option>
+              {brandOptions.map((b) => <option key={b} value={b}>{b}</option>)}
+            </select>
+          </label>
+          <label>型號<input value={form.model} onChange={set('model')} required placeholder="例：DM-RF480" /></label>
           <label>保固<input value={form.warranty} onChange={set('warranty')} placeholder="例：3 年" /></label>
           <label>原價（元）<input type="number" min="0" step="1" value={form.list_price} onChange={set('list_price')} required /></label>
           <label>售價（元）<input type="number" min="0" step="1" value={form.sale_price} onChange={set('sale_price')} required /></label>
@@ -262,11 +269,12 @@ export default function Products() {
   const [q, setQ] = useState('')
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState('')
+  const [brand, setBrand] = useState('')
   const [status, setStatus] = useState('all')
   const [result, setResult] = useState({ key: null, products: [], error: '' })
   const [reloadTick, setReloadTick] = useState(0)
   const [categories, setCategories] = useState([])
-  const [templates, setTemplates] = useState({})
+  const [config, setConfig] = useState({ templates: {}, brands: {} })
   const [selectedId, setSelectedId] = useState(null)
   const [editing, setEditing] = useState(undefined) // undefined=關閉, null=新增, 物件=編輯
   const [toast, setToast] = useState('')
@@ -277,7 +285,18 @@ export default function Products() {
     return () => clearTimeout(t)
   }, [q])
 
-  const key = new URLSearchParams({ q: query, category, status }).toString()
+  const key = new URLSearchParams({ q: query, category, brand, status }).toString()
+
+  // 品牌篩選：有選分類就只列該分類的品牌，否則列全部品牌
+  const brandFilterOptions = category
+    ? config.brands[category] ?? []
+    : [...new Set(Object.values(config.brands).flat())].sort((a, b) => a.localeCompare(b, 'zh-Hant'))
+
+  function changeCategoryFilter(e) {
+    const next = e.target.value
+    setCategory(next)
+    if (next && brand && !(config.brands[next] ?? []).includes(brand)) setBrand('')
+  }
   const loading = result.key !== key
   const { products, error } = result
 
@@ -294,7 +313,7 @@ export default function Products() {
   }, [])
   useEffect(loadCategories, [loadCategories])
   useEffect(() => {
-    api('/spec-templates').then((d) => setTemplates(d.templates)).catch(() => {})
+    api('/catalog-config').then((d) => setConfig({ templates: d.templates, brands: d.brands })).catch(() => {})
   }, [])
 
   useEffect(() => {
@@ -334,9 +353,13 @@ export default function Products() {
           onChange={(e) => setQ(e.target.value)}
           aria-label="搜尋商品"
         />
-        <select value={category} onChange={(e) => setCategory(e.target.value)} aria-label="分類">
+        <select value={category} onChange={changeCategoryFilter} aria-label="分類">
           <option value="">全部分類</option>
           {categories.map((c) => <option key={c.category} value={c.category}>{c.category}（{c.count}）</option>)}
+        </select>
+        <select value={brand} onChange={(e) => setBrand(e.target.value)} aria-label="品牌">
+          <option value="">全部品牌</option>
+          {brandFilterOptions.map((b) => <option key={b} value={b}>{b}</option>)}
         </select>
         <select value={status} onChange={(e) => setStatus(e.target.value)} aria-label="狀態">
           {STATUS_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
@@ -380,10 +403,10 @@ export default function Products() {
       </div>
 
       {selectedId && editing === undefined && (
-        <ProductDetail key={selectedId} id={selectedId} templates={templates} onClose={closeDetail} onEdit={(p) => setEditing(p)} />
+        <ProductDetail key={selectedId} id={selectedId} templates={config.templates} onClose={closeDetail} onEdit={(p) => setEditing(p)} />
       )}
       {editing !== undefined && (
-        <ProductForm product={editing} templates={templates} onClose={closeForm} onSaved={handleSaved} />
+        <ProductForm product={editing} templates={config.templates} brands={config.brands} onClose={closeForm} onSaved={handleSaved} />
       )}
       {toast && <div className="toast" role="status">{toast}</div>}
     </section>

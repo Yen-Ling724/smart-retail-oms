@@ -248,6 +248,7 @@ a.stat-card:hover,
   font-size: 12px;
 }
 .form-grid select:focus { border-color: #8dbb9d; outline: 2px solid #e2f0e6; }
+.form-grid select:disabled { background: #f4f6f4; color: #9aa39d; cursor: not-allowed; }
 .req { margin-left: 3px; color: #c0593f; font-style: normal; }
 
 .unit-input { display: flex; align-items: center; }
