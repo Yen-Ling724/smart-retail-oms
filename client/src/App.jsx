@@ -3,6 +3,7 @@ import './App.css'
 import './pages.css'
 import { api } from './api.js'
 import { modules } from './modules.js'
+import Assistant from './pages/Assistant.jsx'
 import Inventory from './pages/Inventory.jsx'
 import Orders from './pages/Orders.jsx'
 import Overview from './pages/Overview.jsx'
@@ -13,6 +14,7 @@ const PAGES = {
   products: { title: '商品管理', Component: Products },
   inventory: { title: '門市庫存', Component: Inventory },
   orders: { title: '訂單管理', Component: Orders },
+  assistant: { title: '智慧導購', Component: Assistant },
 }
 
 const backendLabels = {
