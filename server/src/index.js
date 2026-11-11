@@ -1,6 +1,6 @@
 import express from 'express';
 import { getDb } from './db/index.js';
-import { seed } from './db/seed.js';
+import { replaceLegacyOrders, seed } from './db/seed.js';
 import inventoryRoutes from './routes/inventory.js';
 import orderRoutes from './routes/orders.js';
 import productRoutes from './routes/products.js';
@@ -25,6 +25,12 @@ app.use('/api', orderRoutes);
 app.post('/api/demo/reset', async (req, res) => {
   await seed({ reset: true });
   res.json({ ok: true, message: '示範資料已重置' });
+});
+
+// 刪除系統補建的 SO-LEGACY 訂單並補上示範訂單（不動其他資料）
+app.post('/api/demo/replace-legacy-orders', async (req, res) => {
+  const result = await replaceLegacyOrders();
+  res.json({ ok: true, ...result });
 });
 
 // 找不到的 API 一律回 404 JSON

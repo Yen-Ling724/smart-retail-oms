@@ -121,6 +121,49 @@ async function createDemoOrders(tx) {
   }
 }
 
+// 刪除系統補建的 SO-LEGACY 訂單（釋放預留），並補上示範訂單。不動其他資料
+export async function replaceLegacyOrders() {
+  const db = await getDb();
+  return db.transaction(async (tx) => {
+    const legacy = await tx.query(
+      `SELECT o.order_no, o.store_id, o.status, oi.product_id, oi.qty
+       FROM orders o JOIN order_items oi ON oi.order_no = o.order_no
+       WHERE o.order_no LIKE 'SO-LEGACY-%'`,
+    );
+    for (const l of legacy) {
+      if (l.status !== 'reserved') continue;
+      const [before] = await tx.query(
+        'SELECT on_hand, reserved, display, damaged FROM inventory WHERE store_id = $1 AND product_id = $2 FOR UPDATE',
+        [l.store_id, l.product_id],
+      );
+      const [after] = await tx.query(
+        `UPDATE inventory SET reserved = GREATEST(reserved - $3, 0) WHERE store_id = $1 AND product_id = $2
+         RETURNING on_hand, reserved, display, damaged`,
+        [l.store_id, l.product_id, l.qty],
+      );
+      if (before && after) {
+        await tx.query(
+          `INSERT INTO inventory_transactions (store_id, product_id, type, qty, qty_change, available_after, note, ref_order_no)
+           VALUES ($1, $2, 'order_release', $3, 0, $4, '清除系統補建訂單，釋放預留', $5)`,
+          [l.store_id, l.product_id, l.qty, after.on_hand - after.reserved - after.display - after.damaged, l.order_no],
+        );
+      }
+    }
+    const removed = new Set(legacy.map((l) => l.order_no)).size;
+    await tx.query(`DELETE FROM orders WHERE order_no LIKE 'SO-LEGACY-%'`);
+    await tx.query(`DELETE FROM customers c WHERE c.phone = '0900000000' AND NOT EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.id)`);
+
+    // 還沒有示範訂單才補（用示範顧客的電話判斷）
+    const [{ count }] = await tx.query(
+      `SELECT count(*)::int AS count FROM orders o JOIN customers c ON c.id = o.customer_id WHERE c.phone LIKE '091200000_'`,
+    );
+    const before = (await tx.query('SELECT count(*)::int AS n FROM orders'))[0].n;
+    if (count === 0) await createDemoOrders(tx);
+    const added = (await tx.query('SELECT count(*)::int AS n FROM orders'))[0].n - before;
+    return { removed, added };
+  });
+}
+
 // 舊版資料庫有「預留」數量卻沒有訂單：每一筆補建一張「已預留」的示範訂單（只在還沒有任何訂單時執行）
 async function backfillReservations(db) {
   const [{ count }] = await db.query('SELECT count(*)::int AS count FROM orders');
