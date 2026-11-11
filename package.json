@@ -1,0 +1,12 @@
+{
+  "name": "smart-retail-oms",
+  "private": true,
+  "description": "CCC家電 AI 智慧導購與門市營運管理系統（作品集模擬專案）",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "build": "npm ci --prefix client && npm run build --prefix client && npm ci --omit=dev --prefix server",
+    "start": "npm start --prefix server"
+  }
+}

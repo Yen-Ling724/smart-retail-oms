@@ -522,6 +522,66 @@ a.stat-card:hover,
   .order-form-body { grid-template-columns: 1fr; }
 }
 
+/* ===== 營運分析 ===== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.viz-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
+.viz-card {
+  --series-1: #2a78d6;
+  --status-good: #0ca30c;
+  --status-warning: #fab219;
+  --status-critical: #d03b3b;
+  min-width: 0;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+.viz-card.wide { grid-column: 1 / -1; }
+.viz-card header { margin-bottom: 12px; }
+.viz-card h2 { margin: 0; color: #24352b; font-size: 14px; }
+.viz-card header p { margin: 2px 0 0; color: var(--muted); font-size: 11px; }
+
+.bar-list, .health-list { width: 100%; border-collapse: collapse; font-size: 12px; }
+.bar-list th, .health-list th { width: 34%; padding: 6px 10px 6px 0; color: #39463e; font-weight: 600; text-align: left; vertical-align: middle; }
+.bar-list th small, .health-list th small { display: block; color: #98a29b; font-size: 10px; font-weight: 400; }
+.bar-list tr:hover th, .health-list tr:hover th { color: #111; }
+.bar-cell { width: 46%; padding: 6px 0; }
+.bar { display: block; height: 10px; border-radius: 0 4px 4px 0; background: var(--series-1); transition: opacity 0.15s; }
+.bar-list:hover .bar { opacity: 0.45; }
+.bar-list tr:hover .bar { opacity: 1; }
+.bar-value { width: 20%; padding: 6px 0 6px 10px; color: #303b34; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+
+.viz-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; margin-bottom: 8px; color: #59645f; font-size: 11px; }
+.viz-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.viz-legend-note { margin-left: auto; color: #98a29b; }
+.swatch-status { font-style: normal; font-size: 11px; line-height: 1; }
+.swatch-status.good { color: var(--status-good); }
+.swatch-status.warning { color: #d99300; }
+.swatch-status.critical { color: var(--status-critical); }
+
+.health-bar { display: flex; gap: 2px; width: 100%; min-width: 120px; height: 12px; padding: 0; }
+.health-list td.health-bar { display: flex; margin: 11px 0; }
+.seg { display: block; min-width: 4px; height: 12px; }
+.seg:first-child { border-radius: 4px 0 0 4px; }
+.seg:last-child { border-radius: 0 4px 4px 0; }
+.seg:only-child { border-radius: 4px; }
+.seg.good { background: var(--status-good); }
+.seg.warning { background: var(--status-warning); }
+.seg.critical { background: var(--status-critical); }
+.health-num { width: 64px; padding: 6px 0 6px 10px; color: #303b34; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.health-tag { margin-right: 4px; color: #a3aca6; font-size: 9px; }
+
+@media (max-width: 900px) {
+  .viz-grid { grid-template-columns: 1fr; }
+}
+
 /* ===== 智慧導購 ===== */
 .mode-badge { align-self: center; padding: 5px 12px; font-size: 11px; }
 .assistant {

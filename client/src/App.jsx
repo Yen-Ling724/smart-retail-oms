@@ -3,6 +3,7 @@ import './App.css'
 import './pages.css'
 import { api } from './api.js'
 import { modules } from './modules.js'
+import Analytics from './pages/Analytics.jsx'
 import Assistant from './pages/Assistant.jsx'
 import Inventory from './pages/Inventory.jsx'
 import Orders from './pages/Orders.jsx'
@@ -11,6 +12,7 @@ import Products from './pages/Products.jsx'
 
 const PAGES = {
   overview: { title: '營運總覽', Component: Overview },
+  analytics: { title: '營運分析', Component: Analytics },
   products: { title: '商品管理', Component: Products },
   inventory: { title: '門市庫存', Component: Inventory },
   orders: { title: '訂單管理', Component: Orders },
@@ -66,6 +68,9 @@ function App() {
         <p className="nav-heading">工作空間</p>
         <a className={`nav-link ${page === 'overview' ? 'active' : ''}`} href="#overview" aria-current={page === 'overview' ? 'page' : undefined}>
           <span aria-hidden="true">▦</span> 營運總覽
+        </a>
+        <a className={`nav-link ${page === 'analytics' ? 'active' : ''}`} href="#analytics" aria-current={page === 'analytics' ? 'page' : undefined}>
+          <span aria-hidden="true">▤</span> 營運分析
         </a>
         <p className="nav-heading">管理模組</p>
         {modules.map((module) => {

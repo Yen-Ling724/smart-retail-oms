@@ -1,6 +1,9 @@
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import express from 'express';
 import { getDb } from './db/index.js';
 import { replaceLegacyOrders, seed } from './db/seed.js';
+import analyticsRoutes from './routes/analytics.js';
 import assistantRoutes from './routes/assistant.js';
 import inventoryRoutes from './routes/inventory.js';
 import orderRoutes from './routes/orders.js';
@@ -22,6 +25,7 @@ app.use('/api', productRoutes);
 app.use('/api', inventoryRoutes);
 app.use('/api', orderRoutes);
 app.use('/api', assistantRoutes);
+app.use('/api', analyticsRoutes);
 
 // 重置示範資料（公開展示時訪客可能改亂資料）。之後加入登入後只開放給 admin。
 app.post('/api/demo/reset', async (req, res) => {
@@ -40,6 +44,13 @@ app.use('/api', (req, res) => {
   res.status(404).json({ ok: false, error: '找不到這個 API' });
 });
 
+// 上線時：前端打包好的檔案（client/dist）也由這個後端提供，整個系統就是一個網址
+const CLIENT_DIST = fileURLToPath(new URL('../../client/dist', import.meta.url));
+if (existsSync(CLIENT_DIST)) {
+  app.use(express.static(CLIENT_DIST, { maxAge: '1h', index: false }));
+  app.get(/^\/(?!api\/).*/, (req, res) => res.sendFile(`${CLIENT_DIST}/index.html`));
+}
+
 // 錯誤處理：已知錯誤回對應訊息，其他回 500
 app.use((err, req, res, next) => {
   if (res.headersSent) return next(err);
@@ -55,7 +66,8 @@ app.use((err, req, res, next) => {
 
 const db = await getDb();
 const seeded = await seed();
-console.log(`資料庫：${db.kind === 'local' ? '本機 PGlite（server/.data）' : 'Supabase'}${seeded ? '，已建立示範資料' : ''}`);
+console.log(`資料庫：${db.kind === 'local' ? '本機 PGlite' : 'Supabase'}${seeded ? '，已建立示範資料' : ''}`);
+if (existsSync(CLIENT_DIST)) console.log('前端：提供 client/dist 的打包檔案');
 
 app.listen(PORT, () => {
   console.log(`後端已啟動：http://localhost:${PORT}`);
