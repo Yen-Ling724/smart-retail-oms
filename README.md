@@ -28,3 +28,23 @@
 - [ ] 第四階段：OMS 訂單與購物車
 - [ ] 第五階段：AI 智慧導購
 - [ ] 第六階段：儀表板、測試、部署、作品集介紹
+
+## 本機開發
+
+需要開**兩個終端機**，前端和後端各一個：
+
+```bash
+# 終端機 1：後端（http://localhost:3001）
+cd server
+npm install        # 第一次才需要
+cp .env.example .env   # 第一次才需要
+npm run dev
+
+# 終端機 2：前端（http://localhost:5173）
+cd client
+npm install        # 第一次才需要
+npm run dev
+```
+
+前端開發時會把 `/api` 開頭的請求轉給後端（設定在 `client/vite.config.js`）。
+畫面右上角顯示「後端連線正常」就代表前後端接通了。

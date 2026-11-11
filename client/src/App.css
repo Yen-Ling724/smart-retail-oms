@@ -153,6 +153,16 @@
   margin-top: 0;
 }
 
+.topbar-pills {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.backend-checking .status-dot { background: #c9b46a; }
+.backend-down { color: #a5503c; border-color: #efd9d2; }
+.backend-down .status-dot { background: #d0715a; }
+
 .welcome {
   display: flex;
   min-height: 242px;

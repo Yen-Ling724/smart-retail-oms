@@ -1,4 +1,27 @@
+import { useEffect, useState } from 'react'
 import './App.css'
+
+// 上線時前後端在不同網址，用 VITE_API_BASE 指定後端位置；開發時留空走 Vite proxy
+const API_BASE = import.meta.env.VITE_API_BASE || ''
+
+const backendLabels = {
+  checking: '後端連線中…',
+  ok: '後端連線正常',
+  down: '後端未連線',
+}
+
+function useBackendStatus() {
+  const [status, setStatus] = useState('checking')
+  useEffect(() => {
+    const controller = new AbortController()
+    fetch(`${API_BASE}/api/health`, { signal: controller.signal })
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(res.statusText))))
+      .then((data) => setStatus(data.ok ? 'ok' : 'down'))
+      .catch((err) => { if (err.name !== 'AbortError') setStatus('down') })
+    return () => controller.abort()
+  }, [])
+  return status
+}
 
 const modules = [
   { number: '01', title: '商品管理', detail: '集中整理商品型號、規格與替代關係。', status: '規劃中' },
@@ -8,6 +31,7 @@ const modules = [
 ]
 
 function App() {
+  const backend = useBackendStatus()
   return (
     <div className="app-shell">
       <aside className="sidebar">
@@ -36,7 +60,12 @@ function App() {
       <main id="overview" className="main-content">
         <header className="topbar">
           <span>營運總覽</span>
-          <span className="demo-label"><span className="status-dot" /> 示範環境</span>
+          <span className="topbar-pills">
+            <span className={`demo-label backend-${backend}`} role="status">
+              <span className="status-dot" /> {backendLabels[backend]}
+            </span>
+            <span className="demo-label"><span className="status-dot" /> 示範環境</span>
+          </span>
         </header>
 
         <section className="welcome">
