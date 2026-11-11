@@ -85,7 +85,7 @@ export default function Overview() {
             <p className="eyebrow">BUILT STEP BY STEP</p>
             <h2 id="modules-heading">系統模組</h2>
           </div>
-          <span className="module-count">4 個規劃模組</span>
+          <span className="module-count">{modules.filter((m) => m.href).length} / {modules.length} 個模組可使用</span>
         </div>
         <div className="module-grid">
           {modules.map((module) => {

@@ -1,0 +1,24 @@
+# 定期喚醒線上展示網站
+# - Render 免費方案閒置會休眠：喚醒後才能回應
+# - Supabase 免費方案連續 7 天沒有使用會暫停：/api/health 會查詢資料庫，順便讓它保持活躍
+# 每 3 天跑一次，也可以在 GitHub 的 Actions 頁面手動執行。
+name: Keep demo alive
+
+on:
+  schedule:
+    - cron: '17 3 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wake the site and touch the database
+        run: |
+          for i in 1 2 3 4 5 6; do
+            if curl -fsS --max-time 90 https://ccc-retail-demo.onrender.com/api/health; then
+              echo; echo "ok"; exit 0
+            fi
+            echo "attempt $i failed, retrying in 30s"; sleep 30
+          done
+          echo "site did not respond"; exit 1
