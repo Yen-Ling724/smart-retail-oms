@@ -73,12 +73,84 @@ function stockFor(storeId, product) {
   if (SCARCE.has(model)) onHand = Math.floor(r * 2.5);
   const display = big && onHand > 0 && r > 0.4 ? 1 : 0;
   const damaged = onHand > 3 && r > 0.85 ? 1 : 0;
-  const reserved = onHand - display - damaged > 2 && r > 0.6 ? 1 : 0;
+  // 「預留」一律由訂單產生（見下方 DEMO_ORDERS），這裡從 0 開始
   const inTransit = onHand <= 1 ? Math.floor(pseudoRandom(model + storeId) * 4) : 0;
-  return { onHand, reserved, display, damaged, inTransit };
+  return { onHand, reserved: 0, display, damaged, inTransit };
 }
 
 export const productId = (i) => `P${String(i + 1).padStart(4, '0')}`;
+
+// 示範訂單（顧客姓名、電話皆為虛構）。商品會挑「那家門市有貨」的同分類商品
+const DEMO_ORDERS = [
+  { name: '王小明', phone: '0912000001', store: 'TN01', fulfillment: 'pickup', items: [['冰箱', 1]], steps: ['confirm'] },
+  { name: '陳美玲', phone: '0912000002', store: 'KH01', fulfillment: 'delivery', address: '高雄市左營區示範街 1 號（虛構）', items: [['電視', 1], ['廚房家電', 1]], steps: [] },
+  { name: '林志豪', phone: '0912000003', store: 'TP01', fulfillment: 'pickup', items: [['冷氣', 1]], steps: ['confirm', 'ship'] },
+  { name: '張雅婷', phone: '0912000004', store: 'TC01', fulfillment: 'delivery', address: '台中市西屯區示範街 2 號（虛構）', items: [['除濕機', 2]], steps: ['confirm', 'ship', 'complete'] },
+  { name: '黃建國', phone: '0912000005', store: 'TN02', fulfillment: 'pickup', items: [['洗衣機', 1]], steps: ['confirm', 'cancel'] },
+  { name: '李佩珊', phone: '0912000006', store: 'TN01', fulfillment: 'delivery', address: '台南市中西區示範街 3 號（虛構）', items: [['空氣清淨機', 1], ['吸塵器', 1]], steps: ['confirm'] },
+  { name: '吳俊傑', phone: '0912000007', store: 'TC01', fulfillment: 'pickup', items: [['電視', 1]], steps: ['confirm'] },
+];
+
+async function createDemoOrders(tx) {
+  const orders = await import('../routes/orders.js');
+  for (const o of DEMO_ORDERS) {
+    const items = [];
+    for (const [category, qty] of o.items) {
+      const [pick] = await tx.query(
+        `SELECT p.product_id FROM products p JOIN inventory i ON i.product_id = p.product_id
+         WHERE p.category = $1 AND p.is_active AND i.store_id = $2 AND (i.on_hand - i.reserved - i.display - i.damaged) >= $3
+         ORDER BY p.product_id LIMIT 1`,
+        [category, o.store, qty + 1],
+      );
+      if (pick) items.push({ product_id: pick.product_id, qty });
+    }
+    if (!items.length) continue;
+    const orderNo = await orders.createOrder(tx, {
+      customer: { name: o.name, phone: o.phone },
+      store_id: o.store,
+      fulfillment: o.fulfillment,
+      delivery_address: o.address,
+      items,
+    });
+    for (const step of o.steps) {
+      if (step === 'confirm') await orders.confirmOrder(tx, orderNo);
+      if (step === 'ship') await orders.shipOrder(tx, orderNo);
+      if (step === 'complete') await orders.completeOrder(tx, orderNo);
+      if (step === 'cancel') await orders.cancelOrder(tx, orderNo, '顧客改變心意');
+    }
+  }
+}
+
+// 舊版資料庫有「預留」數量卻沒有訂單：每一筆補建一張「已預留」的示範訂單（只在還沒有任何訂單時執行）
+async function backfillReservations(db) {
+  const [{ count }] = await db.query('SELECT count(*)::int AS count FROM orders');
+  if (count > 0) return;
+  const rows = await db.query(
+    `SELECT i.store_id, i.product_id, i.reserved, pr.sale_price
+     FROM inventory i LEFT JOIN product_prices pr ON pr.product_id = i.product_id AND pr.valid_to IS NULL
+     WHERE i.reserved > 0 ORDER BY i.store_id, i.product_id`,
+  );
+  if (!rows.length) return;
+  await db.transaction(async (tx) => {
+    const [customer] = await tx.query(
+      `INSERT INTO customers (name, phone) VALUES ('既有預留（系統補建）', '0900000000')
+       ON CONFLICT (phone) DO UPDATE SET name = EXCLUDED.name RETURNING id`,
+    );
+    for (const [i, r] of rows.entries()) {
+      const orderNo = `SO-LEGACY-${String(i + 1).padStart(3, '0')}`;
+      const price = r.sale_price ?? 0;
+      await tx.query(
+        `INSERT INTO orders (order_no, customer_id, store_id, fulfillment, status, total, note)
+         VALUES ($1, $2, $3, 'pickup', 'reserved', $4, '升級前就存在的預留庫存，系統自動補建訂單')`,
+        [orderNo, customer.id, r.store_id, price * r.reserved],
+      );
+      await tx.query('INSERT INTO order_items (order_no, product_id, qty, unit_price) VALUES ($1, $2, $3, $4)', [
+        orderNo, r.product_id, r.reserved, price,
+      ]);
+      await tx.query(`INSERT INTO order_status_history (order_no, status, note) VALUES ($1, 'reserved', '系統補建')`, [orderNo]);
+    }
+  });
+}
 
 // 舊版資料庫有「在途」數量卻沒有調貨單：補建成總倉補貨單（只在還沒有任何調貨單時執行）
 async function backfillTransfers(db) {
@@ -102,7 +174,8 @@ async function backfillRegions(db) {
 export async function seed({ reset = false } = {}) {
   const db = await getDb();
   if (reset) {
-    await db.exec('DROP TABLE IF EXISTS inventory_transactions, stock_transfers, inventory, product_prices, products, stores CASCADE;');
+    await db.exec(`DROP TABLE IF EXISTS order_status_history, order_items, orders, customers,
+      inventory_transactions, stock_transfers, inventory, product_prices, products, stores CASCADE;`);
   }
   await db.exec(SCHEMA);
 
@@ -110,6 +183,7 @@ export async function seed({ reset = false } = {}) {
   if (count > 0) {
     await backfillTransfers(db);
     await backfillRegions(db);
+    await backfillReservations(db);
     return false;
   }
 
@@ -164,6 +238,7 @@ export async function seed({ reset = false } = {}) {
     for (const [oldModel, newModel] of Object.entries(REPLACED_BY)) {
       await tx.query('UPDATE products SET replaced_by = $1 WHERE product_id = $2', [idByModel[newModel], idByModel[oldModel]]);
     }
+    await createDemoOrders(tx);
   });
   return true;
 }

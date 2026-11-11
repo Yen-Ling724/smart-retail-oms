@@ -2,6 +2,7 @@ import express from 'express';
 import { getDb } from './db/index.js';
 import { seed } from './db/seed.js';
 import inventoryRoutes from './routes/inventory.js';
+import orderRoutes from './routes/orders.js';
 import productRoutes from './routes/products.js';
 
 const app = express();
@@ -18,6 +19,7 @@ app.get('/api/health', async (req, res) => {
 
 app.use('/api', productRoutes);
 app.use('/api', inventoryRoutes);
+app.use('/api', orderRoutes);
 
 // 重置示範資料（公開展示時訪客可能改亂資料）。之後加入登入後只開放給 admin。
 app.post('/api/demo/reset', async (req, res) => {

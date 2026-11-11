@@ -5,7 +5,7 @@ import { HttpError } from './products.js';
 const router = Router();
 
 // 可售 = 實體 - 預留 - 展示 - 瑕疵（在途還沒到店，不算）
-const available = (r) => r.on_hand - r.reserved - r.display - r.damaged;
+export const available = (r) => r.on_hand - r.reserved - r.display - r.damaged;
 const AVAILABLE_SQL = '(i.on_hand - i.reserved - i.display - i.damaged)';
 
 // 門市人員可以手動做的庫存動作
@@ -81,11 +81,11 @@ async function saveRow(tx, storeId, productId, row) {
   );
 }
 
-async function logMovement(tx, { storeId, productId, type, qty, before, after, note = null, transferId = null }) {
+export async function logMovement(tx, { storeId, productId, type, qty, before, after, note = null, transferId = null, orderNo = null }) {
   await tx.query(
-    `INSERT INTO inventory_transactions (store_id, product_id, type, qty, qty_change, available_after, note, ref_transfer_id)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
-    [storeId, productId, type, qty, after.on_hand - before.on_hand, available(after), note, transferId],
+    `INSERT INTO inventory_transactions (store_id, product_id, type, qty, qty_change, available_after, note, ref_transfer_id, ref_order_no)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+    [storeId, productId, type, qty, after.on_hand - before.on_hand, available(after), note, transferId, orderNo],
   );
 }
 

@@ -13,6 +13,9 @@ export const MOVEMENT_LABELS = {
   transfer_out: '調出',
   transfer_in: '調入到貨',
   transfer_cancel: '調貨取消退回',
+  order_reserve: '訂單預留',
+  order_release: '訂單取消釋放',
+  order_ship: '訂單出貨',
 }
 
 export const TRANSFER_STATUS = {

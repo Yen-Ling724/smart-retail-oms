@@ -63,6 +63,9 @@ router.get('/stats', async (req, res) => {
       (SELECT count(*)::int FROM stores) AS stores,
       (SELECT COALESCE(SUM(on_hand - reserved - display - damaged), 0)::int FROM inventory) AS available_units,
       (SELECT count(*)::int FROM stock_transfers WHERE status = 'in_transit') AS transfers_in_transit,
+      (SELECT count(*)::int FROM orders WHERE status = 'pending') AS orders_pending,
+      (SELECT count(*)::int FROM orders WHERE status = 'reserved') AS orders_reserved,
+      (SELECT count(*)::int FROM orders WHERE status = 'shipped') AS orders_shipped,
       (SELECT count(*)::int FROM (
          SELECT i.product_id FROM inventory i JOIN products p USING (product_id)
          WHERE p.is_active GROUP BY i.product_id

@@ -26,7 +26,7 @@
 - [x] 第二階段：商品資料庫與商品管理（商品清單、搜尋篩選、詳情、新增編輯、價格歷史）
   - [ ] 尚未做：價格促銷管理、登入權限（admin／staff）
 - [x] 第三階段：多門市 WMS（庫存總表、進貨／展示機／瑕疵／報廢／盤點、門市調貨與總倉補貨、異動紀錄）
-- [ ] 第四階段：OMS 訂單與購物車
+- [x] 第四階段：OMS 訂單與購物車（購物車建單、預留／出貨／完成／取消、防超賣、處理紀錄）
 - [ ] 第五階段：AI 智慧導購
 - [ ] 第六階段：儀表板、測試、部署、作品集介紹
 
@@ -69,6 +69,13 @@ npm run dev
 - 每次調整都在資料庫交易裡鎖住那一列庫存，避免兩個人同時調整算錯。
 - 門市有「區域」（北區／中區／南區／東區，依縣市自動判斷，規則在 `server/src/regions.js`）。庫存總表可以切換「依門市／依區域」：區域檢視把各店加總，點進去再看該區門市。門市增加到全台時，欄位數仍維持在區域數量。
 
+**訂單規則**（`server/src/routes/orders.js`）：
+- 狀態：待確認 → 已預留（扣可售、加預留）→ 已出貨（扣實體、扣預留）→ 已完成；出貨前可取消，已預留的會釋放。
+- **防超賣**：預留時用條件式更新 `UPDATE inventory SET reserved = reserved + n WHERE … AND 可售 >= n`，任何一項更新不到就丟錯，整張訂單在同一個交易裡回復原狀。兩張訂單同時搶最後一件，只有一張會成功。
+- 價格用下單當下的售價存進 `order_items.unit_price`，之後改價不影響舊訂單。
+- 同一支手機視為同一位顧客（`customers.phone` 唯一）。訂單編號格式 `SO + 台灣日期 + 流水號`。
+- 「預留」數量只能由訂單產生；示範資料的預留都來自示範訂單。升級前就存在的預留，會自動補建 `SO-LEGACY-xxx` 訂單，讓帳對得起來。
+
 **測試用資料庫**：設定 `PGLITE_DIR` 可以讓後端用另一個資料夾，例如 `PORT=3002 PGLITE_DIR=../tmp-db node src/index.js`；前端用 `API_PROXY=http://localhost:3002 npx vite --port 5181` 接過去，就不會動到平常的資料。
 
 ## API
@@ -91,4 +98,11 @@ npm run dev
 | POST | `/api/transfers` | 建立調貨單（`from_store_id` 空白＝總倉補貨） |
 | POST | `/api/transfers/:id/receive` | 調貨到貨入庫 |
 | POST | `/api/transfers/:id/cancel` | 取消調貨（退回調出門市） |
+| GET | `/api/orders?status=&store=&q=` | 訂單列表（`status=open` 為進行中），附各狀態數量 |
+| GET | `/api/orders/:no` | 訂單詳情（商品、顧客、處理紀錄） |
+| POST | `/api/orders` | 建立訂單；`reserve_now: true` 會立即預留（失敗時訂單留在待確認並回傳原因） |
+| POST | `/api/orders/:no/confirm` | 確認並預留庫存 |
+| POST | `/api/orders/:no/ship` | 出貨／顧客取貨 |
+| POST | `/api/orders/:no/complete` | 完成 |
+| POST | `/api/orders/:no/cancel` | 取消（已預留的會釋放） |
 | POST | `/api/demo/reset` | 重置示範資料 |

@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS inventory_transactions (
   qty_change      integer NOT NULL,          -- 實體庫存的變化量
   available_after integer NOT NULL,          -- 異動後的可售數
   note            text,
-  ref_order_no    text,                      -- 之後訂單出貨會用到
+  ref_order_no    text,                      -- 訂單預留／出貨時記訂單編號
   created_at      timestamptz NOT NULL DEFAULT now()
 );
 ALTER TABLE inventory_transactions ADD COLUMN IF NOT EXISTS ref_transfer_id bigint REFERENCES stock_transfers(id);
@@ -81,7 +81,52 @@ ALTER TABLE inventory_transactions ADD COLUMN IF NOT EXISTS ref_transfer_id bigi
 ALTER TABLE inventory_transactions DROP CONSTRAINT IF EXISTS inventory_transactions_type_check;
 ALTER TABLE inventory_transactions ADD CONSTRAINT inventory_transactions_type_check CHECK (type IN (
   'receive', 'display_add', 'display_remove', 'damage', 'scrap', 'count',
-  'transfer_out', 'transfer_in', 'transfer_cancel'
+  'transfer_out', 'transfer_in', 'transfer_cancel',
+  'order_reserve', 'order_release', 'order_ship'
 ));
 CREATE INDEX IF NOT EXISTS inventory_tx_product ON inventory_transactions (product_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS inventory_tx_store ON inventory_transactions (store_id, created_at DESC);
+
+-- ===== 第四階段：訂單 =====
+CREATE TABLE IF NOT EXISTS customers (
+  id          bigserial PRIMARY KEY,
+  name        text NOT NULL,
+  phone       text NOT NULL UNIQUE,
+  address     text,
+  created_at  timestamptz NOT NULL DEFAULT now()
+);
+
+-- 訂單狀態：pending 待確認 → reserved 已預留（扣可售）→ shipped 已出貨（扣實體）→ completed 已完成
+--           出貨前都可以 cancelled 取消（已預留的會釋放）
+CREATE TABLE IF NOT EXISTS orders (
+  order_no         text PRIMARY KEY,
+  customer_id      bigint NOT NULL REFERENCES customers(id),
+  store_id         text NOT NULL REFERENCES stores(store_id),
+  fulfillment      text NOT NULL CHECK (fulfillment IN ('pickup', 'delivery')),
+  delivery_address text,
+  status           text NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'reserved', 'shipped', 'completed', 'cancelled')),
+  total            integer NOT NULL CHECK (total >= 0),
+  note             text,
+  created_at       timestamptz NOT NULL DEFAULT now(),
+  updated_at       timestamptz NOT NULL DEFAULT now(),
+  CHECK (fulfillment = 'pickup' OR delivery_address IS NOT NULL)
+);
+CREATE INDEX IF NOT EXISTS orders_status ON orders (status, created_at DESC);
+CREATE INDEX IF NOT EXISTS orders_store ON orders (store_id, created_at DESC);
+
+CREATE TABLE IF NOT EXISTS order_items (
+  id          bigserial PRIMARY KEY,
+  order_no    text NOT NULL REFERENCES orders(order_no) ON DELETE CASCADE,
+  product_id  text NOT NULL REFERENCES products(product_id),
+  qty         integer NOT NULL CHECK (qty > 0),
+  unit_price  integer NOT NULL CHECK (unit_price >= 0),   -- 下單當下的售價
+  UNIQUE (order_no, product_id)
+);
+
+CREATE TABLE IF NOT EXISTS order_status_history (
+  id          bigserial PRIMARY KEY,
+  order_no    text NOT NULL REFERENCES orders(order_no) ON DELETE CASCADE,
+  status      text NOT NULL,
+  note        text,
+  created_at  timestamptz NOT NULL DEFAULT now()
+);

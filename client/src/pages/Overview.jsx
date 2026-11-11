@@ -55,7 +55,13 @@ export default function Overview() {
         {stats && (
           <div className="stat-grid">
             <StatCard label="上架商品" value={stats.active_products} hint={`共 ${stats.products} 項商品`} href="#products" />
-            <StatCard label="門市" value={stats.stores} hint="台南、高雄、台中、台北" />
+            <StatCard
+              label="進行中訂單"
+              value={(stats.orders_pending ?? 0) + (stats.orders_reserved ?? 0) + (stats.orders_shipped ?? 0)}
+              hint={`待確認 ${stats.orders_pending ?? 0}・已預留 ${stats.orders_reserved ?? 0}・已出貨 ${stats.orders_shipped ?? 0}`}
+              tone={stats.orders_pending > 0 ? 'warn' : ''}
+              href="#orders"
+            />
             <StatCard
               label="全門市可售量"
               value={stats.available_units.toLocaleString('zh-TW')}
