@@ -180,7 +180,8 @@ function StockTab({ stores, regions, categories, onAdjust, onTransfer, refreshKe
                   <td><strong>{p.name}</strong><small>{p.model}</small></td>
                   {visibleRegions.map((r) => {
                     const sum = summarize((storesByRegion[r] ?? []).map((s) => p.stores[s.store_id]))
-                    const note = sum.out ? `缺貨 ${sum.out} 店` : sum.low ? `偏低 ${sum.low} 店` : sum.transit ? `在途 ${sum.transit}` : ''
+                    const problems = [sum.out && `缺貨 ${sum.out}`, sum.low && `偏低 ${sum.low}`].filter(Boolean)
+                    const note = problems.length ? `${problems.join('・')} 店` : sum.transit ? `在途 ${sum.transit}` : ''
                     return (
                       <td key={r} className="num">
                         <button
