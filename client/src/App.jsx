@@ -11,9 +11,9 @@ function App() {
   return (
     <div className="app-shell">
       <aside className="sidebar">
-        <a className="brand" href="#overview" aria-label="零售智選首頁">
-          <span className="brand-mark" aria-hidden="true">選</span>
-          <span>零售智選<small>SMART RETAIL</small></span>
+        <a className="brand" href="#overview" aria-label="CCC家電首頁">
+          <span className="brand-mark" aria-hidden="true">C</span>
+          <span>CCC家電<small>AI 智慧導購與門市營運管理</small></span>
         </a>
 
         <p className="nav-heading">工作空間</p>
@@ -96,7 +96,7 @@ function App() {
           </div>
         </section>
 
-        <footer className="page-footer">零售智選 · 個人作品集模擬系統</footer>
+        <footer className="page-footer">CCC家電 AI 智慧導購與門市營運管理系統 · 個人作品集模擬系統</footer>
       </main>
     </div>
   )
