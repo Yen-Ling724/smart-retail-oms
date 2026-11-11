@@ -11,8 +11,8 @@ function StockBadge({ available }) {
   const level = stockLevel(available)
   return (
     <span className="stock-cell">
-      {available}
       {level && <span className={`badge ${level.tone}`}>{level.label}</span>}
+      <span className="stock-num">{available}</span>
     </span>
   )
 }
