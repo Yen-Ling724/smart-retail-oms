@@ -1,19 +1,151 @@
+/* ===== 配色主題 =====
+   預設是「紅色」（#D50040，參考全國電子）。
+   想換回原本的綠色：把 client/index.html 的 <html data-brand="red"> 改成 data-brand="green" 就好。
+   「成功／正常」的綠色徽章（例如：上架中、✓ 符合）兩種主題都保持綠色，因為那是狀態不是品牌色。 */
+:root {
+  --ink: #2f3237;
+  --muted: #74787f;
+  --line: #e8e8eb;
+  --surface: #fff;
+  --page-bg: #f7f7f8;
+
+  --brand: #d50040;          /* 主要按鈕、選中的分頁、Logo */
+  --brand-strong: #a8003a;   /* 淡底上的文字（選中的選單） */
+  --brand-soft: #fdecf1;     /* 選中項目的淡底色 */
+  --brand-tint: #fff6f8;     /* 滑過、提示列的更淡底色 */
+  --brand-border: #f2b3c6;   /* 輸入框聚焦、卡片滑過的框線 */
+  --brand-ring: #fbdce6;     /* 聚焦外框 */
+  --heading: #26282d;        /* 標題文字 */
+  --ink-strong: #3a3d44;     /* 小標題文字 */
+  --eyebrow: #9a7d87;        /* 首頁上方小字 */
+  --panel: #fcfbfb;          /* 表單區塊底色 */
+  --note-bg: linear-gradient(110deg, #fff5f8 0%, #faf8f9 63%, #fde9ef 100%);
+  --selection: #fbd3df;
+
+  --swatch-ok-bg: #f6f6f8;   /* 庫存圖例「正常」，跟正常的格子同色 */
+  --swatch-ok-border: #cfcfd4;
+
+  /* 其他細節灰階／點綴色（紅色主題用中性灰；變數名稱就是綠色主題的原色碼） */
+  --t-2f6e48: #712c3d;
+  --t-303b34: #37373a;
+  --t-366f4d: #b00036;
+  --t-39443d: #404043;
+  --t-505b56: #57575a;
+  --t-52705c: #725159;
+  --t-55725c: #73545c;
+  --t-59645f: #606063;
+  --t-65726a: #6d6d70;
+  --t-68716e: #6e6e71;
+  --t-6b766f: #727275;
+  --t-6f7a73: #767679;
+  --t-77937b: #94767d;
+  --t-7c8780: #838386;
+  --t-7d8780: #838386;
+  --t-818a84: #87878a;
+  --t-849089: #8c8c8f;
+  --t-8c968f: #929295;
+  --t-8c9691: #929295;
+  --t-91a096: #9a9a9d;
+  --t-929c95: #98989b;
+  --t-949b98: #99999c;
+  --t-98a29b: #9e9ea1;
+  --t-9aa39d: #a0a0a3;
+  --t-a0a8a2: #a5a5a8;
+  --t-a3aca6: #a9a9ac;
+  --t-cfe0d4: #dadadd;
+  --t-d9e0db: #dddde0;
+  --t-dae7d8: #e1e1e4;
+  --t-dfe5e0: #e3e3e6;
+  --t-e1e9e3: #e6e6e9;
+  --t-eef5f0: #f2f2f5;
+  --t-e4e9e3: #e7e7e9;
+  --t-eef1ee: #f0f0f2;
+  --t-eef3ee: #f1f1f3;
+  --t-f0f2f0: #f1f1f3;
+  --t-f0f3f0: #f2f2f4;
+  --t-f4f6f4: #f5f5f7;
+  --t-f4f7f4: #f6f6f8;
+  --t-f4f8f5: #f6f6f8;
+  --t-f5f8f5: #f7f7f9;
+  --t-f7f9f7: #f8f8fa;
+}
+
+/* 原本的綠色主題（保留，隨時可以換回來） */
+:root[data-brand="green"] {
+  --ink: #303b34;
+  --muted: #748078;
+  --line: #e7ebe7;
+  --page-bg: #f7f8f6;
+
+  --brand: #41845c;
+  --brand-strong: #276843;
+  --brand-soft: #eaf3ed;
+  --brand-tint: #f1f7f3;
+  --brand-border: #b9d3c1;
+  --brand-ring: #e2f0e6;
+  --heading: #24352b;
+  --ink-strong: #39463e;
+  --eyebrow: #78907d;
+  --panel: #fafcfa;
+  --note-bg: linear-gradient(110deg, #f3f7f1 0%, #f7f8f2 63%, #e9f1e8 100%);
+  --selection: #dcebdd;
+  --swatch-ok-bg: #eaf3ed;
+  --swatch-ok-border: #a9c7b2;
+
+  --t-2f6e48: #2f6e48;
+  --t-303b34: #303b34;
+  --t-366f4d: #366f4d;
+  --t-39443d: #39443d;
+  --t-505b56: #505b56;
+  --t-52705c: #52705c;
+  --t-55725c: #55725c;
+  --t-59645f: #59645f;
+  --t-65726a: #65726a;
+  --t-68716e: #68716e;
+  --t-6b766f: #6b766f;
+  --t-6f7a73: #6f7a73;
+  --t-77937b: #77937b;
+  --t-7c8780: #7c8780;
+  --t-7d8780: #7d8780;
+  --t-818a84: #818a84;
+  --t-849089: #849089;
+  --t-8c968f: #8c968f;
+  --t-8c9691: #8c9691;
+  --t-91a096: #91a096;
+  --t-929c95: #929c95;
+  --t-949b98: #949b98;
+  --t-98a29b: #98a29b;
+  --t-9aa39d: #9aa39d;
+  --t-a0a8a2: #a0a8a2;
+  --t-a3aca6: #a3aca6;
+  --t-cfe0d4: #cfe0d4;
+  --t-d9e0db: #d9e0db;
+  --t-dae7d8: #dae7d8;
+  --t-dfe5e0: #dfe5e0;
+  --t-e1e9e3: #e1e9e3;
+  --t-eef5f0: #eef5f0;
+  --t-e4e9e3: #e4e9e3;
+  --t-eef1ee: #eef1ee;
+  --t-eef3ee: #eef3ee;
+  --t-f0f2f0: #f0f2f0;
+  --t-f0f3f0: #f0f3f0;
+  --t-f4f6f4: #f4f6f4;
+  --t-f4f7f4: #f4f7f4;
+  --t-f4f8f5: #f4f8f5;
+  --t-f5f8f5: #f5f8f5;
+  --t-f7f9f7: #f7f9f7;
+}
+
 :root {
   font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
-  color: #303b34;
-  background: #f7f8f6;
+  color: var(--ink);
+  background: var(--page-bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-optical-sizing: auto;
   font-weight: 400;
-
-  --ink: #303b34;
-  --muted: #748078;
-  --line: #e7ebe7;
-  --surface: #fff;
-  --green: #41845c;
 }
 
 * {
@@ -32,6 +164,6 @@ a {
 }
 
 ::selection {
-  background: #dcebdd;
-  color: #24352b;
+  background: var(--selection);
+  color: var(--heading);
 }
