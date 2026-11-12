@@ -123,6 +123,20 @@ CREATE TABLE IF NOT EXISTS order_items (
   UNIQUE (order_no, product_id)
 );
 
+-- 匯入紀錄：每次從試算表匯入都留一筆，可以復原最近一次
+CREATE TABLE IF NOT EXISTS import_batches (
+  id             bigserial PRIMARY KEY,
+  type           text NOT NULL,                 -- products
+  filename       text,
+  row_count      integer NOT NULL,
+  created_count  integer NOT NULL DEFAULT 0,
+  updated_count  integer NOT NULL DEFAULT 0,
+  status         text NOT NULL DEFAULT 'done' CHECK (status IN ('done', 'undone')),
+  details        jsonb NOT NULL DEFAULT '{}'::jsonb,  -- 新增的商品編號、更新前的資料（復原用）
+  created_at     timestamptz NOT NULL DEFAULT now(),
+  undone_at      timestamptz
+);
+
 CREATE TABLE IF NOT EXISTS order_status_history (
   id          bigserial PRIMARY KEY,
   order_no    text NOT NULL REFERENCES orders(order_no) ON DELETE CASCADE,

@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { api, formatDate, formatPrice, stockLevel } from '../api.js'
 import AdjustForm from '../components/AdjustForm.jsx'
+import ImportProducts from '../components/ImportProducts.jsx'
+import { Modal } from '../components/common.jsx'
 import { useEscape } from '../hooks.js'
 import { MOVEMENT_LABELS, formatDateTime } from '../inventoryLabels.js'
 
@@ -377,6 +379,7 @@ export default function Products() {
   const [config, setConfig] = useState({ templates: {}, brands: {}, warranties: [], error: '' })
   const [selectedId, setSelectedId] = useState(null)
   const [editing, setEditing] = useState(undefined) // undefined=關閉, null=新增, 物件=編輯
+  const [importing, setImporting] = useState(false)
   const [toast, setToast] = useState('')
 
   // 輸入停 0.25 秒才搜尋，避免每打一個字就查一次
@@ -448,7 +451,10 @@ export default function Products() {
           <h1 id="products-heading">商品管理</h1>
           <p className="muted">管理商品主檔、價格與規格。點一列可查看各門市庫存。</p>
         </div>
-        <button className="btn" onClick={() => setEditing(null)}>＋ 新增商品</button>
+        <div className="head-actions">
+          <button className="btn ghost" onClick={() => setImporting(true)}>⬆ 匯入試算表</button>
+          <button className="btn" onClick={() => setEditing(null)}>＋ 新增商品</button>
+        </div>
       </div>
 
       <div className="toolbar">
@@ -531,6 +537,14 @@ export default function Products() {
           onClose={closeForm}
           onSaved={handleSaved}
         />
+      )}
+      {importing && (
+        <Modal title="從試算表匯入商品" wide onClose={() => setImporting(false)}>
+          <ImportProducts
+            templates={config.templates}
+            onImported={() => { setReloadTick((t) => t + 1); loadCategories() }}
+          />
+        </Modal>
       )}
       {toast && <div className="toast" role="status">{toast}</div>}
     </section>

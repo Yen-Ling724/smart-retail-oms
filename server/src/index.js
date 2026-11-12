@@ -5,6 +5,7 @@ import { getDb } from './db/index.js';
 import { replaceLegacyOrders, seed } from './db/seed.js';
 import analyticsRoutes from './routes/analytics.js';
 import assistantRoutes from './routes/assistant.js';
+import importRoutes from './routes/imports.js';
 import inventoryRoutes from './routes/inventory.js';
 import orderRoutes from './routes/orders.js';
 import productRoutes from './routes/products.js';
@@ -12,6 +13,8 @@ import productRoutes from './routes/products.js';
 const app = express();
 const PORT = Number(process.env.PORT) || 3001;
 
+// 匯入的資料比較大（最多 1000 列），放寬到 2MB；其他 API 維持預設 100KB
+app.use('/api/import', express.json({ limit: '2mb' }));
 app.use(express.json());
 
 // 健康檢查：讓前端確認後端和資料庫都有在運作
@@ -26,6 +29,7 @@ app.use('/api', inventoryRoutes);
 app.use('/api', orderRoutes);
 app.use('/api', assistantRoutes);
 app.use('/api', analyticsRoutes);
+app.use('/api', importRoutes);
 
 // 重置示範資料（公開展示時訪客可能改亂資料）。之後加入登入後只開放給 admin。
 app.post('/api/demo/reset', async (req, res) => {
@@ -56,6 +60,9 @@ app.use((err, req, res, next) => {
   if (res.headersSent) return next(err);
   if (err.type === 'entity.parse.failed') {
     return res.status(400).json({ ok: false, error: '資料格式不正確' });
+  }
+  if (err.type === 'entity.too.large') {
+    return res.status(413).json({ ok: false, error: '資料太大了，請分批匯入（每次最多 1000 列）' });
   }
   if (err.status && err.status < 500) {
     return res.status(err.status).json({ ok: false, error: err.message });

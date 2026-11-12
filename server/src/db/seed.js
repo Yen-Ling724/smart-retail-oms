@@ -217,7 +217,7 @@ async function backfillRegions(db) {
 export async function seed({ reset = false } = {}) {
   const db = await getDb();
   if (reset) {
-    await db.exec(`DROP TABLE IF EXISTS order_status_history, order_items, orders, customers,
+    await db.exec(`DROP TABLE IF EXISTS import_batches, order_status_history, order_items, orders, customers,
       inventory_transactions, stock_transfers, inventory, product_prices, products, stores CASCADE;`);
   }
   await db.exec(SCHEMA);

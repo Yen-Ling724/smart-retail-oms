@@ -590,6 +590,39 @@ a.stat-card:hover,
   .viz-grid { grid-template-columns: 1fr; }
 }
 
+/* ===== 匯入試算表 ===== */
+.head-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.import-steps { margin: 0 0 14px; padding-left: 20px; color: #39463e; font-size: 13px; line-height: 1.9; }
+.import-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 6px; }
+.import-actions label.btn { cursor: pointer; }
+.btn.disabled { opacity: 0.6; pointer-events: none; }
+.import-guide { margin-top: 12px; font-size: 12px; color: #59645f; }
+.import-guide summary { cursor: pointer; font-weight: 700; color: #41845c; }
+.import-guide ul { margin: 8px 0 0; padding-left: 18px; line-height: 1.9; }
+.import-guide small { color: #98a29b; }
+.import-file { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; font-size: 13px; }
+.import-summary { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }
+.import-summary .toggle { margin-left: auto; }
+.import-table { max-height: 360px; overflow-y: auto; }
+.import-table thead th { position: sticky; top: 0; background: var(--surface); }
+.row-error td { background: #fdf6f4; }
+.import-note { color: #6f7a73; font-size: 11px; }
+.row-error .import-note { color: #a5503c; }
+.import-done { padding: 8px 0; }
+.import-history { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+.import-history h3 { margin: 0 0 8px; font-size: 13px; color: #39463e; }
+.import-history ul { margin: 0; padding: 0; list-style: none; font-size: 12px; }
+.import-history li {
+  display: grid;
+  grid-template-columns: 40px 90px 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid #f0f2f0;
+}
+.import-history li.undone { color: #a3aca6; }
+.import-history-file { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
 /* ===== 智慧導購 ===== */
 .mode-badge { align-self: center; padding: 5px 12px; font-size: 11px; }
 .assistant {
