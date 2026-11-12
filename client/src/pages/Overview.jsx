@@ -54,7 +54,7 @@ export default function Overview() {
         {error && <p className="form-error" role="alert">營運資料載入失敗：{error}</p>}
         {stats && (
           <div className="stat-grid">
-            <StatCard label="上架商品" value={stats.active_products} hint={`共 ${stats.products} 項商品`} href="#products" />
+            <StatCard label="上架商品" value={stats.active_products} hint={`共 ${stats.products} 項商品・點開看分類圖表`} href="#products?status=active&view=chart" />
             <StatCard
               label="進行中訂單"
               value={(stats.orders_pending ?? 0) + (stats.orders_reserved ?? 0) + (stats.orders_shipped ?? 0)}

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import CategoryChart from '../components/CategoryChart.jsx'
 import { api, formatDate, formatPrice, stockLevel } from '../api.js'
 import AdjustForm from '../components/AdjustForm.jsx'
 import ImportProducts from '../components/ImportProducts.jsx'
@@ -366,12 +367,16 @@ function ProductForm({ product, templates, brands, warranties, configError, onRe
 }
 
 // ===== 商品管理頁 =====
+// 網址可以帶預設條件，例如營運總覽的「上架商品」→ #products?status=active&view=chart
+const hashParams = () => new URLSearchParams(window.location.hash.split('?')[1] ?? '')
+
 export default function Products() {
+  const [view, setView] = useState(() => (hashParams().get('view') === 'chart' ? 'chart' : 'list'))
   const [q, setQ] = useState('')
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState('')
   const [brand, setBrand] = useState('')
-  const [status, setStatus] = useState('all')
+  const [status, setStatus] = useState(() => (STATUS_OPTIONS.some((o) => o.value === hashParams().get('status')) ? hashParams().get('status') : 'all'))
   const [result, setResult] = useState({ key: null, products: [], error: '' })
   const [reloadTick, setReloadTick] = useState(0)
   const [categories, setCategories] = useState([])
@@ -477,12 +482,24 @@ export default function Products() {
         <select value={status} onChange={(e) => setStatus(e.target.value)} aria-label="狀態">
           {STATUS_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
         </select>
+        <div className="segmented" role="group" aria-label="檢視方式">
+          <button type="button" className={view === 'list' ? 'active' : ''} aria-pressed={view === 'list'} onClick={() => setView('list')}>☰ 列表</button>
+          <button type="button" className={view === 'chart' ? 'active' : ''} aria-pressed={view === 'chart'} onClick={() => setView('chart')}>▤ 圖表</button>
+        </div>
         <span className="result-count">{loading ? '載入中…' : `${products.length} 項`}</span>
       </div>
 
       {error && <p className="form-error" role="alert">商品載入失敗：{error}</p>}
 
-      <div className="table-wrap card">
+      {view === 'chart' && !error && (
+        <CategoryChart
+          products={products}
+          categories={category ? [category] : Object.keys(config.templates)}
+          onPick={(c) => { setCategory(c); if (brand && !(config.brands[c] ?? []).includes(brand)) setBrand(''); setView('list') }}
+        />
+      )}
+
+      {view === 'list' && <div className="table-wrap card">
         <table className="data-table">
           <thead>
             <tr>
@@ -513,7 +530,7 @@ export default function Products() {
             )}
           </tbody>
         </table>
-      </div>
+      </div>}
 
       {selectedId && editing === undefined && (
         <ProductDetail

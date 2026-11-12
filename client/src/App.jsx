@@ -36,7 +36,7 @@ function useBackendStatus() {
 // 用網址 # 切換頁面，例如 #products
 function usePage() {
   const read = () => {
-    const key = window.location.hash.replace('#', '')
+    const key = window.location.hash.replace('#', '').split('?')[0] // ? 後面是頁面自己的參數
     return PAGES[key] ? key : 'overview'
   }
   const [page, setPage] = useState(read)
