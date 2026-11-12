@@ -782,3 +782,12 @@ a.stat-card:hover,
 @media (max-width: 640px) {
   .cat-bar-row { grid-template-columns: 70px 1fr 48px; gap: 8px; }
 }
+.cat-bars.by-brand .cat-bar-row { grid-template-columns: 150px 1fr 64px; }
+.cat-empty-note { margin: 12px 8px 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
+.link-btn { margin: 0 0 6px; padding: 0; border: 0; background: none; color: var(--brand); font-size: 12px; font-weight: 600; cursor: pointer; }
+.link-btn:hover { text-decoration: underline; }
+@media (max-width: 640px) {
+  .cat-bars.by-brand .cat-bar-row { grid-template-columns: 104px 1fr 40px; }
+  .cat-bars.by-brand .cat-bar-label { font-size: 12px; }
+}
+@media (max-width: 640px) { .cat-tip { display: none; } } /* 手機沒有滑鼠，數字已經寫在右邊 */

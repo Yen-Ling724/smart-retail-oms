@@ -494,8 +494,12 @@ export default function Products() {
       {view === 'chart' && !error && (
         <CategoryChart
           products={products}
-          categories={category ? [category] : Object.keys(config.templates)}
-          onPick={(c) => { setCategory(c); if (brand && !(config.brands[c] ?? []).includes(brand)) setBrand(''); setView('list') }}
+          categories={Object.keys(config.templates)}
+          category={category}
+          brands={brand ? [brand] : config.brands[category]}
+          onPickCategory={(c) => { setCategory(c); if (brand && !(config.brands[c] ?? []).includes(brand)) setBrand('') }}
+          onPickBrand={(b) => { setBrand(b); setView('list') }}
+          onBack={() => { setCategory(''); setBrand('') }}
         />
       )}
 
