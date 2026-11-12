@@ -101,6 +101,21 @@ async function requireProduct(q, productId) {
   return product;
 }
 
+// 調貨單、異動紀錄共用的篩選：關鍵字（品名／型號／品牌／編號／備註）、分類
+function addProductFilters(where, params, { q = '', category = '' }, noteCol) {
+  const kw = String(q).trim();
+  if (kw) {
+    params.push(`%${kw}%`);
+    const n = params.length;
+    const cols = ['p.name', 'p.model', 'p.brand', 'p.product_id', noteCol].filter(Boolean);
+    where.push('(' + cols.map((c) => `${c} ILIKE $${n}`).join(' OR ') + ')');
+  }
+  if (category) {
+    params.push(String(category));
+    where.push(`p.category = $${params.length}`);
+  }
+}
+
 // ===== 庫存查詢 =====
 
 // 每個商品 × 每家門市一列；前端再依需要排成總表
@@ -138,7 +153,7 @@ router.get('/inventory/actions', (req, res) => {
 });
 
 router.get('/inventory/movements', async (req, res) => {
-  const { store = '', product = '' } = req.query;
+  const { store = '', product = '', type = '' } = req.query;
   const limit = Math.min(Number(req.query.limit) || 50, 200);
   const where = [];
   const params = [];
@@ -150,6 +165,11 @@ router.get('/inventory/movements', async (req, res) => {
     params.push(product);
     where.push(`t.product_id = $${params.length}`);
   }
+  if (type) {
+    params.push(type);
+    where.push(`t.type = $${params.length}`);
+  }
+  addProductFilters(where, params, req.query, 't.note');
   params.push(limit);
   const rows = await query(
     `SELECT t.id, t.type, t.qty, t.qty_change, t.available_after, t.note, t.created_at, t.ref_transfer_id,
@@ -211,6 +231,13 @@ router.get('/transfers', async (req, res) => {
     params.push(store);
     where.push(`(t.from_store_id = $${params.length} OR t.to_store_id = $${params.length})`);
   }
+  // 「#12」或「12」也能找單號
+  const idMatch = String(req.query.q ?? '').trim().match(/^#?(\d+)$/);
+  if (idMatch) {
+    params.push(Number(idMatch[1]));
+    where.push(`t.id = $${params.length}`);
+    addProductFilters(where, params, { category: req.query.category });
+  } else addProductFilters(where, params, req.query, 't.note');
   const rows = await query(
     `${TRANSFER_SQL} ${where.length ? 'WHERE ' + where.join(' AND ') : ''} ORDER BY (t.status = 'in_transit') DESC, t.created_at DESC, t.id DESC LIMIT 100`,
     params,

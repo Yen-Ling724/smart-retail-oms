@@ -289,12 +289,37 @@ function StockTab({ stores, regions, categories, onAdjust, onTransfer, refreshKe
 }
 
 // ===== 調貨單 =====
-function TransfersTab({ stores, onNew, refreshKey, onChanged }) {
+// 調貨單、異動紀錄共用：關鍵字（停 0.25 秒才查）＋分類
+function useSearchFilters() {
+  const [q, setQ] = useState('')
+  const [query, setQuery] = useState('')
+  const [category, setCategory] = useState('')
+  useEffect(() => {
+    const t = setTimeout(() => setQuery(q.trim()), 250)
+    return () => clearTimeout(t)
+  }, [q])
+  return { q, setQ, query, category, setCategory, active: Boolean(query || category) }
+}
+
+function SearchFields({ f, categories, placeholder }) {
+  return (
+    <>
+      <input type="search" className="search" placeholder={placeholder} value={f.q} onChange={(e) => f.setQ(e.target.value)} aria-label="關鍵字搜尋" />
+      <select value={f.category} onChange={(e) => f.setCategory(e.target.value)} aria-label="分類">
+        <option value="">全部分類</option>
+        {categories.map((c) => <option key={c.category} value={c.category}>{c.category}</option>)}
+      </select>
+    </>
+  )
+}
+
+function TransfersTab({ stores, categories, onNew, refreshKey, onChanged }) {
+  const f = useSearchFilters()
   const [status, setStatus] = useState('in_transit')
   const [store, setStore] = useState('')
   const [busy, setBusy] = useState(null)
   const [error, setError] = useState('')
-  const params = new URLSearchParams({ status, store }).toString()
+  const params = new URLSearchParams({ status, store, q: f.query, category: f.category }).toString()
   const { data, loading, reload } = useLoad(`/transfers?${params}`, [refreshKey])
   const transfers = data?.transfers ?? []
 
@@ -316,6 +341,7 @@ function TransfersTab({ stores, onNew, refreshKey, onChanged }) {
   return (
     <>
       <div className="toolbar">
+        <SearchFields f={f} categories={categories} placeholder="搜尋品名、品牌、型號、單號或備註" />
         <select value={status} onChange={(e) => setStatus(e.target.value)} aria-label="狀態">
           <option value="in_transit">在途中</option>
           <option value="received">已到貨</option>
@@ -358,7 +384,7 @@ function TransfersTab({ stores, onNew, refreshKey, onChanged }) {
                 </tr>
               )
             })}
-            {!loading && !transfers.length && <tr><td colSpan="8" className="empty">沒有調貨單</td></tr>}
+            {!loading && !transfers.length && <tr><td colSpan="8" className="empty">{f.active ? '沒有符合搜尋條件的調貨單' : '沒有調貨單'}</td></tr>}
           </tbody>
         </table>
       </div>
@@ -367,18 +393,25 @@ function TransfersTab({ stores, onNew, refreshKey, onChanged }) {
 }
 
 // ===== 異動紀錄 =====
-function MovementsTab({ stores, refreshKey }) {
+function MovementsTab({ stores, categories, refreshKey }) {
   const [store, setStore] = useState('')
-  const { data, loading, error } = useLoad(`/inventory/movements?${new URLSearchParams({ store, limit: 100 })}`, [refreshKey])
+  const [type, setType] = useState('')
+  const f = useSearchFilters()
+  const { data, loading, error } = useLoad(`/inventory/movements?${new URLSearchParams({ store, type, q: f.query, category: f.category, limit: 100 })}`, [refreshKey])
   const movements = data?.movements ?? []
   return (
     <>
       <div className="toolbar">
+        <SearchFields f={f} categories={categories} placeholder="搜尋品名、品牌、型號、編號或備註" />
         <select value={store} onChange={(e) => setStore(e.target.value)} aria-label="門市">
           <option value="">全部門市</option>
           {stores.map((s) => <option key={s.store_id} value={s.store_id}>{s.name}</option>)}
         </select>
-        <span className="result-count">{loading ? '載入中…' : `最近 ${movements.length} 筆`}</span>
+        <select value={type} onChange={(e) => setType(e.target.value)} aria-label="動作">
+          <option value="">全部動作</option>
+          {Object.entries(MOVEMENT_LABELS).map(([k, label]) => <option key={k} value={k}>{label}</option>)}
+        </select>
+        <span className="result-count">{loading ? '載入中…' : `${f.active || type || store ? '符合' : '最近'} ${movements.length} 筆`}</span>
       </div>
       {error && <p className="form-error" role="alert">{error}</p>}
       <div className="table-wrap card">
@@ -400,7 +433,7 @@ function MovementsTab({ stores, refreshKey }) {
                 <td className="muted-num">{m.note}</td>
               </tr>
             ))}
-            {!loading && !movements.length && <tr><td colSpan="9" className="empty">還沒有庫存異動。到「庫存總表」點數字就能調整庫存。</td></tr>}
+            {!loading && !movements.length && <tr><td colSpan="9" className="empty">{f.active || type || store ? '沒有符合條件的異動紀錄' : '還沒有庫存異動。到「庫存總表」點數字就能調整庫存。'}</td></tr>}
           </tbody>
         </table>
       </div>
@@ -465,8 +498,8 @@ export default function Inventory() {
           onTransfer={(productId, storeId) => setTransfer({ productId, toStore: storeId })}
         />
       )}
-      {tab === 'transfers' && <TransfersTab stores={stores} refreshKey={refreshKey} onNew={() => setTransfer({})} onChanged={changed} />}
-      {tab === 'movements' && <MovementsTab stores={stores} refreshKey={refreshKey} />}
+      {tab === 'transfers' && <TransfersTab stores={stores} categories={categories} refreshKey={refreshKey} onNew={() => setTransfer({})} onChanged={changed} />}
+      {tab === 'movements' && <MovementsTab stores={stores} categories={categories} refreshKey={refreshKey} />}
 
       {adjusting && (
         <Modal title={`調整庫存：${adjusting.name}`} onClose={() => setAdjusting(null)}>
