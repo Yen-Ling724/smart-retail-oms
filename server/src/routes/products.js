@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { query, transaction } from '../db/index.js';
 import { REGIONS, STORE_ORDER_SQL } from '../regions.js';
-import { BRANDS, SPEC_TEMPLATES, validateBrand, validateSpecs } from '../specTemplates.js';
+import { BRANDS, SPEC_TEMPLATES, WARRANTY_OPTIONS, normalizeWarranty, validateBrand, validateSpecs } from '../specTemplates.js';
 
 const router = Router();
 
@@ -30,7 +30,7 @@ function checkBrand(category, brand) {
 
 // 各分類的規格欄位與品牌清單（前端表單用）
 router.get('/catalog-config', (req, res) => {
-  res.json({ ok: true, templates: SPEC_TEMPLATES, brands: BRANDS });
+  res.json({ ok: true, templates: SPEC_TEMPLATES, brands: BRANDS, warranties: WARRANTY_OPTIONS });
 });
 
 // 目前價格 + 全門市可售總數
@@ -142,7 +142,13 @@ function readProductBody(body, { partial = false } = {}) {
     if (!value) throw new HttpError(400, `請填寫${{ name: '品名', brand: '品牌', model: '型號', category: '分類' }[field]}`);
     out[field] = value;
   }
-  if (!partial || body.warranty !== undefined) out.warranty = text(body.warranty) || null;
+  if (!partial || body.warranty !== undefined) {
+    try {
+      out.warranty = normalizeWarranty(body.warranty);
+    } catch (err) {
+      throw new HttpError(400, err.message);
+    }
+  }
   if (!partial || body.is_active !== undefined) out.is_active = body.is_active !== false;
   if (out.category && !SPEC_TEMPLATES[out.category]) {
     throw new HttpError(400, `分類必須是：${Object.keys(SPEC_TEMPLATES).join('、')}`);

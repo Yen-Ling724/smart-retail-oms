@@ -2,7 +2,7 @@
 // 品牌使用真實品牌名稱，僅用於呈現零售情境，與品牌官方無關。
 import { readFileSync } from 'node:fs';
 import { regionForCity } from '../regions.js';
-import { validateBrand, validateSpecs } from '../specTemplates.js';
+import { SPEC_TEMPLATES, validateBrand, validateSpecs } from '../specTemplates.js';
 import { getDb } from './index.js';
 
 const SCHEMA = readFileSync(new URL('./schema.sql', import.meta.url), 'utf8');
@@ -18,7 +18,7 @@ export const STORES = [
 // [分類, 品牌, 型號, 品名, 保固, 原價, 售價, 規格]
 // 品牌為真實品牌名稱，僅作情境示範；型號一律用 DM-（Demo）開頭，價格、規格、庫存皆為虛構。
 const PRODUCTS = [
-  ['冰箱', 'Panasonic 國際', 'DM-RF480', 'Panasonic 480L 變頻雙門冰箱', '3 年', 32900, 28900, { 容量: 480, 門數: '雙門', 能效: '1 級', 尺寸: '68×70×178 cm' }],
+  ['冰箱', 'Panasonic 國際', 'DM-RF480', 'Panasonic 480L 變頻雙門冰箱', '3 年', 32900, 28900, { 容量: 480, 門數: '雙門', 能效: '1 級', 尺寸: { 寬: 68, 深: 70, 高: 178 } }],
   ['冰箱', 'HITACHI 日立', 'DM-RF560', 'HITACHI 560L 變頻四門冰箱', '3 年', 45900, 41900, { 容量: 560, 門數: '四門', 能效: '1 級', 特色: '急速冷凍室' }],
   ['冰箱', 'SAMPO 聲寶', 'DM-RF320', 'SAMPO 320L 小家庭雙門冰箱', '2 年', 18900, 16900, { 容量: 320, 門數: '雙門', 能效: '2 級' }],
   ['冰箱', 'LG 樂金', 'DM-RF650', 'LG 650L 對開門大冰箱', '3 年', 58900, 54900, { 容量: 650, 門數: '對開', 能效: '1 級', 特色: '製冰機' }],
@@ -242,7 +242,9 @@ export async function seed({ reset = false } = {}) {
       const [category, brand, model, name, warranty, list, sale, specs] = p;
       const id = productId(i);
       validateBrand(category, brand); // 示範資料也必須符合品牌清單與規格範本
-      const cleanSpecs = validateSpecs(category, specs);
+      // 品名有「變頻」的，規格的「變頻」欄位也填上
+      const withInverter = name.includes('變頻') && SPEC_TEMPLATES[category].some((f) => f.key === '變頻') ? { ...specs, 變頻: '變頻' } : specs;
+      const cleanSpecs = validateSpecs(category, withInverter);
       await tx.query(
         `INSERT INTO products (product_id, category, brand, model, name, specs, warranty, is_active)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,

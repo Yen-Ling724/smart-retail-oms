@@ -29,11 +29,26 @@ function PriceCell({ list, sale }) {
   )
 }
 
+// 尺寸：{ 寬, 深, 高 } 或舊格式文字「68×70×178 cm」→ 三格的值
+function dimsOf(value) {
+  if (value && typeof value === 'object') return { 寬: value.寬 ?? '', 深: value.深 ?? '', 高: value.高 ?? '' }
+  const nums = String(value ?? '').match(/\d+(?:\.\d+)?/g) ?? []
+  return { 寬: nums[0] ?? '', 深: nums[1] ?? '', 高: nums[2] ?? '' }
+}
+
+function formatSpecValue(field, value) {
+  if (field.type === 'dimensions') {
+    const d = dimsOf(value)
+    return `${d.寬} × ${d.深} × ${d.高} ${field.unit}`
+  }
+  return field.unit ? `${value} ${field.unit}` : String(value)
+}
+
 // 依範本順序把規格整理成 [欄位名, 顯示文字]，數字欄位加上單位
 function formatSpecs(specs = {}, template = []) {
   const known = template
     .filter((f) => specs[f.key] !== undefined && specs[f.key] !== '')
-    .map((f) => [f.key, f.unit ? `${specs[f.key]} ${f.unit}` : String(specs[f.key])])
+    .map((f) => [f.key, formatSpecValue(f, specs[f.key])])
   const extra = Object.entries(specs)
     .filter(([k]) => !template.some((f) => f.key === k))
     .map(([k, v]) => [k, String(v)])
@@ -161,11 +176,39 @@ function SpecFields({ template, specs, onChange }) {
     const value = specs[field.key] ?? ''
     const set = (e) => onChange(field.key, e.target.value)
     let input
-    if (field.type === 'select') {
+    if (field.type === 'dimensions') {
+      // 寬 □ × 深 □ × 高 □ cm：三格都只填數字
+      const d = dimsOf(value)
+      const setPart = (part) => (e) => onChange(field.key, { ...d, [part]: e.target.value })
       input = (
-        <select id={id} value={value} onChange={set} required={field.required}>
+        <span className="dims-input" id={id} role="group" aria-label={`${field.key}（${field.unit}）`}>
+          {['寬', '深', '高'].map((part, i) => (
+            <span key={part} className="dims-part">
+              {i > 0 && <span className="dims-x" aria-hidden="true">×</span>}
+              <input
+                type="number"
+                min={field.min}
+                max={field.max}
+                step="any"
+                value={d[part]}
+                onChange={setPart(part)}
+                placeholder={part}
+                aria-label={`${field.key}・${part}`}
+              />
+            </span>
+          ))}
+          <span className="dims-unit">{field.unit}</span>
+        </span>
+      )
+    } else if (field.type === 'select') {
+      // 舊資料的值不在選項裡時，也放進選單，避免被默默清掉
+      const options = value !== '' && !field.options.some((o) => String(o) === String(value))
+        ? [...field.options, value]
+        : field.options
+      input = (
+        <select id={id} value={String(value)} onChange={set} required={field.required}>
           <option value="">{field.required ? '請選擇' : '（不填）'}</option>
-          {field.options.map((o) => <option key={o} value={o}>{o}</option>)}
+          {options.map((o) => <option key={o} value={String(o)}>{field.unit ? `${o} ${field.unit}` : o}</option>)}
         </select>
       )
     } else if (field.type === 'number') {
@@ -176,25 +219,42 @@ function SpecFields({ template, specs, onChange }) {
         </span>
       )
     } else {
-      input = <input id={id} value={value} onChange={set} required={field.required} placeholder={field.placeholder} maxLength={100} />
+      const listId = field.suggestions ? `${id}-list` : undefined
+      input = (
+        <>
+          <input id={id} value={value} onChange={set} required={field.required} placeholder={field.placeholder} maxLength={100} list={listId} />
+          {listId && <datalist id={listId}>{field.suggestions.map((s) => <option key={s} value={s} />)}</datalist>}
+        </>
+      )
     }
+    const wide = field.type === 'dimensions' || (field.type === 'text' && !field.required)
     return (
-      <label key={field.key} htmlFor={id} className={field.type === 'text' && !field.required ? 'span-2' : ''}>
-        <span>{field.key}{field.required && <em className="req" aria-label="必填">*</em>}</span>
+      <label key={field.key} htmlFor={field.type === 'dimensions' ? undefined : id} className={wide ? 'span-2' : ''}>
+        <span>
+          {field.key}
+          {field.type === 'dimensions' && <small className="dims-hint">（寬 × 深 × 高）</small>}
+          {field.required && <em className="req" aria-label="必填">*</em>}
+        </span>
         {input}
       </label>
     )
   })
 }
 
-function ProductForm({ product, templates, brands, configError, onRetryConfig, onClose, onSaved }) {
+// 「3年」「3」→「3 年」，跟保固選項的寫法一致
+const normalizeWarranty = (w) => {
+  const m = String(w ?? '').trim().match(/^(\d{1,2})\s*年?$/)
+  return m ? `${Number(m[1])} 年` : String(w ?? '').trim()
+}
+
+function ProductForm({ product, templates, brands, warranties, configError, onRetryConfig, onClose, onSaved }) {
   const isNew = !product
   const [form, setForm] = useState(() => ({
     name: product?.name ?? '',
     brand: product?.brand ?? '',
     model: product?.model ?? '',
     category: product?.category ?? '',
-    warranty: product?.warranty ?? '',
+    warranty: normalizeWarranty(product?.warranty),
     list_price: product?.list_price ?? '',
     sale_price: product?.sale_price ?? '',
     is_active: product?.is_active ?? true,
@@ -271,7 +331,14 @@ function ProductForm({ product, templates, brands, configError, onRetryConfig, o
             </select>
           </label>
           <label>型號<input value={form.model} onChange={set('model')} required placeholder="例：DM-RF480" /></label>
-          <label>保固<input value={form.warranty} onChange={set('warranty')} placeholder="例：3 年" /></label>
+          <label>保固
+            <select value={form.warranty} onChange={set('warranty')}>
+              <option value="">（不填）</option>
+              {[...warranties, ...(form.warranty && !warranties.includes(form.warranty) ? [form.warranty] : [])].map((w) => (
+                <option key={w} value={w}>{w}</option>
+              ))}
+            </select>
+          </label>
           <label>原價（元）<input type="number" min="0" step="1" value={form.list_price} onChange={set('list_price')} required /></label>
           <label>售價（元）<input type="number" min="0" step="1" value={form.sale_price} onChange={set('sale_price')} required /></label>
           <label className="checkbox span-2"><input type="checkbox" checked={form.is_active} onChange={set('is_active')} /> 上架中</label>
@@ -307,7 +374,7 @@ export default function Products() {
   const [reloadTick, setReloadTick] = useState(0)
   const [categories, setCategories] = useState([])
   const [stores, setStores] = useState([])
-  const [config, setConfig] = useState({ templates: {}, brands: {}, error: '' })
+  const [config, setConfig] = useState({ templates: {}, brands: {}, warranties: [], error: '' })
   const [selectedId, setSelectedId] = useState(null)
   const [editing, setEditing] = useState(undefined) // undefined=關閉, null=新增, 物件=編輯
   const [toast, setToast] = useState('')
@@ -348,7 +415,7 @@ export default function Products() {
   // 分類、規格欄位、品牌清單；載入失敗時表單會顯示「重新載入」
   const loadConfig = useCallback(() => {
     api('/catalog-config')
-      .then((d) => setConfig({ templates: d.templates, brands: d.brands, error: '' }))
+      .then((d) => setConfig({ templates: d.templates, brands: d.brands, warranties: d.warranties ?? [], error: '' }))
       .catch((e) => setConfig((c) => ({ ...c, error: e.message })))
   }, [])
   useEffect(loadConfig, [loadConfig])
@@ -458,6 +525,7 @@ export default function Products() {
           product={editing}
           templates={config.templates}
           brands={config.brands}
+          warranties={config.warranties}
           configError={config.error}
           onRetryConfig={loadConfig}
           onClose={closeForm}

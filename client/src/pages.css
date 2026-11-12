@@ -271,6 +271,14 @@ a.stat-card:hover,
   white-space: nowrap;
 }
 
+/* 尺寸：寬 □ × 深 □ × 高 □ cm */
+.dims-input { display: flex; align-items: center; gap: 6px; }
+.dims-part { display: flex; flex: 1; align-items: center; gap: 6px; min-width: 0; }
+.dims-part input { width: 100%; min-width: 0; }
+.dims-x { color: #98a29b; font-weight: 400; }
+.dims-unit { color: #6f7a73; font-size: 12px; font-weight: 400; }
+.dims-hint { margin-left: 4px; color: #98a29b; font-size: 10px; font-weight: 400; }
+
 .spec-fieldset {
   margin: 16px 0 0;
   padding: 14px 14px 12px;

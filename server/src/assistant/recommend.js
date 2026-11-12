@@ -115,7 +115,10 @@ function specFit(p, need, relaxed) {
     if (s.能效 === '1 級') { score += 2; reasons.push('1 級能效，比較省電'); }
     else { score -= 1; misses.push(`能效 ${s.能效}，不是最省電的 1 級`); }
   }
-  if (prefs.has('inverter') && /變頻/.test(`${p.name}${s.特色 ?? ''}`)) { score += 1; reasons.push('變頻'); }
+  if (prefs.has('inverter')) {
+    if (s.變頻 === '變頻' || /變頻/.test(`${p.name}${s.特色 ?? ''}`)) { score += 1; reasons.push('變頻'); }
+    else if (s.變頻 === '定頻') misses.push('定頻，不是變頻');
+  }
   if (s.特色 && reasons.length < 3) reasons.push(s.特色);
   return { ok, score, reasons, misses };
 }
