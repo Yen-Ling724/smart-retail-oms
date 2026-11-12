@@ -608,6 +608,7 @@ a.stat-card:hover,
 .row-error td { background: #fdf6f4; }
 .import-note { color: #6f7a73; font-size: 11px; }
 .row-error .import-note { color: #a5503c; }
+.import-auto { color: #2a78d6; }
 .import-done { padding: 8px 0; }
 .import-history { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
 .import-history h3 { margin: 0 0 8px; font-size: 13px; color: #39463e; }

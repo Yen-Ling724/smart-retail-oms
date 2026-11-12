@@ -51,8 +51,20 @@ function parseActive(v) {
   return undefined; // 看不懂
 }
 
+// 選項是區間（例如冷氣「9-11 坪」），但只填了一個數字「10」或「10坪」：
+// 自動換成「能涵蓋這個數字的最小區間」→ 10 → 9-11 坪；剛好在交界（如 3）時選小的那個（2-3 坪）。
+// 比最小區間還小就用第一個；比最大區間還大就不猜，交給檢查回報錯誤。
+function pickRange(options, input) {
+  if (!/^\d+(?:\.\d+)?$/.test(looseKey(input))) return null;
+  const n = Number(looseKey(input));
+  const ranges = options.map((o) => ({ o, m: String(o).match(/^(\d+)\s*-\s*(\d+)/) }));
+  if (!ranges.length || ranges.some((r) => !r.m)) return null;
+  const hit = ranges.find((r) => n <= Number(r.m[2]));
+  return hit && n > 0 ? hit.o : null;
+}
+
 // 把一列裡的規格欄位整理成 validateSpecs 吃的格式（只處理有填的格子）
-function specsFromRow(category, raw) {
+function specsFromRow(category, raw, notes = []) {
   const out = {};
   for (const field of SPEC_TEMPLATES[category] ?? []) {
     if (field.type === 'dimensions') {
@@ -67,7 +79,10 @@ function specsFromRow(category, raw) {
       const n = toNumber(v);
       out[field.key] = Number.isFinite(n) ? n : v; // 不是數字就原樣交給檢查，讓錯誤訊息講清楚
     } else if (field.type === 'select') {
-      out[field.key] = field.options.find((o) => looseKey(o) === looseKey(v)) ?? v;
+      const exact = field.options.find((o) => looseKey(o) === looseKey(v));
+      const range = exact ? null : pickRange(field.options, v);
+      if (range) notes.push(`${field.key}「${v}」→「${range}」`);
+      out[field.key] = exact ?? range ?? v;
     } else {
       out[field.key] = v;
     }
@@ -148,10 +163,11 @@ async function analyze(rows, q = query) {
     }
 
     let specs = {};
+    const notes = []; // 系統自動轉換的地方，預覽時顯示給使用者看
     if (SPEC_TEMPLATES[category]) {
       const base = isUpdate ? { ...(current.specs ?? {}) } : {};
       try {
-        specs = validateSpecs(category, { ...base, ...specsFromRow(category, raw) });
+        specs = validateSpecs(category, { ...base, ...specsFromRow(category, raw, notes) });
       } catch (err) {
         errors.push(err.message);
       }
@@ -168,7 +184,7 @@ async function analyze(rows, q = query) {
       if (!same(sortKeys(data.specs), sortKeys(current.specs))) changes.push('規格');
       if (!changes.length) action = 'unchanged';
     }
-    return { row: rowNo, model, name, action, errors, changes, product_id: current?.product_id ?? null, data };
+    return { row: rowNo, model, name, action, errors, changes, notes, product_id: current?.product_id ?? null, data };
   });
 }
 

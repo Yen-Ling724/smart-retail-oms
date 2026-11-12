@@ -167,6 +167,7 @@ export default function ImportProducts({ templates, onImported }) {
                     <td><span className={`badge ${ACTION[r.action].tone}`}>{ACTION[r.action].label}</span></td>
                     <td className="import-note">
                       {r.action === 'error' ? r.errors.join('；') : r.action === 'update' ? `修改：${r.changes.join('、')}` : ''}
+                      {r.action !== 'error' && r.notes?.length > 0 && <div className="import-auto">自動轉換：{r.notes.join('、')}</div>}
                     </td>
                   </tr>
                 ))}
