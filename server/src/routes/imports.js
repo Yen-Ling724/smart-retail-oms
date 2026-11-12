@@ -169,7 +169,7 @@ async function analyze(rows, q = query) {
       try {
         specs = validateSpecs(category, { ...base, ...specsFromRow(category, raw, notes) });
       } catch (err) {
-        errors.push(err.message);
+        errors.push(...(err.errors ?? [err.message]));
       }
     }
 

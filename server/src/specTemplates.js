@@ -129,39 +129,45 @@ export function validateSpecs(category, specs = {}) {
   if (typeof specs !== 'object' || specs === null || Array.isArray(specs)) throw new Error('規格格式不正確');
 
   const clean = {};
+  const missing = []; // 沒填的必填規格，最後合併成一句
+  const errors = []; // 其他錯誤：一次全部列出，不要只講第一個
   for (const field of template) {
     const raw = specs[field.key];
     if (field.type === 'dimensions') {
-      const dims = raw === undefined || raw === null ? null : parseDimensions(raw, field);
+      let dims = null;
+      try { dims = raw === undefined || raw === null ? null : parseDimensions(raw, field); } catch (err) { errors.push(err.message); continue; }
       if (dims) clean[field.key] = dims;
-      else if (field.required) throw new Error(`請填寫規格「${field.key}」`);
+      else if (field.required) missing.push(field.key);
       continue;
     }
     const empty = raw === undefined || raw === null || String(raw).trim() === '';
     if (empty) {
-      if (field.required) throw new Error(`請填寫規格「${field.key}」`);
+      if (field.required) missing.push(field.key);
       continue;
     }
     if (field.type === 'select' && field.numeric) {
       const n = Number(raw);
-      if (!field.options.includes(n)) throw new Error(`規格「${field.key}」只能選：${field.options.join('、')} ${field.unit ?? ''}`.trim());
+      if (!field.options.includes(n)) { errors.push(`規格「${field.key}」只能選：${field.options.join('、')} ${field.unit ?? ''}`.trim()); continue; }
       clean[field.key] = n;
     } else if (field.type === 'number') {
       const n = Number(raw);
-      if (!Number.isFinite(n)) throw new Error(`規格「${field.key}」必須是數字`);
+      if (!Number.isFinite(n)) { errors.push(`規格「${field.key}」必須是數字`); continue; }
       if ((field.min !== undefined && n < field.min) || (field.max !== undefined && n > field.max)) {
-        throw new Error(`規格「${field.key}」必須介於 ${field.min}～${field.max} ${field.unit ?? ''}`.trim());
+        errors.push(`規格「${field.key}」必須介於 ${field.min}～${field.max} ${field.unit ?? ''}`.trim());
+        continue;
       }
       clean[field.key] = n;
     } else if (field.type === 'select') {
       const v = String(raw).trim();
-      if (!field.options.includes(v)) throw new Error(`規格「${field.key}」只能選：${field.options.join('、')}`);
+      if (!field.options.includes(v)) { errors.push(`規格「${field.key}」只能選：${field.options.join('、')}`); continue; }
       clean[field.key] = v;
     } else {
       const v = String(raw).trim();
-      if (v.length > 100) throw new Error(`規格「${field.key}」最多 100 字`);
+      if (v.length > 100) { errors.push(`規格「${field.key}」最多 100 字`); continue; }
       clean[field.key] = v;
     }
   }
+  if (missing.length) errors.unshift(`請填寫規格「${missing.join('」「')}」`);
+  if (errors.length) throw Object.assign(new Error(errors.join('；')), { errors });
   return clean; // 不在範本裡的欄位會被丟掉
 }
