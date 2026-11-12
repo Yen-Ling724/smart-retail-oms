@@ -313,7 +313,7 @@ function SearchFields({ f, categories, placeholder }) {
   )
 }
 
-function TransfersTab({ stores, categories, onNew, refreshKey, onChanged }) {
+function TransfersTab({ stores, categories, refreshKey, onChanged }) {
   const f = useSearchFilters()
   const [status, setStatus] = useState('in_transit')
   const [store, setStore] = useState('')
@@ -353,7 +353,6 @@ function TransfersTab({ stores, categories, onNew, refreshKey, onChanged }) {
           {stores.map((s) => <option key={s.store_id} value={s.store_id}>{s.name}</option>)}
         </select>
         <span className="result-count">{loading ? '載入中…' : `${transfers.length} 張`}</span>
-        <button type="button" className="btn" onClick={onNew}>＋ 新增調貨</button>
       </div>
       {error && <p className="form-error" role="alert">{error}</p>}
       <div className="table-wrap card">
@@ -498,7 +497,7 @@ export default function Inventory() {
           onTransfer={(productId, storeId) => setTransfer({ productId, toStore: storeId })}
         />
       )}
-      {tab === 'transfers' && <TransfersTab stores={stores} categories={categories} refreshKey={refreshKey} onNew={() => setTransfer({})} onChanged={changed} />}
+      {tab === 'transfers' && <TransfersTab stores={stores} categories={categories} refreshKey={refreshKey} onChanged={changed} />}
       {tab === 'movements' && <MovementsTab stores={stores} categories={categories} refreshKey={refreshKey} />}
 
       {adjusting && (
