@@ -61,8 +61,10 @@ function App() {
     <div className="app-shell">
       <aside className="sidebar">
         <a className="brand" href="#overview" aria-label="CCC家電首頁">
-          <span className="brand-mark" aria-hidden="true">C</span>
-          <span>CCC家電<small>AI 智慧導購與門市營運管理</small></span>
+          <span className="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="26" height="26"><path d="M16 31 32 18l16 13" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" /><path d="M21 29v16h22V29" fill="none" stroke="currentColor" strokeWidth="5" strokeLinejoin="round" /><path d="M32 33.5l1.6 3.4 3.4 1.6-3.4 1.6-1.6 3.4-1.6-3.4-3.4-1.6 3.4-1.6z" fill="currentColor" /></svg>
+          </span>
+          <span>CCC家電<small>全國電子營運提案原型</small></span>
         </a>
 
         <p className="nav-heading">工作空間</p>
@@ -110,7 +112,7 @@ function App() {
 
         <Component />
 
-        <footer className="page-footer">CCC家電 AI 智慧導購與門市營運管理系統 · 個人作品集模擬系統</footer>
+        <footer className="page-footer">CCC家電 AI 智慧導購與門市營運管理系統 · 全國電子營運提案原型（課程專題），非全國電子官方系統</footer>
       </main>
     </div>
   )
