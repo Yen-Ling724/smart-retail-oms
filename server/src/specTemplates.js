@@ -10,6 +10,16 @@ const ENERGY = ['1 級', '2 級', '3 級', '4 級', '5 級'];
 const INVERTER = { key: '變頻', type: 'select', options: ['變頻', '定頻'] };
 const FEATURE = { key: '特色', type: 'text', placeholder: '例：急速冷凍、App 控制（選填）' };
 
+// 冷氣坪數級距（全國電子官網「找空調坪數」）：[上限 kW, 級距]；超過 7.9kW 一律「13 坪以上」
+export const AC_TIERS = [
+  [2.3, '3-4 坪'], [2.9, '4-5 坪'], [3.9, '5-6 坪'], [4.5, '6-7 坪'],
+  [5.6, '7-8 坪'], [6.4, '8-10 坪'], [7.9, '11-12 坪'],
+];
+export const AC_PING_OPTIONS = ['2-3 坪', ...AC_TIERS.map(([, label]) => label), '13 坪以上'];
+export const acPingFromKw = (kw) => (AC_TIERS.find(([max]) => kw <= max + 1e-9) ?? [null, '13 坪以上'])[1];
+// 舊版級距 → 新版級距（舊資料庫升級用）
+export const LEGACY_AC_PING = { '7-9 坪': '7-8 坪', '9-11 坪': '8-10 坪', '11-14 坪': '11-12 坪', '14-17 坪': '13 坪以上' };
+
 export const SPEC_TEMPLATES = {
   冰箱: [
     { key: '容量', type: 'number', unit: 'L', required: true, min: 50, max: 1000 },
@@ -29,10 +39,12 @@ export const SPEC_TEMPLATES = {
     FEATURE,
   ],
   冷氣: [
-    { key: '適用坪數', type: 'select', options: ['2-3 坪', '3-4 坪', '4-5 坪', '5-6 坪', '6-7 坪', '7-9 坪', '9-11 坪', '11-14 坪', '14-17 坪'], required: true },
+    // 坪數級距沿用全國電子官網「找空調坪數」（依冷房能力 kW 分級）
+    { key: '適用坪數', type: 'select', options: AC_PING_OPTIONS, required: true },
+    { key: '冷房能力', type: 'number', unit: 'kW', min: 0.5, max: 30 },
     { key: '類型', type: 'select', options: ['分離式', '窗型', '移動式'], required: true },
-    { key: '冷暖', type: 'select', options: ['冷專', '冷暖'], required: true },
-    { key: '能效', type: 'select', options: ENERGY, required: true },
+    { key: '冷暖', type: 'select', options: ['冷專', '冷暖'] },
+    { key: '能效', type: 'select', options: ENERGY },
     INVERTER,
     FEATURE,
   ],
@@ -44,15 +56,15 @@ export const SPEC_TEMPLATES = {
     FEATURE,
   ],
   除濕機: [
-    { key: '除濕量', type: 'select', numeric: true, unit: 'L/日', options: [6, 8, 10, 12, 14, 16, 18, 20, 22, 26, 30], required: true },
-    { key: '適用坪數', type: 'select', numeric: true, unit: '坪', options: [5, 8, 10, 12, 15, 18, 20, 23, 26, 30, 35], required: true },
+    { key: '除濕量', type: 'number', unit: 'L/日', min: 0.5, max: 60, required: true },
+    { key: '適用坪數', type: 'number', unit: '坪', min: 1, max: 100, required: true },
     { key: '能效', type: 'select', options: ENERGY },
     INVERTER,
     FEATURE,
   ],
   空氣清淨機: [
-    { key: '適用坪數', type: 'select', numeric: true, unit: '坪', options: [5, 8, 10, 12, 15, 18, 20, 25, 30, 40, 50], required: true },
-    { key: '濾網', type: 'select', options: ['HEPA H11', 'HEPA H12', 'HEPA H13', 'HEPA H14'], required: true },
+    { key: '適用坪數', type: 'number', unit: '坪', min: 1, max: 100, required: true },
+    { key: '濾網', type: 'select', options: ['HEPA H11', 'HEPA H12', 'HEPA H13', 'HEPA H14'] },
     FEATURE,
   ],
   吸塵器: [
@@ -101,16 +113,16 @@ function parseDimensions(raw, field) {
 
 export const CATEGORIES = Object.keys(SPEC_TEMPLATES);
 
-// 各分類可選的品牌（參考台灣家電通路常見品牌）。
-// 品牌名稱僅用於情境示範；示範資料的型號、價格、庫存都是虛構的。
+// 各分類可選的品牌：冷氣、除濕機、空氣清淨機依全國電子官網在售品牌整理（2026/11/18），
+// 其他分類參考台灣家電通路常見品牌。
 const OTHER = '其他品牌';
 export const BRANDS = {
   冰箱: ['Panasonic 國際', 'HITACHI 日立', '三菱電機', 'TOSHIBA 東芝', 'LG 樂金', 'SAMSUNG 三星', 'SAMPO 聲寶', 'TECO 東元', OTHER],
   洗衣機: ['Panasonic 國際', 'HITACHI 日立', 'LG 樂金', 'SAMSUNG 三星', 'TOSHIBA 東芝', 'Whirlpool 惠而浦', 'SAMPO 聲寶', 'TECO 東元', OTHER],
-  冷氣: ['HITACHI 日立', 'Panasonic 國際', '三菱電機', '三菱重工', '日本將軍', 'DAIKIN 大金', 'LG 樂金', 'SAMPO 聲寶', 'TECO 東元', 'HERAN 禾聯', OTHER],
+  冷氣: ['Panasonic 國際', 'HITACHI 日立', '三菱電機', '三菱重工', 'LG 樂金', 'TECO 東元', 'HERAN 禾聯', 'SHARP 夏普', 'SAMPO 聲寶', 'RECHI 瑞智', 'SANLUX 台灣三洋', 'DAIKIN 大金', '日本將軍', OTHER],
   電視: ['SONY 索尼', 'Panasonic 國際', 'LG 樂金', 'SAMSUNG 三星', 'Philips 飛利浦', 'SAMPO 聲寶', 'HERAN 禾聯', 'TCL', OTHER],
-  除濕機: ['Panasonic 國際', 'HITACHI 日立', '三菱電機', 'LG 樂金', 'SAMPO 聲寶', 'TECO 東元', OTHER],
-  空氣清淨機: ['Panasonic 國際', 'SHARP 夏普', 'HITACHI 日立', 'dyson', 'Blueair', '3M', 'LG 樂金', OTHER],
+  除濕機: ['Panasonic 國際', 'LG 樂金', 'JJPRO 家佳寶', 'NWT 威技', 'ARKDAN', 'ARTISAN', 'DIKE', 'HITACHI 日立', '三菱電機', 'SAMPO 聲寶', 'TECO 東元', OTHER],
+  空氣清淨機: ['LG 樂金', 'dyson', 'SHARP 夏普', 'Xiaomi 小米', 'Electrolux 伊萊克斯', 'Panasonic 國際', 'Philips 飛利浦', 'Honeywell', 'DIKE', 'HITACHI 日立', 'Blueair', '3M', OTHER],
   吸塵器: ['dyson', 'Panasonic 國際', 'HITACHI 日立', 'LG 樂金', 'iRobot', 'Electrolux 伊萊克斯', OTHER],
   廚房家電: ['TATUNG 大同', 'Panasonic 國際', 'ZOJIRUSHI 象印', 'TIGER 虎牌', 'Philips 飛利浦', 'SHARP 夏普', OTHER],
 };

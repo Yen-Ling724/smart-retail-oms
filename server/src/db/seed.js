@@ -1,11 +1,16 @@
-// 示範資料：門市地址、型號、價格、規格、庫存全部是虛構的。
-// 品牌使用真實品牌名稱，僅用於呈現零售情境，與品牌官方無關。
+// 示範資料：
+// - 冷氣、除濕機、空氣清淨機：全國電子官網公開商品（型號、品名、網路價、原價，見 data/elifemall-products.json）
+// - 其他分類：虛構示範商品（型號 DM- 開頭）
+// - 門市、庫存、訂單、顧客：全部模擬
 import { readFileSync } from 'node:fs';
 import { regionForCity } from '../regions.js';
-import { SPEC_TEMPLATES, validateBrand, validateSpecs } from '../specTemplates.js';
+import { LEGACY_AC_PING, SPEC_TEMPLATES, validateBrand, validateSpecs } from '../specTemplates.js';
 import { getDb } from './index.js';
 
 const SCHEMA = readFileSync(new URL('./schema.sql', import.meta.url), 'utf8');
+const ELIFE = JSON.parse(readFileSync(new URL('./data/elifemall-products.json', import.meta.url), 'utf8'));
+// 這些分類改用官網商品，不再放虛構商品
+export const REAL_CATEGORIES = new Set(ELIFE.products.map((p) => p.category));
 
 export const STORES = [
   ['TN01', '台南中西店', '台南市', '台南市中西區示範路 101 號（虛構）'],
@@ -26,20 +31,10 @@ const PRODUCTS = [
   ['洗衣機', 'Panasonic 國際', 'DM-WM17', 'Panasonic 17kg 變頻直立洗衣機', '3 年', 21900, 19900, { 容量: 17, 類型: '直立式', 能效: '1 級', 特色: '變頻、溫水洗' }],
   ['洗衣機', 'LG 樂金', 'DM-WD12', 'LG 12kg 滾筒洗脫烘', '3 年', 39900, 35900, { 容量: 12, 類型: '滾筒', 能效: '2 級', 烘乾容量: 7 }],
   ['洗衣機', 'LG 樂金', 'DM-WD10', 'LG 10kg 滾筒洗衣機（舊款）', '2 年', 29900, 22900, { 容量: 10, 類型: '滾筒', 能效: '3 級' }],
-  ['冷氣', 'DAIKIN 大金', 'DM-AC28', 'DAIKIN 4-5 坪 變頻冷暖分離式冷氣', '5 年', 32900, 29900, { 適用坪數: '4-5 坪', 類型: '分離式', 冷暖: '冷暖', 能效: '1 級' }],
-  ['冷氣', 'HITACHI 日立', 'DM-AC41', 'HITACHI 6-7 坪 變頻冷暖分離式冷氣', '5 年', 42900, 38900, { 適用坪數: '6-7 坪', 類型: '分離式', 冷暖: '冷暖', 能效: '1 級' }],
-  ['冷氣', 'HERAN 禾聯', 'DM-AC22', 'HERAN 3-4 坪 變頻冷專分離式冷氣', '3 年', 23900, 21900, { 適用坪數: '3-4 坪', 類型: '分離式', 冷暖: '冷專', 能效: '2 級' }],
-  ['冷氣', 'SAMPO 聲寶', 'DM-AW18', 'SAMPO 2-3 坪 窗型冷氣', '3 年', 15900, 14500, { 適用坪數: '2-3 坪', 類型: '窗型', 冷暖: '冷專', 能效: '3 級' }],
   ['電視', 'SONY 索尼', 'DM-TV55', 'SONY 55 吋 4K 智慧電視', '3 年', 22900, 18900, { 尺寸: 55, 解析度: '4K', 面板: 'LCD', 系統: '智慧電視' }],
   ['電視', 'LG 樂金', 'DM-TV65', 'LG 65 吋 4K 智慧電視', '3 年', 32900, 27900, { 尺寸: 65, 解析度: '4K', 面板: 'LCD', 系統: '智慧電視' }],
   ['電視', 'HERAN 禾聯', 'DM-TV43', 'HERAN 43 吋 FHD 液晶電視', '2 年', 10900, 9490, { 尺寸: 43, 解析度: 'FHD', 面板: 'LCD', 系統: '一般電視' }],
   ['電視', 'SAMSUNG 三星', 'DM-TV75', 'SAMSUNG 75 吋 4K 量子點電視', '3 年', 49900, 44900, { 尺寸: 75, 解析度: '4K', 面板: '量子點', 系統: '智慧電視' }],
-  ['除濕機', 'Panasonic 國際', 'DM-DH12', 'Panasonic 12L 除濕機', '2 年', 8990, 7990, { 除濕量: 12, 適用坪數: 15, 能效: '1 級' }],
-  ['除濕機', 'HITACHI 日立', 'DM-DH18', 'HITACHI 18L 變頻除濕機', '3 年', 13900, 12500, { 除濕量: 18, 適用坪數: 23, 能效: '1 級', 特色: '變頻' }],
-  ['除濕機', 'SAMPO 聲寶', 'DM-DH08', 'SAMPO 8L 輕巧除濕機', '1 年', 5490, 4990, { 除濕量: 8, 適用坪數: 10, 能效: '2 級' }],
-  ['空氣清淨機', 'SHARP 夏普', 'DM-AP20', 'SHARP 20 坪 空氣清淨機', '2 年', 12900, 10900, { 適用坪數: 20, 濾網: 'HEPA H13' }],
-  ['空氣清淨機', '3M', 'DM-AP12', '3M 12 坪 空氣清淨機', '2 年', 7900, 6900, { 適用坪數: 12, 濾網: 'HEPA H12' }],
-  ['空氣清淨機', 'Panasonic 國際', 'DM-AP30', 'Panasonic 30 坪 智慧空氣清淨機', '3 年', 19900, 17900, { 適用坪數: 30, 濾網: 'HEPA H13', 特色: 'App 控制' }],
   ['吸塵器', 'dyson', 'DM-VC10', 'dyson 無線手持吸塵器', '2 年', 19900, 16900, { 類型: '無線手持', 續航: 60 }],
   ['吸塵器', 'iRobot', 'DM-RB20', 'iRobot 掃拖機器人', '2 年', 25900, 21900, { 類型: '掃地機器人', 續航: 120, 特色: '掃拖、自動集塵' }],
   ['吸塵器', 'Electrolux 伊萊克斯', 'DM-VC05', 'Electrolux 有線吸塵器', '1 年', 3990, 3490, { 類型: '有線', 特色: '旋風式集塵' }],
@@ -62,10 +57,17 @@ function pseudoRandom(seed) {
 
 const BIG_ITEMS = new Set(['冰箱', '洗衣機', '冷氣', '電視']);
 // 熱銷缺貨中的商品，讓「低庫存」提醒有東西可以示範
-const SCARCE = new Set(['DM-RF650', 'DM-TV75', 'DM-AP30', 'DM-RB20']);
+const SCARCE = new Set(['DM-RF650', 'DM-TV75', 'DM-RB20', 'LSU22DST/LSN22DST', 'CU-UK22BCA2/CS-UK22BA2']);
 
-function stockFor(storeId, product) {
-  const [category, , model] = product;
+// 全部示範商品（物件格式）：虛構商品在前，官網商品在後
+const ALL_PRODUCTS = [
+  ...PRODUCTS.filter((p) => !REAL_CATEGORIES.has(p[0])).map(([category, brand, model, name, warranty, list, sale, specs]) => (
+    { category, brand, model, name, warranty, list_price: list, sale_price: sale, specs, source_code: null, meta: {} }
+  )),
+  ...ELIFE.products.map((p) => ({ ...p, warranty: null })),
+];
+
+function stockFor(storeId, { category, model }) {
   const r = pseudoRandom(storeId + model);
   const big = BIG_ITEMS.has(category);
   let onHand = Math.floor(r * (big ? 9 : 16));
@@ -79,6 +81,103 @@ function stockFor(storeId, product) {
 }
 
 export const productId = (i) => `P${String(i + 1).padStart(4, '0')}`;
+
+// 新增一項示範商品：商品主檔、目前價格、各店模擬庫存（在途數量附上總倉補貨單）
+async function insertProduct(tx, id, p, storeIds, { oldPrice = false, active = true } = {}) {
+  validateBrand(p.category, p.brand); // 示範資料也必須符合品牌清單與規格範本
+  // 品名有「變頻」的，規格的「變頻」欄位也填上
+  const withInverter = p.name.includes('變頻') && SPEC_TEMPLATES[p.category].some((f) => f.key === '變頻') && !p.specs.變頻
+    ? { ...p.specs, 變頻: '變頻' } : p.specs;
+  const specs = validateSpecs(p.category, withInverter);
+  await tx.query(
+    `INSERT INTO products (product_id, category, brand, model, name, specs, warranty, is_active, source_code, meta)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+    [id, p.category, p.brand, p.model, p.name, JSON.stringify(specs), p.warranty, active && !REPLACED_BY[p.model],
+      p.source_code, JSON.stringify(p.meta ?? {})],
+  );
+  // 虛構商品有一半多一筆舊價格，示範價格歷史；官網商品從擷取日起算
+  if (oldPrice) {
+    await tx.query(
+      `INSERT INTO product_prices (product_id, list_price, sale_price, valid_from, valid_to)
+       VALUES ($1, $2, $2, now() - interval '90 days', now() - interval '30 days')`,
+      [id, p.list_price],
+    );
+  }
+  await tx.query(
+    `INSERT INTO product_prices (product_id, list_price, sale_price, valid_from)
+     VALUES ($1, $2, $3, ${p.source_code ? '$4::date' : "now() - interval '30 days'"})`,
+    p.source_code ? [id, p.list_price, p.sale_price, ELIFE.captured_at] : [id, p.list_price, p.sale_price],
+  );
+  for (const storeId of storeIds) {
+    const st = stockFor(storeId, p);
+    await tx.query(
+      `INSERT INTO inventory (store_id, product_id, on_hand, reserved, display, damaged, in_transit)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [storeId, id, st.onHand, st.reserved, st.display, st.damaged, st.inTransit],
+    );
+    // 在途數量要有對應的調貨單：示範資料一律是「總倉補貨」，兩天前出發
+    if (st.inTransit > 0) {
+      await tx.query(
+        `INSERT INTO stock_transfers (product_id, from_store_id, to_store_id, qty, status, note, created_at, updated_at)
+         VALUES ($1, NULL, $2, $3, 'in_transit', '總倉例行補貨', now() - interval '2 days', now() - interval '2 days')`,
+        [id, storeId, st.inTransit],
+      );
+    }
+  }
+}
+
+// 舊資料庫升級：加入官網商品（已有同型號就補上官網編號與價格），並把這幾個分類的虛構商品下架。
+// 不刪除任何資料，既有訂單、庫存紀錄都保留。每次啟動都會檢查，已升級過就直接跳過。
+export async function syncElifemallProducts(db) {
+  const [{ n }] = await db.query('SELECT count(*)::int AS n FROM products WHERE source_code IS NOT NULL');
+  if (n >= ELIFE.products.length) return null;
+
+  return db.transaction(async (tx) => {
+    const storeIds = (await tx.query('SELECT store_id FROM stores ORDER BY store_id')).map((s) => s.store_id);
+    const [{ next }] = await tx.query(
+      `SELECT COALESCE(MAX(substring(product_id from 2)::int), 0) AS next FROM products WHERE product_id ~ '^P[0-9]+$'`,
+    );
+    let nextNo = next;
+    let added = 0;
+    let updated = 0;
+    for (const p of ELIFE.products) {
+      const [existing] = await tx.query(
+        'SELECT product_id, source_code FROM products WHERE model = $1 OR source_code = $2',
+        [p.model, p.source_code],
+      );
+      if (!existing) {
+        await insertProduct(tx, productId(nextNo++), { ...p, warranty: null }, storeIds);
+        added++;
+      } else if (!existing.source_code) {
+        // 同型號的既有商品：補上官網編號、外型資料與目前官網價格（價格歷史保留）
+        await tx.query(
+          'UPDATE products SET source_code = $2, meta = $3, updated_at = now() WHERE product_id = $1',
+          [existing.product_id, p.source_code, JSON.stringify(p.meta ?? {})],
+        );
+        await tx.query('UPDATE product_prices SET valid_to = now() WHERE product_id = $1 AND valid_to IS NULL', [existing.product_id]);
+        await tx.query('INSERT INTO product_prices (product_id, list_price, sale_price) VALUES ($1, $2, $3)', [
+          existing.product_id, p.list_price, p.sale_price,
+        ]);
+        updated++;
+      }
+    }
+    // 這幾個分類的虛構商品（DM-）下架：不再出現在導購與下單，舊訂單仍看得到
+    const hidden = await tx.query(
+      `UPDATE products SET is_active = false, updated_at = now()
+       WHERE model LIKE 'DM-%' AND category = ANY($1) AND is_active RETURNING product_id`,
+      [[...REAL_CATEGORIES]],
+    );
+    // 冷氣坪數改用官網級距：舊級距換成最接近的新級距
+    for (const [from, to] of Object.entries(LEGACY_AC_PING)) {
+      await tx.query(
+        `UPDATE products SET specs = jsonb_set(specs, '{適用坪數}', to_jsonb($2::text))
+         WHERE category = '冷氣' AND specs->>'適用坪數' = $1`,
+        [from, to],
+      );
+    }
+    return { added, updated, hidden: hidden.length };
+  });
+}
 
 // 示範訂單（顧客姓名、電話皆為虛構）。商品會挑「那家門市有貨」的同分類商品
 const DEMO_ORDERS = [
@@ -227,6 +326,8 @@ export async function seed({ reset = false } = {}) {
     await backfillTransfers(db);
     await backfillRegions(db);
     await backfillReservations(db);
+    const synced = await syncElifemallProducts(db);
+    if (synced) console.log(`已加入全國電子官網商品：新增 ${synced.added}、更新 ${synced.updated}、下架虛構商品 ${synced.hidden}`);
     return false;
   }
 
@@ -237,48 +338,10 @@ export async function seed({ reset = false } = {}) {
         [storeId, name, city, address, regionForCity(city)],
       );
     }
-    const idByModel = Object.fromEntries(PRODUCTS.map((p, i) => [p[2], productId(i)]));
-    for (const [i, p] of PRODUCTS.entries()) {
-      const [category, brand, model, name, warranty, list, sale, specs] = p;
-      const id = productId(i);
-      validateBrand(category, brand); // 示範資料也必須符合品牌清單與規格範本
-      // 品名有「變頻」的，規格的「變頻」欄位也填上
-      const withInverter = name.includes('變頻') && SPEC_TEMPLATES[category].some((f) => f.key === '變頻') ? { ...specs, 變頻: '變頻' } : specs;
-      const cleanSpecs = validateSpecs(category, withInverter);
-      await tx.query(
-        `INSERT INTO products (product_id, category, brand, model, name, specs, warranty, is_active)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
-        [id, category, brand, model, name, JSON.stringify(cleanSpecs), warranty, !REPLACED_BY[model]],
-      );
-      // 一半的商品多一筆舊價格，示範價格歷史
-      if (i % 2 === 0) {
-        await tx.query(
-          `INSERT INTO product_prices (product_id, list_price, sale_price, valid_from, valid_to)
-           VALUES ($1, $2, $2, now() - interval '90 days', now() - interval '30 days')`,
-          [id, list],
-        );
-      }
-      await tx.query(
-        `INSERT INTO product_prices (product_id, list_price, sale_price, valid_from)
-         VALUES ($1, $2, $3, now() - interval '30 days')`,
-        [id, list, sale],
-      );
-      for (const [storeId] of STORES) {
-        const st = stockFor(storeId, p);
-        await tx.query(
-          `INSERT INTO inventory (store_id, product_id, on_hand, reserved, display, damaged, in_transit)
-           VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-          [storeId, id, st.onHand, st.reserved, st.display, st.damaged, st.inTransit],
-        );
-        // 在途數量要有對應的調貨單：示範資料一律是「總倉補貨」，兩天前出發
-        if (st.inTransit > 0) {
-          await tx.query(
-            `INSERT INTO stock_transfers (product_id, from_store_id, to_store_id, qty, status, note, created_at, updated_at)
-             VALUES ($1, NULL, $2, $3, 'in_transit', '總倉例行補貨', now() - interval '2 days', now() - interval '2 days')`,
-            [id, storeId, st.inTransit],
-          );
-        }
-      }
+    const idByModel = Object.fromEntries(ALL_PRODUCTS.map((p, i) => [p.model, productId(i)]));
+    const storeIds = STORES.map(([id]) => id);
+    for (const [i, p] of ALL_PRODUCTS.entries()) {
+      await insertProduct(tx, productId(i), p, storeIds, { oldPrice: !p.source_code && i % 2 === 0 });
     }
     for (const [oldModel, newModel] of Object.entries(REPLACED_BY)) {
       await tx.query('UPDATE products SET replaced_by = $1 WHERE product_id = $2', [idByModel[newModel], idByModel[oldModel]]);

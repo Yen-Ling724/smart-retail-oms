@@ -14,8 +14,14 @@ function washerRange(people) {
   if (people <= 4) return [12, 17, '3～4 人'];
   return [15, 30, '5 人以上'];
 }
-// 冷氣「4-5 坪」→ [4, 5]
-const pingRange = (s) => (String(s ?? '').match(/(\d+)\s*-\s*(\d+)/) || []).slice(1, 3).map(Number);
+// 冷氣「4-5 坪」→ [4, 5]；「13 坪以上」→ [13, 99]
+function pingRange(s) {
+  const text = String(s ?? '');
+  const range = text.match(/(\d+)\s*-\s*(\d+)/);
+  if (range) return [Number(range[1]), Number(range[2])];
+  const above = text.match(/(\d+)\s*坪以上/);
+  return above ? [Number(above[1]), 99] : [];
+}
 
 // 依分類評估規格：回傳 { ok, score, reasons, misses }。ok=false 代表不合；
 // 寬鬆模式會放寬，但把沒做到的條件記在 misses，回答時老實告訴顧客
@@ -88,7 +94,8 @@ function specFit(p, need, relaxed) {
     case '空氣清淨機':
       if (need.ping) {
         if (s.適用坪數 >= need.ping) {
-          score += 3;
+          // 夠用就好：大太多的機型分數低一點（例如 10 坪的房間，15 坪的比 33 坪的優先）
+          score += 3 - Math.min(2, (s.適用坪數 - need.ping) / need.ping);
           reasons.push(`適用 ${s.適用坪數} 坪，涵蓋 ${need.ping} 坪的空間`);
         } else if (relaxed && s.適用坪數 >= need.ping * 0.7) {
           score += 1;

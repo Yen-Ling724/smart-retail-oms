@@ -1,0 +1,4395 @@
+{
+ "source": "全國電子官網公開商品列表（elifemall.com.tw）",
+ "captured_at": "2026-11-18",
+ "note": "商品編號、品名、型號、網路價、原價取自官網；規格中的適用坪數依官網級距或日除濕量推算。",
+ "products": [
+  {
+   "source_code": "2160417",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU22DST/LSN22DST",
+   "name": "LG DUALCOOL WiFi空調 極效系列2.0 LSU22DST/LSN22DST",
+   "list_price": 27900,
+   "sale_price": 25668,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2153325",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ22BCA2/CS-UJ22BA2",
+   "name": "Panasonic一對一變頻冷專(UJ精緻系列) CU-UJ22BCA2/CS-UJ22BA2",
+   "list_price": 28100,
+   "sale_price": 25290,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2161502",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UK22BCA2/CS-UK22BA2",
+   "name": "Panasonic一對一變頻冷專(UK標準系列) CU-UK22BCA2/CS-UK22BA2",
+   "list_price": 23800,
+   "sale_price": 21420,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2161908",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ22BCA2/CS-UX22FA2",
+   "name": "Panasonic一對一變頻冷專(UX旗艦系列) CU-UJ22BCA2/CS-UX22FA2",
+   "list_price": 31900,
+   "sale_price": 31900,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2153335",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ22BHA2/CS-UJ22BA2",
+   "name": "Panasonic一對一變頻冷暖(UJ精緻系列) CU-UJ22BHA2/CS-UJ22BA2",
+   "list_price": 30600,
+   "sale_price": 26010,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2161514",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UK22BHA2/CS-UK22BA2",
+   "name": "Panasonic一對一變頻冷暖(UK標準系列) CU-UK22BHA2/CS-UK22BA2",
+   "list_price": 26200,
+   "sale_price": 22270,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2155616",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-Y22BHA2/CS-Y22BA2",
+   "name": "Panasonic一對一變頻冷暖(Y系列) CU-Y22BHA2/CS-Y22BA2",
+   "list_price": 22800,
+   "sale_price": 20520,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2162186",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CW-U22CA2",
+   "name": "Panasonic窗型變頻冷專空調(右吹) CW-U22CA2",
+   "list_price": 23900,
+   "sale_price": 21510,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "窗型",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2162188",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CW-U22HA2",
+   "name": "Panasonic窗型變頻冷暖空調(右吹) CW-U22HA2",
+   "list_price": 25400,
+   "sale_price": 22860,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "窗型",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2161075",
+   "category": "冷氣",
+   "brand": "SHARP 夏普",
+   "model": "AE-23DAMH/AY-23DAMH-W",
+   "name": "SHARP夏普尊爵一對一冷暖空調 AE-23DAMH/AY-23DAMH-W",
+   "list_price": 31950,
+   "sale_price": 27000,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.3,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.3
+   }
+  },
+  {
+   "source_code": "2148066",
+   "category": "冷氣",
+   "brand": "SHARP 夏普",
+   "model": "AU-23BESH/AH-23BESH-W",
+   "name": "SHARP夏普極致一對一冷專空調(防鏽防沼機型) AU-23BESH/AH-23BESH-W",
+   "list_price": 22500,
+   "sale_price": 20500,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.3,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.3
+   }
+  },
+  {
+   "source_code": "2148073",
+   "category": "冷氣",
+   "brand": "SHARP 夏普",
+   "model": "AE-23BESH/AY-23BESH-W",
+   "name": "SHARP夏普極致一對一冷暖空調(防鏽防沼機型) AE-23BESH/AY-23BESH-W",
+   "list_price": 24900,
+   "sale_price": 22900,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.3,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.3
+   }
+  },
+  {
+   "source_code": "2154109",
+   "category": "冷氣",
+   "brand": "三菱重工",
+   "model": "SRC22ZTNT-W/SRK22ZTNT-W",
+   "name": "三菱重工一對一變頻冷暖空調(旭山系列) SRC22ZTNT-W/SRK22ZTNT-W",
+   "list_price": 36500,
+   "sale_price": 32850,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2153113",
+   "category": "冷氣",
+   "brand": "三菱重工",
+   "model": "DXC20ZST2-W/DXK20ZST2-W",
+   "name": "三菱重工一對一變頻冷暖空調(晴空2系列) DXC20ZST2-W/DXK20ZST2-W",
+   "list_price": 40000,
+   "sale_price": 36000,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2
+   }
+  },
+  {
+   "source_code": "2160416",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU28DST/LSN28DST",
+   "name": "LG DUALCOOL WiFi空調 極效系列2.0 LSU28DST/LSN28DST",
+   "list_price": 30490,
+   "sale_price": 25900,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2160406",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU22DHST/LSN22DDHST",
+   "name": "LG DUALCOOL WiFi空調 極淨系列2.0 LSU22DHST/LSN22DDHST",
+   "list_price": 34900,
+   "sale_price": 33155,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2160413",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU22DHST/LSN22IDHST",
+   "name": "LG DUALCOOL WiFi空調 極適系列2.0 LSU22DHST/LSN22IDHST",
+   "list_price": 32900,
+   "sale_price": 28952,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2160410",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU41DHST/LSN41IDHST",
+   "name": "LG DUALCOOL WiFi空調 極適系列2.0 LSU41DHST/LSN41IDHST",
+   "list_price": 44900,
+   "sale_price": 39512,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4.1,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4.1
+   }
+  },
+  {
+   "source_code": "2122008",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-K28FCA2/CS-K28FA2",
+   "name": "Panasonic一對一變頻冷專(K標準系列) CU-K28FCA2/CS-K28FA2",
+   "list_price": 28000,
+   "sale_price": 19600,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2153324",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ28BCA2/CS-UJ28BA2",
+   "name": "Panasonic一對一變頻冷專(UJ精緻系列) CU-UJ28BCA2/CS-UJ28BA2",
+   "list_price": 32800,
+   "sale_price": 29520,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2161907",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ28BCA2/CS-UX28FA2",
+   "name": "Panasonic一對一變頻冷專(UX旗艦系列) CU-UJ28BCA2/CS-UX28FA2",
+   "list_price": 36100,
+   "sale_price": 36100,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2153334",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ28BHA2/CS-UJ28BA2",
+   "name": "Panasonic一對一變頻冷暖(UJ精緻系列) CU-UJ28BHA2/CS-UJ28BA2",
+   "list_price": 35200,
+   "sale_price": 29920,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2161468",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UX22FDHA2/CS-UX22FDA2",
+   "name": "Panasonic一對一變頻冷暖(UX高效系列) CU-UX22FDHA2/CS-UX22FDA2",
+   "list_price": 47600,
+   "sale_price": 47600,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2161481",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UX22FHA2/CS-UX22FA2",
+   "name": "Panasonic一對一變頻冷暖(UX頂級旗艦系列) CU-UX22FHA2/CS-UX22FA2",
+   "list_price": 36700,
+   "sale_price": 33030,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2161472",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UX71FHA2/CS-UX71FA2",
+   "name": "Panasonic一對一變頻冷暖(UX頂級旗艦系列) CU-UX71FHA2/CS-UX71FA2",
+   "list_price": 74000,
+   "sale_price": 66600,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 7.1,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 7.1
+   }
+  },
+  {
+   "source_code": "2161918",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ22BHA2/CS-UX22FA2",
+   "name": "Panasonic一對一變頻冷暖(UX旗艦系列) CU-UJ22BHA2/CS-UX22FA2",
+   "list_price": 34400,
+   "sale_price": 34400,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2161483",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UX22FHA2/CS-VX22FA2",
+   "name": "Panasonic一對一變頻冷暖(VX極致旗艦系列) CU-UX22FHA2/CS-VX22FA2",
+   "list_price": 38400,
+   "sale_price": 38400,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2155615",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-Y28BHA2/CS-Y28BA2",
+   "name": "Panasonic一對一變頻冷暖(Y系列) CU-Y28BHA2/CS-Y28BA2",
+   "list_price": 27900,
+   "sale_price": 25110,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2161920",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CW-U28CA2",
+   "name": "Panasonic窗型變頻冷專右吹(U系列) CW-U28CA2",
+   "list_price": 27600,
+   "sale_price": 24840,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "窗型",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2160415",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU36DST/LSN36DST",
+   "name": "LG DUALCOOL WiFi空調 極效系列2.0 LSU36DST/LSN36DST",
+   "list_price": 35900,
+   "sale_price": 33028,
+   "specs": {
+    "適用坪數": "5-6 坪",
+    "冷房能力": 3.6,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 3.6
+   }
+  },
+  {
+   "source_code": "2160405",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU28DHST/LSN28DDHST",
+   "name": "LG DUALCOOL WiFi空調 極淨系列2.0 LSU28DHST/LSN28DDHST",
+   "list_price": 36900,
+   "sale_price": 35055,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2160404",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU36DHST/LSN36DDHST",
+   "name": "LG DUALCOOL WiFi空調 極淨系列2.0 LSU36DHST/LSN36DDHST",
+   "list_price": 42900,
+   "sale_price": 40755,
+   "specs": {
+    "適用坪數": "5-6 坪",
+    "冷房能力": 3.6,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 3.6
+   }
+  },
+  {
+   "source_code": "2160412",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU28DHST/LSN28IDHST",
+   "name": "LG DUALCOOL WiFi空調 極適系列2.0 LSU28DHST/LSN28IDHST",
+   "list_price": 34900,
+   "sale_price": 29900,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2160411",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU36DHST/LSN36IDHST",
+   "name": "LG DUALCOOL WiFi空調 極適系列2.0 LSU36DHST/LSN36IDHST",
+   "list_price": 40900,
+   "sale_price": 35992,
+   "specs": {
+    "適用坪數": "5-6 坪",
+    "冷房能力": 3.6,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 3.6
+   }
+  },
+  {
+   "source_code": "2153323",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ36BCA2/CS-UJ36BA2",
+   "name": "Panasonic一對一變頻冷專(UJ精緻系列) CU-UJ36BCA2/CS-UJ36BA2",
+   "list_price": 40900,
+   "sale_price": 36810,
+   "specs": {
+    "適用坪數": "5-6 坪",
+    "冷房能力": 3.6,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 3.6
+   }
+  },
+  {
+   "source_code": "2161501",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UK36BCA2/CS-UK36BA2",
+   "name": "Panasonic一對一變頻冷專(UK標準系列) CU-UK36BCA2/CS-UK36BA2",
+   "list_price": 36900,
+   "sale_price": 33210,
+   "specs": {
+    "適用坪數": "5-6 坪",
+    "冷房能力": 3.6,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 3.6
+   }
+  },
+  {
+   "source_code": "2161906",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ36BCA2/CS-UX36FA2",
+   "name": "Panasonic一對一變頻冷專(UX旗艦系列) CU-UJ36BCA2/CS-UX36FA2",
+   "list_price": 43800,
+   "sale_price": 43800,
+   "specs": {
+    "適用坪數": "5-6 坪",
+    "冷房能力": 3.6,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 3.6
+   }
+  },
+  {
+   "source_code": "2161513",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UK28BHA2/CS-UK28BA2",
+   "name": "Panasonic一對一變頻冷暖(UK標準系列) CU-UK28BHA2/CS-UK28BA2",
+   "list_price": 31300,
+   "sale_price": 26605,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2161512",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UK36BHA2/CS-UK36BA2",
+   "name": "Panasonic一對一變頻冷暖(UK標準系列) CU-UK36BHA2/CS-UK36BA2",
+   "list_price": 39200,
+   "sale_price": 33320,
+   "specs": {
+    "適用坪數": "5-6 坪",
+    "冷房能力": 3.6,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 3.6
+   }
+  },
+  {
+   "source_code": "2161482",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UX28FDHA2/CS-UX28FDA2",
+   "name": "Panasonic一對一變頻冷暖(UX高效系列) CU-UX28FDHA2/CS-UX28FDA2",
+   "list_price": 50800,
+   "sale_price": 50800,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2161478",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UX28FHA2/CS-UX28FA2",
+   "name": "Panasonic一對一變頻冷暖(UX頂級旗艦系列) CU-UX28FHA2/CS-UX28FA2",
+   "list_price": 40900,
+   "sale_price": 36810,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2161474",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UX36FHA2/CS-UX36FA2",
+   "name": "Panasonic一對一變頻冷暖(UX頂級旗艦系列) CU-UX36FHA2/CS-UX36FA2",
+   "list_price": 48700,
+   "sale_price": 43830,
+   "specs": {
+    "適用坪數": "5-6 坪",
+    "冷房能力": 3.6,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 3.6
+   }
+  },
+  {
+   "source_code": "2161917",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ28BHA2/CS-UX28FA2",
+   "name": "Panasonic一對一變頻冷暖(UX旗艦系列) CU-UJ28BHA2/CS-UX28FA2",
+   "list_price": 38500,
+   "sale_price": 38500,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2160414",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU41DST/LSN41DST",
+   "name": "LG DUALCOOL WiFi空調 極效系列2.0 LSU41DST/LSN41DST",
+   "list_price": 39900,
+   "sale_price": 36708,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4.1,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4.1
+   }
+  },
+  {
+   "source_code": "2160403",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU41DHST/LSN41DDHST",
+   "name": "LG DUALCOOL WiFi空調 極淨系列2.0 LSU41DHST/LSN41DDHST",
+   "list_price": 46900,
+   "sale_price": 44555,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4.1,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4.1
+   }
+  },
+  {
+   "source_code": "2153322",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ40BCA2/CS-UJ40BA2",
+   "name": "Panasonic一對一變頻冷專(UJ精緻系列) CU-UJ40BCA2/CS-UJ40BA2",
+   "list_price": 43200,
+   "sale_price": 38880,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4
+   }
+  },
+  {
+   "source_code": "2161500",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UK40BCA2/CS-UK40BA2",
+   "name": "Panasonic一對一變頻冷專(UK標準系列) CU-UK40BCA2/CS-UK40BA2",
+   "list_price": 39300,
+   "sale_price": 35370,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4
+   }
+  },
+  {
+   "source_code": "2161905",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ40BCA2/CS-UX40FA2",
+   "name": "Panasonic一對一變頻冷專(UX旗艦系列) CU-UJ40BCA2/CS-UX40FA2",
+   "list_price": 46100,
+   "sale_price": 46100,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4
+   }
+  },
+  {
+   "source_code": "2153332",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ40BHA2/CS-UJ40BA2",
+   "name": "Panasonic一對一變頻冷暖(UJ精緻系列) CU-UJ40BHA2/CS-UJ40BA2",
+   "list_price": 46100,
+   "sale_price": 39185,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4
+   }
+  },
+  {
+   "source_code": "2161511",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UK40BHA2/CS-UK40BA2",
+   "name": "Panasonic一對一變頻冷暖(UK標準系列) CU-UK40BHA2/CS-UK40BA2",
+   "list_price": 42000,
+   "sale_price": 35700,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4
+   }
+  },
+  {
+   "source_code": "2161470",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UX40FHA2/CS-UX40FA2",
+   "name": "Panasonic一對一變頻冷暖(UX頂級旗艦系列) CU-UX40FHA2/CS-UX40FA2",
+   "list_price": 52000,
+   "sale_price": 46800,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4
+   }
+  },
+  {
+   "source_code": "2161915",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ40BHA2/CS-UX40FA2",
+   "name": "Panasonic一對一變頻冷暖(UX旗艦系列) CU-UJ40BHA2/CS-UX40FA2",
+   "list_price": 49000,
+   "sale_price": 49000,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4
+   }
+  },
+  {
+   "source_code": "2161466",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UX40FHA2/CS-VX40FA2",
+   "name": "Panasonic一對一變頻冷暖(VX極致旗艦系列) CU-UX40FHA2/CS-VX40FA2",
+   "list_price": 53700,
+   "sale_price": 53700,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4
+   }
+  },
+  {
+   "source_code": "2162192",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-Y40BHA2/CS-Y40BA2",
+   "name": "Panasonic一對一變頻冷暖(Y舒適系列) CU-Y40BHA2/CS-Y40BA2",
+   "list_price": 37000,
+   "sale_price": 37000,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4
+   }
+  },
+  {
+   "source_code": "2164700",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CW-U40LHA2",
+   "name": "Panasonic窗型變頻冷暖左吹(U系列) CW-U40LHA2",
+   "list_price": 41900,
+   "sale_price": 41900,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4,
+    "類型": "窗型",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4
+   }
+  },
+  {
+   "source_code": "2140260",
+   "category": "冷氣",
+   "brand": "SHARP 夏普",
+   "model": "AE-40ZAMH/AY-40ZAMH-W",
+   "name": "SHARP夏普頂級系列變頻冷暖空調R32 AE-40ZAMH/AY-40ZAMH-W",
+   "list_price": 49900,
+   "sale_price": 45900,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4
+   }
+  },
+  {
+   "source_code": "2161072",
+   "category": "冷氣",
+   "brand": "SHARP 夏普",
+   "model": "AE-41DAMH/AY-41DAMH-W",
+   "name": "SHARP夏普尊爵一對一冷暖空調(PCI自動除菌離子) AE-41DAMH/AY-41DAMH-W",
+   "list_price": 48290,
+   "sale_price": 41300,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4.1,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4.1
+   }
+  },
+  {
+   "source_code": "2148063",
+   "category": "冷氣",
+   "brand": "SHARP 夏普",
+   "model": "AU-41BESH/AH-41BESH-W",
+   "name": "SHARP夏普極致一對一冷專空調(防鏽防沼機型) AU-41BESH/AH-41BESH-W",
+   "list_price": 36700,
+   "sale_price": 33700,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4.1,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4.1
+   }
+  },
+  {
+   "source_code": "2160402",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU50DHST/LSN50DDHST",
+   "name": "LG DUALCOOL WiFi空調 極淨系列2.0 LSU50DHST/LSN50DDHST",
+   "list_price": 53900,
+   "sale_price": 51205,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2160409",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU50DHST/LSN50IDHST",
+   "name": "LG DUALCOOL WiFi空調 極適系列2.0 LSU50DHST/LSN50IDHST",
+   "list_price": 51900,
+   "sale_price": 45672,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2129654",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CW-R50HA2",
+   "name": "Panasonic 窗型變頻冷暖空調(右吹) CW-R50HA2",
+   "list_price": 45500,
+   "sale_price": 40950,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "窗型",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2153321",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ50BCA2/CS-UJ50BA2",
+   "name": "Panasonic一對一變頻冷專(UJ精緻系列) CU-UJ50BCA2/CS-UJ50BA2",
+   "list_price": 50200,
+   "sale_price": 45180,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2161499",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UK50BCA2/CS-UK50BA2",
+   "name": "Panasonic一對一變頻冷專(UK標準系列) CU-UK50BCA2/CS-UK50BA2",
+   "list_price": 45700,
+   "sale_price": 41130,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2161904",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ50BCA2/CS-UX50FA2",
+   "name": "Panasonic一對一變頻冷專(UX旗艦系列) CU-UJ50BCA2/CS-UX50FA2",
+   "list_price": 53300,
+   "sale_price": 53300,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2153331",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ50BHA2/CS-UJ50BA2",
+   "name": "Panasonic一對一變頻冷暖(UJ精緻系列) CU-UJ50BHA2/CS-UJ50BA2",
+   "list_price": 52800,
+   "sale_price": 44880,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2161510",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UK50BHA2/CS-UK50BA2",
+   "name": "Panasonic一對一變頻冷暖(UK標準系列) CU-UK50BHA2/CS-UK50BA2",
+   "list_price": 48400,
+   "sale_price": 41140,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2161469",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UX50FHA2/CS-UX50FA2",
+   "name": "Panasonic一對一變頻冷暖(UX頂級旗艦系列) CU-UX50FHA2/CS-UX50FA2",
+   "list_price": 58700,
+   "sale_price": 52830,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2161914",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ50BHA2/CS-UX50FA2",
+   "name": "Panasonic一對一變頻冷暖(UX旗艦系列) CU-UJ50BHA2/CS-UX50FA2",
+   "list_price": 55900,
+   "sale_price": 55900,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2153799",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UX50BHA2/CS-VX50BA2",
+   "name": "Panasonic一對一變頻冷暖(VX極致旗艦系列) CU-UX50BHA2/CS-VX50BA2",
+   "list_price": 58700,
+   "sale_price": 58700,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2162191",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-Y50BHA2/CS-Y50BA2",
+   "name": "Panasonic一對一變頻冷暖(Y舒適系列) CU-Y50BHA2/CS-Y50BA2",
+   "list_price": 43400,
+   "sale_price": 43400,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2164699",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CW-U50LHA2",
+   "name": "Panasonic窗型變頻冷暖左吹(U系列) CW-U50LHA2",
+   "list_price": 46700,
+   "sale_price": 46700,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "窗型",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2148057",
+   "category": "冷氣",
+   "brand": "SHARP 夏普",
+   "model": "AF-G500CH",
+   "name": "SHARP典雅系列變頻冷專窗機(機體小型化) AF-G500CH",
+   "list_price": 39900,
+   "sale_price": 36900,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "窗型",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2160401",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU63DHST/LSN63DDHST",
+   "name": "LG DUALCOOL WiFi空調 極淨系列2.0 LSU63DHST/LSN63DDHST",
+   "list_price": 61900,
+   "sale_price": 58805,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2160408",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU63DHST/LSN63IDHST",
+   "name": "LG DUALCOOL WiFi空調 極適系列2.0 LSU63DHST/LSN63IDHST",
+   "list_price": 59900,
+   "sale_price": 52712,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2153320",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ63BCA2/CS-UJ63BA2",
+   "name": "Panasonic一對一變頻冷專(UJ精緻系列) CU-UJ63BCA2/CS-UJ63BA2",
+   "list_price": 59700,
+   "sale_price": 53730,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2161498",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UK63BCA2/CS-UK63BA2",
+   "name": "Panasonic一對一變頻冷專(UK標準系列) CU-UK63BCA2/CS-UK63BA2",
+   "list_price": 54700,
+   "sale_price": 49230,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2161903",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ63BCA2/CS-UX63FA2",
+   "name": "Panasonic一對一變頻冷專(UX旗艦系列) CU-UJ63BCA2/CS-UX63FA2",
+   "list_price": 63100,
+   "sale_price": 63100,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2153330",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ63BHA2/CS-UJ63BA2",
+   "name": "Panasonic一對一變頻冷暖(UJ精緻系列) CU-UJ63BHA2/CS-UJ63BA2",
+   "list_price": 62300,
+   "sale_price": 56070,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2161464",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UK71BHA2/CS-UK71BA2",
+   "name": "Panasonic一對一變頻冷暖(UK標準系列) CU-UK71BHA2/CS-UK71BA2",
+   "list_price": 61900,
+   "sale_price": 55710,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 7.1,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 7.1
+   }
+  },
+  {
+   "source_code": "2146085",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UX63BHA2/CS-UX63BA2",
+   "name": "Panasonic一對一變頻冷暖(UX頂級旗艦系列) CU-UX63BHA2/CS-UX63BA2",
+   "list_price": 66300,
+   "sale_price": 66300,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2164695",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CW-U60CA2",
+   "name": "Panasonic窗型變頻冷專右吹(U系列) CW-U60CA2",
+   "list_price": 52300,
+   "sale_price": 52300,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6,
+    "類型": "窗型",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6
+   }
+  },
+  {
+   "source_code": "2164702",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CW-U60HA2",
+   "name": "Panasonic窗型變頻冷暖右吹(U系列) CW-U60HA2",
+   "list_price": 56300,
+   "sale_price": 56300,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6,
+    "類型": "窗型",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6
+   }
+  },
+  {
+   "source_code": "2148056",
+   "category": "冷氣",
+   "brand": "SHARP 夏普",
+   "model": "AF-G630CH",
+   "name": "SHARP典雅系列變頻冷專窗機(機體小型化) AF-G630CH",
+   "list_price": 47900,
+   "sale_price": 43900,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "窗型",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2154104",
+   "category": "冷氣",
+   "brand": "三菱重工",
+   "model": "SRC63ZTNT-W/SRK63ZTNT-W",
+   "name": "三菱重工一對一變頻冷暖空調(旭山系列) SRC63ZTNT-W/SRK63ZTNT-W",
+   "list_price": 73000,
+   "sale_price": 65700,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2153108",
+   "category": "冷氣",
+   "brand": "三菱重工",
+   "model": "DXC63ZRT2-W/DXK63ZRT2-W",
+   "name": "三菱重工一對一變頻冷暖空調(晴空2系列) DXC63ZRT2-W/DXK63ZRT2-W",
+   "list_price": 78000,
+   "sale_price": 70200,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2153019",
+   "category": "冷氣",
+   "brand": "三菱電機",
+   "model": "MUY-GA60NJ/MSY-GA60NJ",
+   "name": "三菱電機靜音大師一對一DC變頻冷專GA系列 MUY-GA60NJ/MSY-GA60NJ",
+   "list_price": 64700,
+   "sale_price": 58230,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6
+   }
+  },
+  {
+   "source_code": "2160400",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU72DHST/LSN72DDHST",
+   "name": "LG DUALCOOL WiFi空調 極淨系列2.0 LSU72DHST/LSN72DDHST",
+   "list_price": 67900,
+   "sale_price": 64505,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 7.2,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 7.2
+   }
+  },
+  {
+   "source_code": "2160407",
+   "category": "冷氣",
+   "brand": "LG 樂金",
+   "model": "LSU72DHST/LSN72IDHST",
+   "name": "LG DUALCOOL WiFi空調 極適系列2.0 LSU72DHST/LSN72IDHST",
+   "list_price": 65900,
+   "sale_price": 57992,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 7.2,
+    "類型": "分離式",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 7.2
+   }
+  },
+  {
+   "source_code": "2153319",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ71BCA2/CS-UJ71BA2",
+   "name": "Panasonic一對一變頻冷專(UJ精緻系列) CU-UJ71BCA2/CS-UJ71BA2",
+   "list_price": 63500,
+   "sale_price": 57150,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 7.1,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 7.1
+   }
+  },
+  {
+   "source_code": "2161497",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UK71BCA2/CS-UK71BA2",
+   "name": "Panasonic一對一變頻冷專(UK標準系列) CU-UK71BCA2/CS-UK71BA2",
+   "list_price": 59600,
+   "sale_price": 53640,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 7.1,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 7.1
+   }
+  },
+  {
+   "source_code": "2161902",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ71BCA2/CS-UX71FA2",
+   "name": "Panasonic一對一變頻冷專(UX旗艦系列) CU-UJ71BCA2/CS-UX71FA2",
+   "list_price": 66700,
+   "sale_price": 66700,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 7.1,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 7.1
+   }
+  },
+  {
+   "source_code": "2153329",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ71BHA2/CS-UJ71BA2",
+   "name": "Panasonic一對一變頻冷暖(UJ精緻系列) CU-UJ71BHA2/CS-UJ71BA2",
+   "list_price": 65900,
+   "sale_price": 59310,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 7.1,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 7.1
+   }
+  },
+  {
+   "source_code": "2161509",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UK63BHA2/CS-UK63BA2",
+   "name": "Panasonic一對一變頻冷暖(UK標準系列) CU-UK63BHA2/CS-UK63BA2",
+   "list_price": 57400,
+   "sale_price": 51660,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2161471",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UX63FHA2/CS-UX63FA2",
+   "name": "Panasonic一對一變頻冷暖(UX頂級旗艦系列) CU-UX63FHA2/CS-UX63FA2",
+   "list_price": 68400,
+   "sale_price": 61560,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2161913",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ63BHA2/CS-UX63FA2",
+   "name": "Panasonic一對一變頻冷暖(UX旗艦系列) CU-UJ63BHA2/CS-UX63FA2",
+   "list_price": 65700,
+   "sale_price": 65700,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2161465",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UX63FHA2/CS-VX63FA2",
+   "name": "Panasonic一對一變頻冷暖(VX極致旗艦系列) CU-UX63FHA2/CS-VX63FA2",
+   "list_price": 70000,
+   "sale_price": 70000,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2162190",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-Y63BHA2/CS-Y63BA2",
+   "name": "Panasonic一對一變頻冷暖(Y舒適系列) CU-Y63BHA2/CS-Y63BA2",
+   "list_price": 50700,
+   "sale_price": 50700,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2163232",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CW-U68CA2",
+   "name": "Panasonic窗型變頻冷專右吹(U系列) CW-U68CA2",
+   "list_price": 58800,
+   "sale_price": 58800,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 6.8,
+    "類型": "窗型",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.8
+   }
+  },
+  {
+   "source_code": "2163231",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CW-U68LHA2",
+   "name": "Panasonic窗型變頻冷暖左吹(U系列) CW-U68LHA2",
+   "list_price": 62800,
+   "sale_price": 62800,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 6.8,
+    "類型": "窗型",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.8
+   }
+  },
+  {
+   "source_code": "2153316",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ110BCA2/CS-UJ110BA2",
+   "name": "Panasonic一對一變頻冷專(UJ精緻系列) CU-UJ110BCA2/CS-UJ110BA2",
+   "list_price": 86900,
+   "sale_price": 86900,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 11,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 11
+   }
+  },
+  {
+   "source_code": "2153318",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ80BCA2/CS-UJ80BA2",
+   "name": "Panasonic一對一變頻冷專(UJ精緻系列) CU-UJ80BCA2/CS-UJ80BA2",
+   "list_price": 76400,
+   "sale_price": 76400,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 8,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 8
+   }
+  },
+  {
+   "source_code": "2153317",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ90BCA2/CS-UJ90BA2",
+   "name": "Panasonic一對一變頻冷專(UJ精緻系列) CU-UJ90BCA2/CS-UJ90BA2",
+   "list_price": 82400,
+   "sale_price": 82400,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 9,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 9
+   }
+  },
+  {
+   "source_code": "2161494",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UK110BCA2/CS-UK110BA2",
+   "name": "Panasonic一對一變頻冷專(UK標準系列) CU-UK110BCA2/CS-UK110BA2",
+   "list_price": 82700,
+   "sale_price": 82700,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 11,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 11
+   }
+  },
+  {
+   "source_code": "2161496",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UK80BCA2/CS-UK80BA2",
+   "name": "Panasonic一對一變頻冷專(UK標準系列) CU-UK80BCA2/CS-UK80BA2",
+   "list_price": 72700,
+   "sale_price": 72700,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 8,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 8
+   }
+  },
+  {
+   "source_code": "2161495",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UK90BCA2/CS-UK90BA2",
+   "name": "Panasonic一對一變頻冷專(UK標準系列) CU-UK90BCA2/CS-UK90BA2",
+   "list_price": 78700,
+   "sale_price": 78700,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 9,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 9
+   }
+  },
+  {
+   "source_code": "2161899",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ110BCA2/CS-UX110FA2",
+   "name": "Panasonic一對一變頻冷專(UX旗艦系列) CU-UJ110BCA2/CS-UX110FA2",
+   "list_price": 89900,
+   "sale_price": 89900,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 11,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 11
+   }
+  },
+  {
+   "source_code": "2161901",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ80BCA2/CS-UX80FA2",
+   "name": "Panasonic一對一變頻冷專(UX旗艦系列) CU-UJ80BCA2/CS-UX80FA2",
+   "list_price": 79100,
+   "sale_price": 79100,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 8,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 8
+   }
+  },
+  {
+   "source_code": "2161900",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ90BCA2/CS-UX90FA2",
+   "name": "Panasonic一對一變頻冷專(UX旗艦系列) CU-UJ90BCA2/CS-UX90FA2",
+   "list_price": 85100,
+   "sale_price": 85100,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 9,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 9
+   }
+  },
+  {
+   "source_code": "2161493",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-U125BCA2/CS-U125BA2",
+   "name": "Panasonic一對一變頻冷專(U標準系列) CU-U125BCA2/CS-U125BA2",
+   "list_price": 86700,
+   "sale_price": 86700,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 12.5,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 12.5
+   }
+  },
+  {
+   "source_code": "2161492",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-U140BCA2/CS-U140BA2",
+   "name": "Panasonic一對一變頻冷專(U標準系列) CU-U140BCA2/CS-U140BA2",
+   "list_price": 90700,
+   "sale_price": 90700,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 14,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 14
+   }
+  },
+  {
+   "source_code": "2161490",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-U160BCA2/CS-U160BA2",
+   "name": "Panasonic一對一變頻冷專(U標準系列) CU-U160BCA2/CS-U160BA2",
+   "list_price": 95800,
+   "sale_price": 95800,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 16,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 16
+   }
+  },
+  {
+   "source_code": "2153326",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ110BHA2/CS-UJ110BA2",
+   "name": "Panasonic一對一變頻冷暖(UJ精緻系列) CU-UJ110BHA2/CS-UJ110BA2",
+   "list_price": 88800,
+   "sale_price": 88800,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 11,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 11
+   }
+  },
+  {
+   "source_code": "2153328",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ80BHA2/CS-UJ80BA2",
+   "name": "Panasonic一對一變頻冷暖(UJ精緻系列) CU-UJ80BHA2/CS-UJ80BA2",
+   "list_price": 79300,
+   "sale_price": 71370,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 8,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 8
+   }
+  },
+  {
+   "source_code": "2153327",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UJ90BHA2/CS-UJ90BA2",
+   "name": "Panasonic一對一變頻冷暖(UJ精緻系列) CU-UJ90BHA2/CS-UJ90BA2",
+   "list_price": 84400,
+   "sale_price": 75960,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 9,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 9
+   }
+  },
+  {
+   "source_code": "2161506",
+   "category": "冷氣",
+   "brand": "Panasonic 國際",
+   "model": "CU-UK110BHA2/CS-UK110BA2",
+   "name": "Panasonic一對一變頻冷暖(UK標準系列) CU-UK110BHA2/CS-UK110BA2",
+   "list_price": 84600,
+   "sale_price": 84600,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 11,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 11
+   }
+  },
+  {
+   "source_code": "2161782",
+   "category": "冷氣",
+   "brand": "HITACHI 日立",
+   "model": "RAC-110SP/RAS-110YSP1",
+   "name": "日立一對一變頻冷專空調 精品型 RAC-110SP/RAS-110YSP1",
+   "list_price": 93490,
+   "sale_price": 93490,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 11,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 11
+   }
+  },
+  {
+   "source_code": "2161781",
+   "category": "冷氣",
+   "brand": "HITACHI 日立",
+   "model": "RAC-125SP/RAS-125YSP1",
+   "name": "日立一對一變頻冷專空調 精品型 RAC-125SP/RAS-125YSP1",
+   "list_price": 96490,
+   "sale_price": 96490,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 12.5,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 12.5
+   }
+  },
+  {
+   "source_code": "2161784",
+   "category": "冷氣",
+   "brand": "HITACHI 日立",
+   "model": "RAC-81SP/RAS-81YSP1",
+   "name": "日立一對一變頻冷專空調 精品型 RAC-81SP/RAS-81YSP1",
+   "list_price": 77390,
+   "sale_price": 77390,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 8.1,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 8.1
+   }
+  },
+  {
+   "source_code": "2161783",
+   "category": "冷氣",
+   "brand": "HITACHI 日立",
+   "model": "RAC-90SP/RAS-90YSP1",
+   "name": "日立一對一變頻冷專空調 精品型 RAC-90SP/RAS-90YSP1",
+   "list_price": 83490,
+   "sale_price": 83490,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 9,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 9
+   }
+  },
+  {
+   "source_code": "2161762",
+   "category": "冷氣",
+   "brand": "HITACHI 日立",
+   "model": "RAC-36QP/RAS-36HQP1",
+   "name": "日立一對一變頻冷專空調旗艦型 RAC-36QP/RAS-36HQP1",
+   "list_price": 45090,
+   "sale_price": 45090,
+   "specs": {
+    "適用坪數": "5-6 坪",
+    "冷房能力": 3.6,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 3.6
+   }
+  },
+  {
+   "source_code": "2161707",
+   "category": "冷氣",
+   "brand": "HITACHI 日立",
+   "model": "RAC-40QP/RAS-40HQP1",
+   "name": "日立一對一變頻冷專空調旗艦型 RAC-40QP/RAS-40HQP1",
+   "list_price": 48690,
+   "sale_price": 48690,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4
+   }
+  },
+  {
+   "source_code": "2161706",
+   "category": "冷氣",
+   "brand": "HITACHI 日立",
+   "model": "RAC-50QP/RAS-50HQP1",
+   "name": "日立一對一變頻冷專空調旗艦型 RAC-50QP/RAS-50HQP1",
+   "list_price": 56290,
+   "sale_price": 56290,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2161704",
+   "category": "冷氣",
+   "brand": "HITACHI 日立",
+   "model": "RAC-63QP/RAS-63HQP1",
+   "name": "日立一對一變頻冷專空調旗艦型 RAC-63QP/RAS-63HQP1",
+   "list_price": 65990,
+   "sale_price": 65990,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2161703",
+   "category": "冷氣",
+   "brand": "HITACHI 日立",
+   "model": "RAC-71QP/RAS-71HQP1",
+   "name": "日立一對一變頻冷專空調旗艦型 RAC-71QP/RAS-71HQP1",
+   "list_price": 72390,
+   "sale_price": 72390,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 7.1,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 7.1
+   }
+  },
+  {
+   "source_code": "2161766",
+   "category": "冷氣",
+   "brand": "HITACHI 日立",
+   "model": "RAC-28SP/RAS-28YSP1",
+   "name": "日立一對一變頻冷專空調精品型 RAC-28SP/RAS-28YSP1",
+   "list_price": 31290,
+   "sale_price": 31290,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2161711",
+   "category": "冷氣",
+   "brand": "HITACHI 日立",
+   "model": "RAC-36SP/RAS-36YSP1",
+   "name": "日立一對一變頻冷專空調精品型 RAC-36SP/RAS-36YSP1",
+   "list_price": 39990,
+   "sale_price": 39990,
+   "specs": {
+    "適用坪數": "5-6 坪",
+    "冷房能力": 3.6,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 3.6
+   }
+  },
+  {
+   "source_code": "2161765",
+   "category": "冷氣",
+   "brand": "HITACHI 日立",
+   "model": "RAC-40SP/RAS-40YSP1",
+   "name": "日立一對一變頻冷專空調精品型 RAC-40SP/RAS-40YSP1",
+   "list_price": 43690,
+   "sale_price": 43690,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4
+   }
+  },
+  {
+   "source_code": "2161710",
+   "category": "冷氣",
+   "brand": "HITACHI 日立",
+   "model": "RAC-71SP/RAS-71YSP1",
+   "name": "日立一對一變頻冷專空調精品型 RAC-71SP/RAS-71YSP1",
+   "list_price": 65090,
+   "sale_price": 65090,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 7.1,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 7.1
+   }
+  },
+  {
+   "source_code": "2152787",
+   "category": "冷氣",
+   "brand": "HITACHI 日立",
+   "model": "RAC-22VP/RAS-22VP",
+   "name": "日立豪華型冷暖空調2.2kW RAC-22VP/RAS-22VP",
+   "list_price": 24590,
+   "sale_price": 20902,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2152785",
+   "category": "冷氣",
+   "brand": "HITACHI 日立",
+   "model": "RAC-28VP/RAS-28VP",
+   "name": "日立豪華型冷暖空調2.8kW RAC-28VP/RAS-28VP",
+   "list_price": 29690,
+   "sale_price": 25237,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2152784",
+   "category": "冷氣",
+   "brand": "HITACHI 日立",
+   "model": "RAC-36VP/RAS-36VP",
+   "name": "日立豪華型冷暖空調3.6kW RAC-36VP/RAS-36VP",
+   "list_price": 36490,
+   "sale_price": 31017,
+   "specs": {
+    "適用坪數": "5-6 坪",
+    "冷房能力": 3.6,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 3.6
+   }
+  },
+  {
+   "source_code": "2160796",
+   "category": "冷氣",
+   "brand": "SANLUX 台灣三洋",
+   "model": "SAC-V23HJ3/SAE-V23HJ3",
+   "name": "台灣三洋一對一變頻冷暖速捷淨系列 SAC-V23HJ3/SAE-V23HJ3",
+   "list_price": 23200,
+   "sale_price": 18500,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.3,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.3
+   }
+  },
+  {
+   "source_code": "2153021",
+   "category": "冷氣",
+   "brand": "三菱電機",
+   "model": "MUY-GA42NJ/MSY-GA42NJ",
+   "name": "三菱電機靜音大師GA系列一對一DC變頻冷專 MUY-GA42NJ/MSY-GA42NJ",
+   "list_price": 47800,
+   "sale_price": 43020,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4.2,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4.2
+   }
+  },
+  {
+   "source_code": "2153020",
+   "category": "冷氣",
+   "brand": "三菱電機",
+   "model": "MUY-GA50NJ/MSY-GA50NJ",
+   "name": "三菱電機靜音大師GA系列一對一DC變頻冷專 MUY-GA50NJ/MSY-GA50NJ",
+   "list_price": 55400,
+   "sale_price": 49860,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2153038",
+   "category": "冷氣",
+   "brand": "三菱電機",
+   "model": "MUZ-GA100NJ/MSZ-GA100NJ",
+   "name": "三菱電機靜音大師GA系列一對一DC變頻冷暖 MUZ-GA100NJ/MSZ-GA100NJ",
+   "list_price": 98100,
+   "sale_price": 88290,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 10,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 10
+   }
+  },
+  {
+   "source_code": "2153031",
+   "category": "冷氣",
+   "brand": "三菱電機",
+   "model": "MUZ-HA42NF/MSZ-HA42NF",
+   "name": "三菱電機靜音大師HA系列一對一DC變頻冷暖 MUZ-HA42NF/MSZ-HA42NF",
+   "list_price": 47800,
+   "sale_price": 43020,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4.2,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4.2
+   }
+  },
+  {
+   "source_code": "2136498",
+   "category": "冷氣",
+   "brand": "三菱電機",
+   "model": "MUY-HW42NF-TW/MSY-HW42NF-TW",
+   "name": "三菱電機靜音大師HW系列變頻一對一冷專 MUY-HW42NF-TW/MSY-HW42NF-TW",
+   "list_price": 43400,
+   "sale_price": 39060,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4.2,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4.2
+   }
+  },
+  {
+   "source_code": "2153015",
+   "category": "冷氣",
+   "brand": "三菱電機",
+   "model": "MUY-GA100NJ/MSY-GA100NJ",
+   "name": "三菱電機靜音大師一對一DC變頻冷專GA系列 MUY-GA100NJ/MSY-GA100NJ",
+   "list_price": 91400,
+   "sale_price": 82260,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 10,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 10
+   }
+  },
+  {
+   "source_code": "2153024",
+   "category": "冷氣",
+   "brand": "三菱電機",
+   "model": "MUY-GA22NJ/MSY-GA22NJ",
+   "name": "三菱電機靜音大師一對一DC變頻冷專GA系列 MUY-GA22NJ/MSY-GA22NJ",
+   "list_price": 31700,
+   "sale_price": 28530,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2153023",
+   "category": "冷氣",
+   "brand": "三菱電機",
+   "model": "MUY-GA28NJ/MSY-GA28NJ",
+   "name": "三菱電機靜音大師一對一DC變頻冷專GA系列 MUY-GA28NJ/MSY-GA28NJ",
+   "list_price": 37600,
+   "sale_price": 33840,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2153022",
+   "category": "冷氣",
+   "brand": "三菱電機",
+   "model": "MUY-GA35NJ/MSY-GA35NJ",
+   "name": "三菱電機靜音大師一對一DC變頻冷專GA系列 MUY-GA35NJ/MSY-GA35NJ",
+   "list_price": 42200,
+   "sale_price": 37980,
+   "specs": {
+    "適用坪數": "5-6 坪",
+    "冷房能力": 3.5,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 3.5
+   }
+  },
+  {
+   "source_code": "2153018",
+   "category": "冷氣",
+   "brand": "三菱電機",
+   "model": "MUY-GA71NJ/MSY-GA71NJ",
+   "name": "三菱電機靜音大師一對一DC變頻冷專GA系列 MUY-GA71NJ/MSY-GA71NJ",
+   "list_price": 72700,
+   "sale_price": 65430,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 7.1,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 7.1
+   }
+  },
+  {
+   "source_code": "2153017",
+   "category": "冷氣",
+   "brand": "三菱電機",
+   "model": "MUY-GA80NJ/MSY-GA80NJ",
+   "name": "三菱電機靜音大師一對一DC變頻冷專GA系列 MUY-GA80NJ/MSY-GA80NJ",
+   "list_price": 81200,
+   "sale_price": 73080,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 8,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 8
+   }
+  },
+  {
+   "source_code": "2153016",
+   "category": "冷氣",
+   "brand": "三菱電機",
+   "model": "MUY-GA90NJ/MSY-GA90NJ",
+   "name": "三菱電機靜音大師一對一DC變頻冷專GA系列 MUY-GA90NJ/MSY-GA90NJ",
+   "list_price": 85500,
+   "sale_price": 76950,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 9,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 9
+   }
+  },
+  {
+   "source_code": "2153044",
+   "category": "冷氣",
+   "brand": "三菱電機",
+   "model": "MUZ-GA42NJ/MSZ-GA42NJ",
+   "name": "三菱電機靜音大師一對一DC變頻冷暖 GA系列 MUZ-GA42NJ/MSZ-GA42NJ",
+   "list_price": 54100,
+   "sale_price": 48690,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4.2,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4.2
+   }
+  },
+  {
+   "source_code": "2153047",
+   "category": "冷氣",
+   "brand": "三菱電機",
+   "model": "MUZ-GA22NJ/MSZ-GA22NJ",
+   "name": "三菱電機靜音大師一對一DC變頻冷暖GA系列 MUZ-GA22NJ/MSZ-GA22NJ",
+   "list_price": 36800,
+   "sale_price": 33120,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2153046",
+   "category": "冷氣",
+   "brand": "三菱電機",
+   "model": "MUZ-GA28NJ/MSZ-GA28NJ",
+   "name": "三菱電機靜音大師一對一DC變頻冷暖GA系列 MUZ-GA28NJ/MSZ-GA28NJ",
+   "list_price": 44000,
+   "sale_price": 39600,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2153819",
+   "category": "冷氣",
+   "brand": "TECO 東元",
+   "model": "MW40ICR-HR2",
+   "name": "東元一級冷專變頻窗機右吹 MW40ICR-HR2",
+   "list_price": 35400,
+   "sale_price": 31490,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4,
+    "類型": "窗型",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4
+   }
+  },
+  {
+   "source_code": "2153580",
+   "category": "冷氣",
+   "brand": "TECO 東元",
+   "model": "MW22IHR-HR2",
+   "name": "東元一級冷暖變頻窗機右吹 MW22IHR-HR2",
+   "list_price": 26400,
+   "sale_price": 26400,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "窗型",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2153823",
+   "category": "冷氣",
+   "brand": "TECO 東元",
+   "model": "MW40IHR-HR2",
+   "name": "東元一級冷暖變頻窗機右吹 MW40IHR-HR2",
+   "list_price": 38300,
+   "sale_price": 32990,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4,
+    "類型": "窗型",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4
+   }
+  },
+  {
+   "source_code": "2153822",
+   "category": "冷氣",
+   "brand": "TECO 東元",
+   "model": "MW50IHR-HR2",
+   "name": "東元一級冷暖變頻窗機右吹 MW50IHR-HR2",
+   "list_price": 43400,
+   "sale_price": 37400,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "窗型",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2163346",
+   "category": "冷氣",
+   "brand": "TECO 東元",
+   "model": "MA22IC-GAT6/MS22IC-GAT6",
+   "name": "東元一對一變頻沉浸式精品冷專空調 MA22IC-GAT6/MS22IC-GAT6",
+   "list_price": 20900,
+   "sale_price": 18900,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2153408",
+   "category": "冷氣",
+   "brand": "TECO 東元",
+   "model": "MA28IC-GA5/MS28IC-GA5",
+   "name": "東元一對一變頻沉浸式精品冷專空調 MA28IC-GA5/MS28IC-GA5",
+   "list_price": 25490,
+   "sale_price": 25490,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2163345",
+   "category": "冷氣",
+   "brand": "TECO 東元",
+   "model": "MA28IC-GAT6/MS28IC-GAT6",
+   "name": "東元一對一變頻沉浸式精品冷專空調 MA28IC-GAT6/MS28IC-GAT6",
+   "list_price": 25900,
+   "sale_price": 22490,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2153407",
+   "category": "冷氣",
+   "brand": "TECO 東元",
+   "model": "MA36IC-GA5/MS36IC-GA5",
+   "name": "東元一對一變頻沉浸式精品冷專空調 MA36IC-GA5/MS36IC-GA5",
+   "list_price": 32900,
+   "sale_price": 24000,
+   "specs": {
+    "適用坪數": "5-6 坪",
+    "冷房能力": 3.6,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 3.6
+   }
+  },
+  {
+   "source_code": "2163344",
+   "category": "冷氣",
+   "brand": "TECO 東元",
+   "model": "MA36IC-GAT6/MS36IC-GAT6",
+   "name": "東元一對一變頻沉浸式精品冷專空調 MA36IC-GAT6/MS36IC-GAT6",
+   "list_price": 32900,
+   "sale_price": 29490,
+   "specs": {
+    "適用坪數": "5-6 坪",
+    "冷房能力": 3.6,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 3.6
+   }
+  },
+  {
+   "source_code": "2153406",
+   "category": "冷氣",
+   "brand": "TECO 東元",
+   "model": "MA40IC-GA5/MS40IC-GA5",
+   "name": "東元一對一變頻沉浸式精品冷專空調 MA40IC-GA5/MS40IC-GA5",
+   "list_price": 35300,
+   "sale_price": 26500,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4
+   }
+  },
+  {
+   "source_code": "2163343",
+   "category": "冷氣",
+   "brand": "TECO 東元",
+   "model": "MA40IC-GAT6/MS40IC-GAT6",
+   "name": "東元一對一變頻沉浸式精品冷專空調 MA40IC-GAT6/MS40IC-GAT6",
+   "list_price": 35900,
+   "sale_price": 30900,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4
+   }
+  },
+  {
+   "source_code": "2153405",
+   "category": "冷氣",
+   "brand": "TECO 東元",
+   "model": "MA50IC-GA5/MS50IC-GA5",
+   "name": "東元一對一變頻沉浸式精品冷專空調 MA50IC-GA5/MS50IC-GA5",
+   "list_price": 40900,
+   "sale_price": 33500,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2163338",
+   "category": "冷氣",
+   "brand": "TECO 東元",
+   "model": "MA50IC-GAT6/MS50IC-GAT6",
+   "name": "東元一對一變頻沉浸式精品冷專空調 MA50IC-GAT6/MS50IC-GAT6",
+   "list_price": 40900,
+   "sale_price": 36900,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2153404",
+   "category": "冷氣",
+   "brand": "TECO 東元",
+   "model": "MA63IC-GA5/MS63IC-GA5",
+   "name": "東元一對一變頻沉浸式精品冷專空調 MA63IC-GA5/MS63IC-GA5",
+   "list_price": 48900,
+   "sale_price": 48900,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2163336",
+   "category": "冷氣",
+   "brand": "TECO 東元",
+   "model": "MA63IC-GAT6/MS63IC-GAT6",
+   "name": "東元一對一變頻沉浸式精品冷專空調 MA63IC-GAT6/MS63IC-GAT6",
+   "list_price": 50900,
+   "sale_price": 43900,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2153403",
+   "category": "冷氣",
+   "brand": "TECO 東元",
+   "model": "MA72IC-GA5/MS72IC-GA5",
+   "name": "東元一對一變頻沉浸式精品冷專空調 MA72IC-GA5/MS72IC-GA5",
+   "list_price": 53900,
+   "sale_price": 53900,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 7.2,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 7.2
+   }
+  },
+  {
+   "source_code": "2161097",
+   "category": "冷氣",
+   "brand": "SHARP 夏普",
+   "model": "AU-72BEMB/AH-72BEMB-W",
+   "name": "SHARP夏普極致一對一冷專空調(防鏽防沼機型) AU-72BEMB/AH-72BEMB-W",
+   "list_price": 60290,
+   "sale_price": 51600,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 7.2,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 7.2
+   }
+  },
+  {
+   "source_code": "2161098",
+   "category": "冷氣",
+   "brand": "SHARP 夏普",
+   "model": "AE-72BEMB/AY-72BEMB-W",
+   "name": "SHARP夏普極致一對一冷暖空調(防鏽防沼機型) AE-72BEMB/AY-72BEMB-W",
+   "list_price": 62700,
+   "sale_price": 53900,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 7.2,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 7.2
+   }
+  },
+  {
+   "source_code": "2154178",
+   "category": "冷氣",
+   "brand": "HERAN 禾聯",
+   "model": "HO-AR36C3/HI-AR36C3",
+   "name": "禾聯AR3變頻一對一冷專空調(耀金防鏽) HO-AR36C3/HI-AR36C3",
+   "list_price": 30490,
+   "sale_price": 24900,
+   "specs": {
+    "適用坪數": "5-6 坪",
+    "冷房能力": 3.6,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 3.6
+   }
+  },
+  {
+   "source_code": "2154177",
+   "category": "冷氣",
+   "brand": "HERAN 禾聯",
+   "model": "HO-AR41C3/HI-AR41C3",
+   "name": "禾聯AR3變頻一對一冷專空調(耀金防鏽) HO-AR41C3/HI-AR41C3",
+   "list_price": 31900,
+   "sale_price": 26490,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4.1,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4.1
+   }
+  },
+  {
+   "source_code": "2154176",
+   "category": "冷氣",
+   "brand": "HERAN 禾聯",
+   "model": "HO-AR50C3/HI-AR50C3",
+   "name": "禾聯AR3變頻一對一冷專空調(耀金防鏽) HO-AR50C3/HI-AR50C3",
+   "list_price": 39000,
+   "sale_price": 28490,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2154175",
+   "category": "冷氣",
+   "brand": "HERAN 禾聯",
+   "model": "HO-AR63C3/HI-AR63C3",
+   "name": "禾聯AR3變頻一對一冷專空調(耀金防鏽) HO-AR63C3/HI-AR63C3",
+   "list_price": 46900,
+   "sale_price": 36490,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2154174",
+   "category": "冷氣",
+   "brand": "HERAN 禾聯",
+   "model": "HO-AR72C3/HI-AR72C3",
+   "name": "禾聯AR3變頻一對一冷專空調(耀金防鏽) HO-AR72C3/HI-AR72C3",
+   "list_price": 52490,
+   "sale_price": 39900,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 7.2,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 7.2
+   }
+  },
+  {
+   "source_code": "2154187",
+   "category": "冷氣",
+   "brand": "HERAN 禾聯",
+   "model": "HO-AR23H3/HI-AR23H3",
+   "name": "禾聯AR3變頻一對一冷暖空調(耀金防鏽) HO-AR23H3/HI-AR23H3",
+   "list_price": 20000,
+   "sale_price": 20000,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.3,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.3
+   }
+  },
+  {
+   "source_code": "2154185",
+   "category": "冷氣",
+   "brand": "HERAN 禾聯",
+   "model": "HO-AR36H3/HI-AR36H3",
+   "name": "禾聯AR3變頻一對一冷暖空調(耀金防鏽) HO-AR36H3/HI-AR36H3",
+   "list_price": 31490,
+   "sale_price": 25490,
+   "specs": {
+    "適用坪數": "5-6 坪",
+    "冷房能力": 3.6,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 3.6
+   }
+  },
+  {
+   "source_code": "2154184",
+   "category": "冷氣",
+   "brand": "HERAN 禾聯",
+   "model": "HO-AR41H3/HI-AR41H3",
+   "name": "禾聯AR3變頻一對一冷暖空調(耀金防鏽) HO-AR41H3/HI-AR41H3",
+   "list_price": 32900,
+   "sale_price": 26900,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4.1,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4.1
+   }
+  },
+  {
+   "source_code": "2154183",
+   "category": "冷氣",
+   "brand": "HERAN 禾聯",
+   "model": "HO-AR50H3/HI-AR50H3",
+   "name": "禾聯AR3變頻一對一冷暖空調(耀金防鏽) HO-AR50H3/HI-AR50H3",
+   "list_price": 40000,
+   "sale_price": 29900,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2154182",
+   "category": "冷氣",
+   "brand": "HERAN 禾聯",
+   "model": "HO-AR63H3/HI-AR63H3",
+   "name": "禾聯AR3變頻一對一冷暖空調(耀金防鏽) HO-AR63H3/HI-AR63H3",
+   "list_price": 47900,
+   "sale_price": 36900,
+   "specs": {
+    "適用坪數": "8-10 坪",
+    "冷房能力": 6.3,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 6.3
+   }
+  },
+  {
+   "source_code": "2154181",
+   "category": "冷氣",
+   "brand": "HERAN 禾聯",
+   "model": "HO-AR72H3/HI-AR72H3",
+   "name": "禾聯AR3變頻一對一冷暖空調(耀金防鏽) HO-AR72H3/HI-AR72H3",
+   "list_price": 53490,
+   "sale_price": 40490,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 7.2,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 7.2
+   }
+  },
+  {
+   "source_code": "2161085",
+   "category": "冷氣",
+   "brand": "HERAN 禾聯",
+   "model": "HO-AR50C6/HI-AR50C6",
+   "name": "禾聯AR6變頻一對一冷專空調 HO-AR50C6/HI-AR50C6",
+   "list_price": 42600,
+   "sale_price": 36000,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2161083",
+   "category": "冷氣",
+   "brand": "HERAN 禾聯",
+   "model": "HO-AR72C6/HI-AR72C6",
+   "name": "禾聯AR6變頻一對一冷專空調 HO-AR72C6/HI-AR72C6",
+   "list_price": 56990,
+   "sale_price": 48490,
+   "specs": {
+    "適用坪數": "11-12 坪",
+    "冷房能力": 7.2,
+    "類型": "分離式",
+    "冷暖": "冷專",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 7.2
+   }
+  },
+  {
+   "source_code": "2162502",
+   "category": "冷氣",
+   "brand": "RECHI 瑞智",
+   "model": "RAU-HA110DC/RAM-HA110DC",
+   "name": "瑞智變頻空調冷暖壁掛一對一 RAU-HA110DC/RAM-HA110DC",
+   "list_price": 80900,
+   "sale_price": 80900,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 11,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 11
+   }
+  },
+  {
+   "source_code": "2162510",
+   "category": "冷氣",
+   "brand": "RECHI 瑞智",
+   "model": "RAU-HA22DC/RAM-HA22DC",
+   "name": "瑞智變頻空調冷暖壁掛一對一 RAU-HA22DC/RAM-HA22DC",
+   "list_price": 23900,
+   "sale_price": 23900,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2162509",
+   "category": "冷氣",
+   "brand": "RECHI 瑞智",
+   "model": "RAU-HA28DC/RAM-HA28DC",
+   "name": "瑞智變頻空調冷暖壁掛一對一 RAU-HA28DC/RAM-HA28DC",
+   "list_price": 26900,
+   "sale_price": 26900,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2162506",
+   "category": "冷氣",
+   "brand": "RECHI 瑞智",
+   "model": "RAU-HA50DC/RAM-HA50DC",
+   "name": "瑞智變頻空調冷暖壁掛一對一 RAU-HA50DC/RAM-HA50DC",
+   "list_price": 43900,
+   "sale_price": 43900,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2162504",
+   "category": "冷氣",
+   "brand": "RECHI 瑞智",
+   "model": "RAU-HA80DC/RAM-HA80DC",
+   "name": "瑞智變頻空調冷暖壁掛一對一 RAU-HA80DC/RAM-HA80DC",
+   "list_price": 64900,
+   "sale_price": 64900,
+   "specs": {
+    "適用坪數": "13 坪以上",
+    "冷房能力": 8,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 8
+   }
+  },
+  {
+   "source_code": "2161641",
+   "category": "冷氣",
+   "brand": "SAMPO 聲寶",
+   "model": "AU-VF28DC1/AM-VF28DC1",
+   "name": "聲寶一對一冷暖空調VF1系列 AU-VF28DC1/AM-VF28DC1",
+   "list_price": 23900,
+   "sale_price": 22990,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2161640",
+   "category": "冷氣",
+   "brand": "SAMPO 聲寶",
+   "model": "AU-VF41DC1/AM-VF41DC1",
+   "name": "聲寶一對一冷暖空調VF1系列 AU-VF41DC1/AM-VF41DC1",
+   "list_price": 33900,
+   "sale_price": 32990,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4.1,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4.1
+   }
+  },
+  {
+   "source_code": "2146149",
+   "category": "冷氣",
+   "brand": "SAMPO 聲寶",
+   "model": "AU-VF50DC/AM-VF50DC",
+   "name": "聲寶一對一冷暖空調VF系列 AU-VF50DC/AM-VF50DC",
+   "list_price": 39900,
+   "sale_price": 39900,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2091795",
+   "category": "冷氣",
+   "brand": "SAMPO 聲寶",
+   "model": "AW-PC41R",
+   "name": "聲寶定頻窗型右吹空調 AW-PC41R",
+   "list_price": 26700,
+   "sale_price": 26700,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4.1,
+    "類型": "窗型",
+    "變頻": "定頻"
+   },
+   "meta": {
+    "kw": 4.1
+   }
+  },
+  {
+   "source_code": "2091794",
+   "category": "冷氣",
+   "brand": "SAMPO 聲寶",
+   "model": "AW-PC50R",
+   "name": "聲寶定頻窗型右吹空調 AW-PC50R",
+   "list_price": 30700,
+   "sale_price": 30700,
+   "specs": {
+    "適用坪數": "7-8 坪",
+    "冷房能力": 5,
+    "類型": "窗型",
+    "變頻": "定頻"
+   },
+   "meta": {
+    "kw": 5
+   }
+  },
+  {
+   "source_code": "2154988",
+   "category": "冷氣",
+   "brand": "SAMPO 聲寶",
+   "model": "AU-PH22DC/AM-PH22DC",
+   "name": "聲寶星幸福變頻一對一冷暖空調 AU-PH22DC/AM-PH22DC",
+   "list_price": 28600,
+   "sale_price": 25900,
+   "specs": {
+    "適用坪數": "3-4 坪",
+    "冷房能力": 2.2,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.2
+   }
+  },
+  {
+   "source_code": "2154983",
+   "category": "冷氣",
+   "brand": "SAMPO 聲寶",
+   "model": "AU-PH28DC/AM-PH28DC",
+   "name": "聲寶星幸福變頻一對一冷暖空調 AU-PH28DC/AM-PH28DC",
+   "list_price": 31900,
+   "sale_price": 28900,
+   "specs": {
+    "適用坪數": "4-5 坪",
+    "冷房能力": 2.8,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 2.8
+   }
+  },
+  {
+   "source_code": "2154982",
+   "category": "冷氣",
+   "brand": "SAMPO 聲寶",
+   "model": "AU-PH36DC/AM-PH36DC",
+   "name": "聲寶星幸福變頻一對一冷暖空調 AU-PH36DC/AM-PH36DC",
+   "list_price": 37900,
+   "sale_price": 36500,
+   "specs": {
+    "適用坪數": "5-6 坪",
+    "冷房能力": 3.6,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 3.6
+   }
+  },
+  {
+   "source_code": "2154979",
+   "category": "冷氣",
+   "brand": "SAMPO 聲寶",
+   "model": "AU-PH41DC/AM-PH41DC",
+   "name": "聲寶星幸福變頻一對一冷暖空調 AU-PH41DC/AM-PH41DC",
+   "list_price": 40400,
+   "sale_price": 38900,
+   "specs": {
+    "適用坪數": "6-7 坪",
+    "冷房能力": 4.1,
+    "類型": "分離式",
+    "冷暖": "冷暖",
+    "變頻": "變頻"
+   },
+   "meta": {
+    "kw": 4.1
+   }
+  },
+  {
+   "source_code": "2150375",
+   "category": "空氣清淨機",
+   "brand": "dyson",
+   "model": "DYSONHP12-NK/GD",
+   "name": "Dyson HP12 甲醛偵測涼暖空氣清淨機（鎳金）",
+   "list_price": 29900,
+   "sale_price": 19999,
+   "specs": {
+    "適用坪數": 10
+   },
+   "meta": {
+    "coverLabel": "10坪以下",
+    "shape": "loop",
+    "color": "#9ea3a8",
+    "accent": "#c9a54a"
+   }
+  },
+  {
+   "source_code": "2157018",
+   "category": "空氣清淨機",
+   "brand": "dyson",
+   "model": "DYSONPURIFIERCOOLTP11WHITE",
+   "name": "Dyson TP11 二合一涼風智能空氣清淨機（白）",
+   "list_price": 15900,
+   "sale_price": 12900,
+   "specs": {
+    "適用坪數": 10
+   },
+   "meta": {
+    "coverLabel": "10坪以下",
+    "shape": "loop-tall",
+    "color": "#ececea",
+    "accent": "#c3c7cc"
+   }
+  },
+  {
+   "source_code": "2157020",
+   "category": "空氣清淨機",
+   "brand": "dyson",
+   "model": "DYSONPURIFIERHOT+COOLHP11WHITE",
+   "name": "Dyson HP11 三合一涼暖智能空氣清淨機（白）",
+   "list_price": 19900,
+   "sale_price": 14900,
+   "specs": {
+    "適用坪數": 10
+   },
+   "meta": {
+    "coverLabel": "10坪以下",
+    "shape": "loop",
+    "color": "#ececea",
+    "accent": "#c3c7cc"
+   }
+  },
+  {
+   "source_code": "2150373",
+   "category": "空氣清淨機",
+   "brand": "dyson",
+   "model": "DYSONTP12K-CARBONNK/GD",
+   "name": "Dyson TP12 甲醛偵測涼風空氣清淨機（鎳金）",
+   "list_price": 25900,
+   "sale_price": 20900,
+   "specs": {
+    "適用坪數": 10
+   },
+   "meta": {
+    "coverLabel": "10坪以下",
+    "shape": "loop-tall",
+    "color": "#9ea3a8",
+    "accent": "#c9a54a"
+   }
+  },
+  {
+   "source_code": "2143253",
+   "category": "空氣清淨機",
+   "brand": "LG 樂金",
+   "model": "AS201PWU0",
+   "name": "LG Aero Furniture 新淨几（雪梨白）",
+   "list_price": 14900,
+   "sale_price": 12900,
+   "specs": {
+    "適用坪數": 10
+   },
+   "meta": {
+    "coverLabel": "10坪以下",
+    "shape": "table",
+    "color": "#f1efea",
+    "accent": "#d9c9b0"
+   }
+  },
+  {
+   "source_code": "2159386",
+   "category": "空氣清淨機",
+   "brand": "LG 樂金",
+   "model": "AS251CBZ0",
+   "name": "LG AeroCatTower 智慧寵物照護空氣清淨機",
+   "list_price": 23900,
+   "sale_price": 18900,
+   "specs": {
+    "適用坪數": 10
+   },
+   "meta": {
+    "coverLabel": "10坪以下",
+    "shape": "cattower",
+    "color": "#ece7df",
+    "accent": "#cbb593"
+   }
+  },
+  {
+   "source_code": "2162232",
+   "category": "空氣清淨機",
+   "brand": "LG 樂金",
+   "model": "AS201SHU0",
+   "name": "LG AeroSpeaker 空氣清淨機",
+   "list_price": 20900,
+   "sale_price": 14900,
+   "specs": {
+    "適用坪數": 10
+   },
+   "meta": {
+    "coverLabel": "10坪以下",
+    "shape": "speaker",
+    "color": "#e9e9e7",
+    "accent": "#7d8691"
+   }
+  },
+  {
+   "source_code": "2150748",
+   "category": "空氣清淨機",
+   "brand": "SHARP 夏普",
+   "model": "FU-S40T-T",
+   "name": "SHARP 雙向速淨 mini 空氣美學機 9坪（小茶棕）",
+   "list_price": 9900,
+   "sale_price": 6990,
+   "specs": {
+    "適用坪數": 9
+   },
+   "meta": {
+    "coverLabel": "9坪",
+    "shape": "box-s",
+    "color": "#8b6b55",
+    "accent": "#d8c7b6"
+   }
+  },
+  {
+   "source_code": "2127969",
+   "category": "空氣清淨機",
+   "brand": "Xiaomi 小米",
+   "model": "4 Lite",
+   "name": "小米 Xiaomi 空氣淨化器 4 Lite",
+   "list_price": 3495,
+   "sale_price": 3299,
+   "specs": {
+    "適用坪數": 10
+   },
+   "meta": {
+    "coverLabel": "10坪以下",
+    "shape": "cyl-s",
+    "color": "#f4f4f2",
+    "accent": "#d6d8da"
+   }
+  },
+  {
+   "source_code": "2160804",
+   "category": "空氣清淨機",
+   "brand": "dyson",
+   "model": "DYSONHUSHJETHJ10BK(SP01-A)",
+   "name": "Dyson HJ10 噴射氣流空氣清淨機（冰川藍）",
+   "list_price": 14900,
+   "sale_price": 9900,
+   "specs": {
+    "適用坪數": 15
+   },
+   "meta": {
+    "coverLabel": "11-15坪",
+    "shape": "cyl-top",
+    "color": "#8fb7c9",
+    "accent": "#e8eef1"
+   }
+  },
+  {
+   "source_code": "2156802",
+   "category": "空氣清淨機",
+   "brand": "LG 樂金",
+   "model": "AS551GWX0",
+   "name": "LG AeroBooster 空氣清淨機（專業版）",
+   "list_price": 21900,
+   "sale_price": 15900,
+   "specs": {
+    "適用坪數": 15
+   },
+   "meta": {
+    "coverLabel": "11-15坪",
+    "shape": "cyl-booster",
+    "color": "#f0efec",
+    "accent": "#c7ccd2"
+   }
+  },
+  {
+   "source_code": "2144206",
+   "category": "空氣清淨機",
+   "brand": "Panasonic 國際",
+   "model": "F-P75MH",
+   "name": "Panasonic nanoeX 空氣清淨機 15坪",
+   "list_price": 15900,
+   "sale_price": 14310,
+   "specs": {
+    "適用坪數": 15
+   },
+   "meta": {
+    "coverLabel": "15坪",
+    "shape": "box",
+    "color": "#f3f3f1",
+    "accent": "#d4d7da"
+   }
+  },
+  {
+   "source_code": "2127971",
+   "category": "空氣清淨機",
+   "brand": "Xiaomi 小米",
+   "model": "4",
+   "name": "小米 Xiaomi 空氣淨化器 4",
+   "list_price": 4995,
+   "sale_price": 4995,
+   "specs": {
+    "適用坪數": 15
+   },
+   "meta": {
+    "coverLabel": "11-15坪",
+    "shape": "cyl",
+    "color": "#f4f4f2",
+    "accent": "#d6d8da"
+   }
+  },
+  {
+   "source_code": "2127972",
+   "category": "空氣清淨機",
+   "brand": "Xiaomi 小米",
+   "model": "4 Pro",
+   "name": "小米 Xiaomi 空氣淨化器 4 Pro",
+   "list_price": 6995,
+   "sale_price": 6599,
+   "specs": {
+    "適用坪數": 15
+   },
+   "meta": {
+    "coverLabel": "11-15坪",
+    "shape": "cyl-l",
+    "color": "#f4f4f2",
+    "accent": "#d6d8da"
+   }
+  },
+  {
+   "source_code": "2157236",
+   "category": "空氣清淨機",
+   "brand": "DIKE",
+   "model": "HCF610WT",
+   "name": "DIKE 寵愛抗敏空氣清淨機（落地型）",
+   "list_price": 9490,
+   "sale_price": 9490,
+   "specs": {
+    "適用坪數": 20
+   },
+   "meta": {
+    "coverLabel": "16-20坪",
+    "shape": "box",
+    "color": "#f5f5f3",
+    "accent": "#cfd3d8"
+   }
+  },
+  {
+   "source_code": "2141716",
+   "category": "空氣清淨機",
+   "brand": "Honeywell",
+   "model": "HPA400WTW",
+   "name": "Honeywell 純淨空氣清淨機（9-18坪）",
+   "list_price": 21900,
+   "sale_price": 15900,
+   "specs": {
+    "適用坪數": 18
+   },
+   "meta": {
+    "coverLabel": "9-18坪",
+    "shape": "box-round",
+    "color": "#f3f3f1",
+    "accent": "#9aa3ad"
+   }
+  },
+  {
+   "source_code": "2144049",
+   "category": "空氣清淨機",
+   "brand": "LG 樂金",
+   "model": "AS651DBY0",
+   "name": "LG PuriCare 360度單層清淨機（寵物功能增加版二代）",
+   "list_price": 25800,
+   "sale_price": 21300,
+   "specs": {
+    "適用坪數": 20
+   },
+   "meta": {
+    "coverLabel": "16-20坪",
+    "shape": "cyl-360-1",
+    "color": "#efede8",
+    "accent": "#d2cdc4"
+   }
+  },
+  {
+   "source_code": "2143048",
+   "category": "空氣清淨機",
+   "brand": "LG 樂金",
+   "model": "FS151PBK0",
+   "name": "LG UV 二合一涼風空氣清淨機（白）",
+   "list_price": 14900,
+   "sale_price": 12900,
+   "specs": {
+    "適用坪數": 21
+   },
+   "meta": {
+    "coverLabel": "21坪以上",
+    "shape": "tower-fan",
+    "color": "#f2f2f0",
+    "accent": "#c7ccd2"
+   }
+  },
+  {
+   "source_code": "2144205",
+   "category": "空氣清淨機",
+   "brand": "Panasonic 國際",
+   "model": "F-P90MH",
+   "name": "Panasonic nanoeX 空氣清淨機 18坪",
+   "list_price": 18900,
+   "sale_price": 17000,
+   "specs": {
+    "適用坪數": 18
+   },
+   "meta": {
+    "coverLabel": "18坪",
+    "shape": "box",
+    "color": "#f3f3f1",
+    "accent": "#d4d7da"
+   }
+  },
+  {
+   "source_code": "2167112",
+   "category": "空氣清淨機",
+   "brand": "SHARP 夏普",
+   "model": "FP-S72T-L",
+   "name": "SHARP AI 智慧雙向速淨寵物清淨機 16坪（岩霧灰）",
+   "list_price": 16900,
+   "sale_price": 15900,
+   "specs": {
+    "適用坪數": 16
+   },
+   "meta": {
+    "coverLabel": "16坪",
+    "shape": "box",
+    "color": "#7d8794",
+    "accent": "#c9ced4"
+   }
+  },
+  {
+   "source_code": "2162699",
+   "category": "空氣清淨機",
+   "brand": "Electrolux 伊萊克斯",
+   "model": "EP53-45SWA",
+   "name": "伊萊克斯 毛寵心淨空氣清淨機",
+   "list_price": 9900,
+   "sale_price": 9900,
+   "specs": {
+    "適用坪數": 20
+   },
+   "meta": {
+    "coverLabel": "16-20坪",
+    "shape": "box-round",
+    "color": "#f1f0ec",
+    "accent": "#b9bec4"
+   }
+  },
+  {
+   "source_code": "2142347",
+   "category": "空氣清淨機",
+   "brand": "dyson",
+   "model": "DYSONPURIFIERBIGQUIETBP04DBU/GD",
+   "name": "Dyson BP04 強效極靜甲醛偵測空氣清淨機",
+   "list_price": 34900,
+   "sale_price": 27900,
+   "specs": {
+    "適用坪數": 21
+   },
+   "meta": {
+    "coverLabel": "21坪以上",
+    "shape": "bp",
+    "color": "#2f3e5c",
+    "accent": "#c9a54a"
+   }
+  },
+  {
+   "source_code": "2144051",
+   "category": "空氣清淨機",
+   "brand": "LG 樂金",
+   "model": "AS101DBY0",
+   "name": "LG PuriCare 360度雙層清淨機（寵物功能增加版二代）",
+   "list_price": 35800,
+   "sale_price": 31300,
+   "specs": {
+    "適用坪數": 21
+   },
+   "meta": {
+    "coverLabel": "21坪以上",
+    "shape": "cyl-360-2",
+    "color": "#efede8",
+    "accent": "#d2cdc4"
+   }
+  },
+  {
+   "source_code": "2160236",
+   "category": "空氣清淨機",
+   "brand": "LG 樂金",
+   "model": "AS111NGY1",
+   "name": "LG PuriCare 360度雙層清淨機（寵物版二代旗艦款）",
+   "list_price": 40800,
+   "sale_price": 36900,
+   "specs": {
+    "適用坪數": 21
+   },
+   "meta": {
+    "coverLabel": "21坪以上",
+    "shape": "cyl-360-2",
+    "color": "#e7e8e6",
+    "accent": "#9da5ad"
+   }
+  },
+  {
+   "source_code": "2139216",
+   "category": "空氣清淨機",
+   "brand": "Electrolux 伊萊克斯",
+   "model": "EP71-56BLA",
+   "name": "伊萊克斯 Pure A9.2 高效能抗菌空氣清淨機（丹寧藍）",
+   "list_price": 21900,
+   "sale_price": 12900,
+   "specs": {
+    "適用坪數": 21
+   },
+   "meta": {
+    "coverLabel": "21坪以上",
+    "shape": "box-tall",
+    "color": "#3e5a78",
+    "accent": "#d9dee3"
+   }
+  },
+  {
+   "source_code": "2139219",
+   "category": "空氣清淨機",
+   "brand": "Electrolux 伊萊克斯",
+   "model": "EP71-76BLA",
+   "name": "伊萊克斯 Pure A9.2 高效能抗菌空氣清淨機（丹寧藍・大）",
+   "list_price": 24900,
+   "sale_price": 14900,
+   "specs": {
+    "適用坪數": 21
+   },
+   "meta": {
+    "coverLabel": "21坪以上",
+    "shape": "box-tall-l",
+    "color": "#3e5a78",
+    "accent": "#d9dee3"
+   }
+  },
+  {
+   "source_code": "2143255",
+   "category": "空氣清淨機",
+   "brand": "SHARP 夏普",
+   "model": "FP-S90T-W",
+   "name": "SHARP Purefit 純淨美學空氣清淨機 27坪（奶油白）",
+   "list_price": 28900,
+   "sale_price": 16900,
+   "specs": {
+    "適用坪數": 27
+   },
+   "meta": {
+    "coverLabel": "27坪",
+    "shape": "box-l",
+    "color": "#f1ece1",
+    "accent": "#cbbfa9"
+   }
+  },
+  {
+   "source_code": "2135830",
+   "category": "空氣清淨機",
+   "brand": "Philips 飛利浦",
+   "model": "AC3033/86",
+   "name": "飛利浦 奈米級空氣清淨機",
+   "list_price": 21990,
+   "sale_price": 14990,
+   "specs": {
+    "適用坪數": 21
+   },
+   "meta": {
+    "coverLabel": "21坪以上",
+    "shape": "cyl-l",
+    "color": "#f3f3f1",
+    "accent": "#9aa3ad"
+   }
+  },
+  {
+   "source_code": "2149439",
+   "category": "除濕機",
+   "brand": "ARTISAN",
+   "model": "DH6500",
+   "name": "ARTISAN 1.5L HEPA 清淨除溼機",
+   "list_price": 1990,
+   "sale_price": 1990,
+   "specs": {
+    "除濕量": 1.5,
+    "適用坪數": 2
+   },
+   "meta": {
+    "color": "#f4f4f2"
+   }
+  },
+  {
+   "source_code": "2161373",
+   "category": "除濕機",
+   "brand": "ARKDAN",
+   "model": "DHY-GC18PC",
+   "name": "ARKDAN 18公升清淨除濕機",
+   "list_price": 18990,
+   "sale_price": 17490,
+   "specs": {
+    "除濕量": 18,
+    "適用坪數": 23
+   },
+   "meta": {
+    "color": "#f2f2f0"
+   }
+  },
+  {
+   "source_code": "2163117",
+   "category": "除濕機",
+   "brand": "DIKE",
+   "model": "HLE810WT",
+   "name": "DIKE 6L 除濕機",
+   "list_price": 6490,
+   "sale_price": 5990,
+   "specs": {
+    "除濕量": 6,
+    "適用坪數": 8
+   },
+   "meta": {
+    "color": "#f5f5f3"
+   }
+  },
+  {
+   "source_code": "2162388",
+   "category": "除濕機",
+   "brand": "JJPRO 家佳寶",
+   "model": "JPDH05",
+   "name": "JJPRO 家佳寶 新一級能效 12L WIFI 除濕機",
+   "list_price": 9900,
+   "sale_price": 9900,
+   "specs": {
+    "除濕量": 12,
+    "適用坪數": 15
+   },
+   "meta": {
+    "color": "#f3f3f1"
+   }
+  },
+  {
+   "source_code": "2162387",
+   "category": "除濕機",
+   "brand": "JJPRO 家佳寶",
+   "model": "JPDH06",
+   "name": "JJPRO 家佳寶 新一級能效 12L WIFI 除濕機",
+   "list_price": 12900,
+   "sale_price": 12900,
+   "specs": {
+    "除濕量": 12,
+    "適用坪數": 15
+   },
+   "meta": {
+    "color": "#e9e6df"
+   }
+  },
+  {
+   "source_code": "2162392",
+   "category": "除濕機",
+   "brand": "JJPRO 家佳寶",
+   "model": "JPDH02A",
+   "name": "JJPRO 家佳寶 新一級能效 6L WIFI 除濕機",
+   "list_price": 5980,
+   "sale_price": 5980,
+   "specs": {
+    "除濕量": 6,
+    "適用坪數": 8
+   },
+   "meta": {
+    "color": "#f3f3f1"
+   }
+  },
+  {
+   "source_code": "2162390",
+   "category": "除濕機",
+   "brand": "JJPRO 家佳寶",
+   "model": "JPDH03A",
+   "name": "JJPRO 家佳寶 新一級能效 6L 除濕機",
+   "list_price": 4980,
+   "sale_price": 4980,
+   "specs": {
+    "除濕量": 6,
+    "適用坪數": 8
+   },
+   "meta": {
+    "color": "#f3f3f1"
+   }
+  },
+  {
+   "source_code": "2157654",
+   "category": "除濕機",
+   "brand": "LG 樂金",
+   "model": "DD181MWE0",
+   "name": "LG UV 抑菌雙變頻除濕機 18L（時尚款）",
+   "list_price": 22900,
+   "sale_price": 17900,
+   "specs": {
+    "除濕量": 18,
+    "適用坪數": 23
+   },
+   "meta": {
+    "color": "#ebe8e2"
+   }
+  },
+  {
+   "source_code": "2136490",
+   "category": "除濕機",
+   "brand": "LG 樂金",
+   "model": "MD161QPE0",
+   "name": "LG WiFi 變頻除濕機 16L UV版",
+   "list_price": 20900,
+   "sale_price": 16900,
+   "specs": {
+    "除濕量": 16,
+    "適用坪數": 20
+   },
+   "meta": {
+    "color": "#f0f0ee"
+   }
+  },
+  {
+   "source_code": "2161372",
+   "category": "除濕機",
+   "brand": "NWT 威技",
+   "model": "WDH-126HN",
+   "name": "NWT 威技 一級能效 6L 除濕機",
+   "list_price": 4890,
+   "sale_price": 3288,
+   "specs": {
+    "除濕量": 6,
+    "適用坪數": 8
+   },
+   "meta": {
+    "color": "#f4f4f2"
+   }
+  },
+  {
+   "source_code": "2160637",
+   "category": "除濕機",
+   "brand": "NWT 威技",
+   "model": "WDH-26ED",
+   "name": "NWT 威技 一級能效 WiFi 智能 26L 除濕機",
+   "list_price": 12900,
+   "sale_price": 8990,
+   "specs": {
+    "除濕量": 26,
+    "適用坪數": 33
+   },
+   "meta": {
+    "color": "#f1f1ef"
+   }
+  },
+  {
+   "source_code": "2163121",
+   "category": "除濕機",
+   "brand": "NWT 威技",
+   "model": "WDH-20VX",
+   "name": "NWT 威技 WiFi 智能雙變頻一級能效 20L 除濕機",
+   "list_price": 18900,
+   "sale_price": 12888,
+   "specs": {
+    "除濕量": 20,
+    "適用坪數": 25
+   },
+   "meta": {
+    "color": "#f1f1ef"
+   }
+  },
+  {
+   "source_code": "2120169",
+   "category": "除濕機",
+   "brand": "Panasonic 國際",
+   "model": "F-Y26JH",
+   "name": "Panasonic WIFI 清淨型 13L 除濕機",
+   "list_price": 18090,
+   "sale_price": 17186,
+   "specs": {
+    "除濕量": 13,
+    "適用坪數": 16
+   },
+   "meta": {
+    "color": "#f3f3f1"
+   }
+  },
+  {
+   "source_code": "2166505",
+   "category": "除濕機",
+   "brand": "Panasonic 國際",
+   "model": "F-YV20QBH",
+   "name": "Panasonic 10L 變頻除濕機",
+   "list_price": 11600,
+   "sale_price": 11020,
+   "specs": {
+    "除濕量": 10,
+    "適用坪數": 13
+   },
+   "meta": {
+    "color": "#f3f3f1"
+   }
+  },
+  {
+   "source_code": "2158403",
+   "category": "除濕機",
+   "brand": "Panasonic 國際",
+   "model": "F-Y22PN",
+   "name": "Panasonic 11L 專用型除濕機",
+   "list_price": 10990,
+   "sale_price": 10441,
+   "specs": {
+    "除濕量": 11,
+    "適用坪數": 14
+   },
+   "meta": {
+    "color": "#f3f3f1"
+   }
+  },
+  {
+   "source_code": "2166506",
+   "category": "除濕機",
+   "brand": "Panasonic 國際",
+   "model": "F-YV24QNH",
+   "name": "Panasonic 12L 變頻除濕機",
+   "list_price": 13600,
+   "sale_price": 12920,
+   "specs": {
+    "除濕量": 12,
+    "適用坪數": 15
+   },
+   "meta": {
+    "color": "#f3f3f1"
+   }
+  }
+ ]
+}

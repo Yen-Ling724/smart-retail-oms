@@ -25,6 +25,10 @@ CREATE TABLE IF NOT EXISTS products (
   updated_at  timestamptz NOT NULL DEFAULT now()
 );
 
+-- 全國電子官網商品編號（自建商品為空）、給 3D 選購頁用的外型與配色等附加資料
+ALTER TABLE products ADD COLUMN IF NOT EXISTS source_code text UNIQUE;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS meta jsonb NOT NULL DEFAULT '{}'::jsonb;
+
 -- 價格歷史：valid_to 為空的那一筆就是目前價格
 CREATE TABLE IF NOT EXISTS product_prices (
   id          bigserial PRIMARY KEY,
