@@ -61,7 +61,11 @@ function specFit(p, need, relaxed) {
       }
       if (prefs.has('drum')) s.類型 === '滾筒' ? (score += 2, reasons.push('滾筒式')) : unmet(`是${s.類型}，不是滾筒式`);
       if (prefs.has('top')) s.類型 === '直立式' ? (score += 2, reasons.push('直立式')) : unmet(`是${s.類型}，不是直立式`);
-      if (prefs.has('dryer')) s.烘乾容量 ? (score += 2, reasons.push(`有烘乾功能（${s.烘乾容量}kg）`)) : unmet('沒有烘乾功能');
+      if (prefs.has('dryer')) {
+        if (s.烘乾容量) { score += 2; reasons.push(`有烘乾功能（${s.烘乾容量}kg）`); }
+        else if (/烘/.test(`${s.特色 ?? ''}${p.name}`)) { score += 2; reasons.push('洗脫烘一機完成'); }
+        else unmet('沒有烘乾功能');
+      }
       break;
     case '冷氣': {
       const [lo, hi] = pingRange(s.適用坪數);
@@ -126,7 +130,7 @@ function specFit(p, need, relaxed) {
     if (s.變頻 === '變頻' || /變頻/.test(`${p.name}${s.特色 ?? ''}`)) { score += 1; reasons.push('變頻'); }
     else if (s.變頻 === '定頻') misses.push('定頻，不是變頻');
   }
-  if (s.特色 && reasons.length < 3) reasons.push(s.特色);
+  if (s.特色 && reasons.length < 3 && !reasons.some((r) => r.includes(s.特色))) reasons.push(s.特色);
   return { ok, score, reasons, misses };
 }
 

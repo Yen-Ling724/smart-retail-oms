@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+
 // 每個分類的固定規格欄位（參考家電通路的篩選條件：坪數、能效、變頻、尺寸…）。
 // type：
 //   number      數字，單位由 unit 決定（例如 容量: 480）
@@ -23,8 +25,9 @@ export const LEGACY_AC_PING = { '7-9 坪': '7-8 坪', '9-11 坪': '8-10 坪', '1
 export const SPEC_TEMPLATES = {
   冰箱: [
     { key: '容量', type: 'number', unit: 'L', required: true, min: 50, max: 1000 },
-    { key: '門數', type: 'select', options: ['單門', '雙門', '三門', '四門', '五門', '對開'], required: true },
-    { key: '能效', type: 'select', options: ENERGY, required: true },
+    // 官網品名不一定寫門數與能效，所以不是必填
+    { key: '門數', type: 'select', options: ['單門', '雙門', '三門', '四門', '五門', '六門', '對開'] },
+    { key: '能效', type: 'select', options: ENERGY },
     INVERTER,
     { key: '尺寸', type: 'dimensions', unit: 'cm', min: 10, max: 300 },
     FEATURE,
@@ -49,8 +52,8 @@ export const SPEC_TEMPLATES = {
     FEATURE,
   ],
   電視: [
-    { key: '尺寸', type: 'select', numeric: true, unit: '吋', options: [32, 40, 43, 50, 55, 58, 65, 70, 75, 85, 98], required: true },
-    { key: '解析度', type: 'select', options: ['HD', 'FHD', '4K', '8K'], required: true },
+    { key: '尺寸', type: 'number', unit: '吋', min: 10, max: 150, required: true },
+    { key: '解析度', type: 'select', options: ['HD', 'FHD', '4K', '8K'] },
     { key: '面板', type: 'select', options: ['LCD', '量子點', 'Mini LED', 'OLED'] },
     { key: '系統', type: 'select', options: ['智慧電視', '一般電視'] },
     FEATURE,
@@ -75,7 +78,7 @@ export const SPEC_TEMPLATES = {
   廚房家電: [
     { key: '類型', type: 'select', options: ['電子鍋', '氣炸鍋', '微波爐', '烤箱', '蒸烤爐', '飲水機', '其他'], required: true },
     {
-      key: '容量', type: 'text', required: true, placeholder: '例：10 人份、6L',
+      key: '容量', type: 'text', placeholder: '例：10 人份、6L',
       suggestions: ['3 人份', '6 人份', '10 人份', '3L', '4L', '5L', '6L', '20L', '25L', '30L', '32L'],
     },
     { key: '功率', type: 'number', unit: 'W', min: 1, max: 5000 },
@@ -126,6 +129,17 @@ export const BRANDS = {
   吸塵器: ['dyson', 'Panasonic 國際', 'HITACHI 日立', 'LG 樂金', 'iRobot', 'Electrolux 伊萊克斯', OTHER],
   廚房家電: ['TATUNG 大同', 'Panasonic 國際', 'ZOJIRUSHI 象印', 'TIGER 虎牌', 'Philips 飛利浦', 'SHARP 夏普', OTHER],
 };
+
+// 官網商品資料裡出現、但上面清單沒有的品牌，自動補在「其他品牌」前面
+try {
+  const data = JSON.parse(readFileSync(new URL('./db/data/elifemall-products.json', import.meta.url), 'utf8'));
+  for (const { category, brand } of data.products) {
+    const list = BRANDS[category];
+    if (list && !list.includes(brand)) list.splice(list.length - 1, 0, brand);
+  }
+} catch {
+  // 資料檔還沒產生（第一次執行轉換程式時）就只用上面的清單
+}
 
 export function validateBrand(category, brand) {
   const list = BRANDS[category];

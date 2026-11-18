@@ -108,21 +108,22 @@ async function insertProduct(tx, id, p, storeIds, { oldPrice = false, active = t
      VALUES ($1, $2, $3, ${p.source_code ? '$4::date' : "now() - interval '30 days'"})`,
     p.source_code ? [id, p.list_price, p.sale_price, ELIFE.captured_at] : [id, p.list_price, p.sale_price],
   );
-  for (const storeId of storeIds) {
-    const st = stockFor(storeId, p);
+  // 各店庫存一次寫入（商品多時，逐筆寫入雲端資料庫會太慢）
+  const stock = storeIds.map((storeId) => ({ storeId, ...stockFor(storeId, p) }));
+  await tx.query(
+    `INSERT INTO inventory (store_id, product_id, on_hand, reserved, display, damaged, in_transit)
+     SELECT s, $1, o, 0, d, g, t FROM unnest($2::text[], $3::int[], $4::int[], $5::int[], $6::int[]) AS x(s, o, d, g, t)`,
+    [id, stock.map((s) => s.storeId), stock.map((s) => s.onHand), stock.map((s) => s.display), stock.map((s) => s.damaged), stock.map((s) => s.inTransit)],
+  );
+  // 在途數量要有對應的調貨單：示範資料一律是「總倉補貨」，兩天前出發
+  const moving = stock.filter((s) => s.inTransit > 0);
+  if (moving.length) {
     await tx.query(
-      `INSERT INTO inventory (store_id, product_id, on_hand, reserved, display, damaged, in_transit)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-      [storeId, id, st.onHand, st.reserved, st.display, st.damaged, st.inTransit],
+      `INSERT INTO stock_transfers (product_id, from_store_id, to_store_id, qty, status, note, created_at, updated_at)
+       SELECT $1, NULL, s, q, 'in_transit', '總倉例行補貨', now() - interval '2 days', now() - interval '2 days'
+       FROM unnest($2::text[], $3::int[]) AS x(s, q)`,
+      [id, moving.map((s) => s.storeId), moving.map((s) => s.inTransit)],
     );
-    // 在途數量要有對應的調貨單：示範資料一律是「總倉補貨」，兩天前出發
-    if (st.inTransit > 0) {
-      await tx.query(
-        `INSERT INTO stock_transfers (product_id, from_store_id, to_store_id, qty, status, note, created_at, updated_at)
-         VALUES ($1, NULL, $2, $3, 'in_transit', '總倉例行補貨', now() - interval '2 days', now() - interval '2 days')`,
-        [id, storeId, st.inTransit],
-      );
-    }
   }
 }
 
@@ -198,7 +199,7 @@ async function createDemoOrders(tx) {
       const [pick] = await tx.query(
         `SELECT p.product_id FROM products p JOIN inventory i ON i.product_id = p.product_id
          WHERE p.category = $1 AND p.is_active AND i.store_id = $2 AND (i.on_hand - i.reserved - i.display - i.damaged) >= $3
-         ORDER BY p.product_id LIMIT 1`,
+         ORDER BY md5(p.product_id || $2) LIMIT 1`,
         [category, o.store, qty + 1],
       );
       if (pick) items.push({ product_id: pick.product_id, qty });
@@ -344,7 +345,7 @@ export async function seed({ reset = false } = {}) {
       await insertProduct(tx, productId(i), p, storeIds, { oldPrice: !p.source_code && i % 2 === 0 });
     }
     for (const [oldModel, newModel] of Object.entries(REPLACED_BY)) {
-      await tx.query('UPDATE products SET replaced_by = $1 WHERE product_id = $2', [idByModel[newModel], idByModel[oldModel]]);
+      if (idByModel[oldModel] && idByModel[newModel]) await tx.query('UPDATE products SET replaced_by = $1 WHERE product_id = $2', [idByModel[newModel], idByModel[oldModel]]);
     }
     await createDemoOrders(tx);
   });
