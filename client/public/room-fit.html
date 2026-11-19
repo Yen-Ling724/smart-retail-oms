@@ -282,6 +282,19 @@ footer ul{margin:6px 0 0;padding-left:18px}
 .dlg .sub.err{color:var(--low);font-weight:600;min-height:0}
 .dlg .sub.err:empty{display:none}
 .notice a{color:inherit;text-decoration:underline}
+/* 桌機：上方三欄剛好一個螢幕高，不必上下捲動；左右兩欄內容多時在欄內捲動 */
+@media (min-width:1241px){
+  header.top{padding:10px 20px 2px}
+  header.top h1{font-size:19px}
+  header.top p{font-size:13px}
+  .modehint{padding:2px 20px 0;font-size:12px}
+  .app{height:var(--app-h,auto);padding:8px 20px 12px}
+  .stage{min-height:0}
+  .controls,.viewer{min-height:0;overflow-y:auto;scrollbar-width:thin}
+  .controls{padding:12px 14px;gap:10px}
+  .viewer{padding:12px}
+  #viewer3d{height:clamp(160px,26vh,240px)}
+}
 </style>
 </head>
 <body>
@@ -1340,6 +1353,7 @@ function applyView(){
   document.body.dataset.view = view.mode;
   setPressed($('#viewSw'), 'view', view.mode);
   $('#modeHint').innerHTML = VIEW_HINT[view.mode];
+  if(typeof appEl !== 'undefined') fitApp();
 }
 
 /* 店員銷售重點：依房間適配、跨通路價差與同級價格自動產生 */
@@ -1565,7 +1579,16 @@ try {
 } catch(e){}
 
 /* ---------- 啟動 ---------- */
+// 桌機版：上方三欄的高度 = 視窗高度 − 頁首，3D 房間一眼看完；下方商品清單捲動後再看
+const appEl = document.querySelector('main.app');
+function fitApp(){
+  if(innerWidth <= 1240){ appEl.style.removeProperty('--app-h'); return; }
+  const top = appEl.getBoundingClientRect().top + scrollY;
+  appEl.style.setProperty('--app-h', Math.max(540, innerHeight - top) + 'px');
+}
+addEventListener('resize', fitApp);
 applyView();
+fitApp();
 resizeStage();
 refresh({room:true});
 requestAnimationFrame(tick);
