@@ -446,7 +446,7 @@ async function backfillRegions(db) {
 export async function seed({ reset = false } = {}) {
   const db = await getDb();
   if (reset) {
-    await db.exec(`DROP TABLE IF EXISTS sales_history, weather_monthly, demand_events, brand_lead_times, fit_sessions, service_requests, import_batches, order_status_history, order_items, orders, customers,
+    await db.exec(`DROP TABLE IF EXISTS forecast_sources, sales_history, weather_monthly, demand_events, brand_lead_times, fit_sessions, service_requests, import_batches, order_status_history, order_items, orders, customers,
       inventory_transactions, stock_transfers, inventory, product_prices, products, stores CASCADE;`);
   }
   await db.exec(SCHEMA);

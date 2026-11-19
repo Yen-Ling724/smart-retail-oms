@@ -595,6 +595,7 @@ a.stat-card:hover,
 .import-steps { margin: 0 0 14px; padding-left: 20px; color: var(--ink-strong); font-size: 13px; line-height: 1.9; }
 .import-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 6px; }
 .import-actions label.btn { cursor: pointer; }
+.import-actions a.btn { text-decoration: none; }
 .btn.disabled { opacity: 0.6; pointer-events: none; }
 .import-guide { margin-top: 12px; font-size: 12px; color: var(--t-59645f); }
 .import-guide summary { cursor: pointer; font-weight: 700; color: var(--brand); }
@@ -861,3 +862,19 @@ a.stat-card:hover,
 .fc-more { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
 .fc-season th, .fc-season td { padding-left: 4px !important; padding-right: 4px !important; font-size: 11px; }
 .fc-season td:first-child, .fc-season th:first-child, .fc-season td:last-child { white-space: nowrap; }
+
+/* 06 匯入銷售資料 */
+.fc-source { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 6px 0 0; font-size: 12px; color: var(--ink); }
+.si-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 10px; }
+.si-summary > div { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; min-width: 0; }
+.si-summary span { font-size: 11px; color: var(--muted); }
+.si-summary strong { font-size: 15px; color: var(--ink-strong); }
+.si-summary small { font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.si-summary .bad strong { color: #b4232a; }
+.si-monthly { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; font-size: 11px; }
+.si-bars { display: flex; align-items: flex-end; gap: 2px; height: 56px; padding: 4px 0; border-bottom: 1px solid var(--line); }
+.si-bars span { flex: 1; min-width: 2px; background: var(--series-1, #2a78d6); border-radius: 2px 2px 0 0; }
+.si-bars span:hover { opacity: 0.7; }
+.si-bars span.zero { height: 2px !important; background: #d9534f; }
+.si-notes { margin: 0 0 10px; padding-left: 4px; list-style: none; font-size: 12px; line-height: 1.8; color: var(--ink); }
+@media (max-width: 720px) { .si-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

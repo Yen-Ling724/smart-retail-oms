@@ -242,3 +242,13 @@ CREATE TABLE IF NOT EXISTS brand_lead_times (
   lead_sd_days   numeric NOT NULL,
   note           text
 );
+-- 預測用的銷售資料來源：沒有這一列＝示範用的模擬資料
+CREATE TABLE IF NOT EXISTS forecast_sources (
+  category     text PRIMARY KEY,
+  filename     text,
+  rows_used    integer,
+  month_from   text,
+  month_to     text,
+  store_count  integer,
+  imported_at  timestamptz NOT NULL DEFAULT now()
+);

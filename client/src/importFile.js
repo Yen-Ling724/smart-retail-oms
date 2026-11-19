@@ -71,8 +71,15 @@ function decodeCsv(buffer) {
 }
 
 // 讀檔 → { rows: [{ row: 試算表列號, cells: { 欄位名稱: 值 } }] }
-export async function readImportFile(file) {
-  if (file.size > IMPORT_MAX_MB * 1024 * 1024) throw new Error(`檔案超過 ${IMPORT_MAX_MB}MB，請分批匯入`)
+// options：isHeader(欄位名稱陣列) 判斷哪一列是標題列、headerError、maxRows、maxMb（預設是商品匯入的設定）
+export async function readImportFile(file, options = {}) {
+  const {
+    isHeader = (names) => names.includes('型號'),
+    headerError = '找不到「型號」欄位。請使用範本，第一列要是欄位名稱',
+    maxRows = IMPORT_MAX_ROWS,
+    maxMb = IMPORT_MAX_MB,
+  } = options
+  if (file.size > maxMb * 1024 * 1024) throw new Error(`檔案超過 ${maxMb}MB，請分批匯入`)
   const name = file.name.toLowerCase()
   let grid
   if (name.endsWith('.xlsx')) {
@@ -86,8 +93,8 @@ export async function readImportFile(file) {
     throw new Error('只支援 Excel（.xlsx）或 CSV（.csv）檔案')
   }
 
-  const headerIndex = grid.findIndex((r) => r.some((c) => normalizeHeader(c) === '型號'))
-  if (headerIndex < 0) throw new Error('找不到「型號」欄位。請使用範本，第一列要是欄位名稱')
+  const headerIndex = grid.slice(0, 30).findIndex((r) => isHeader(r.map(normalizeHeader)))
+  if (headerIndex < 0) throw new Error(headerError)
   const headers = grid[headerIndex].map(normalizeHeader)
 
   const rows = []
@@ -101,6 +108,6 @@ export async function readImportFile(file) {
     rows.push({ row: i + 1, cells })
   }
   if (!rows.length) throw new Error('檔案裡沒有資料列')
-  if (rows.length > IMPORT_MAX_ROWS) throw new Error(`一次最多匯入 ${IMPORT_MAX_ROWS} 列，這個檔案有 ${rows.length} 列，請分批匯入`)
+  if (rows.length > maxRows) throw new Error(`一次最多匯入 ${maxRows.toLocaleString()} 列，這個檔案有 ${rows.length.toLocaleString()} 列，請分批匯入`)
   return { rows, headers: headers.filter(Boolean) }
 }

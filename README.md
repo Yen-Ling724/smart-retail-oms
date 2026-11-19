@@ -14,6 +14,9 @@
 
 ### 需求預測與補貨的資料與方法
 - 資料（**全部為模擬**）：`sales_history`（2023-11～2026-10，20 間門市 × 8 個坪數級距的冷氣月銷量）、`weather_monthly`（各區月均溫）、`demand_events`（補助、促銷）、`brand_lead_times`（品牌交期）。產生規則見 `server/src/db/demoHistory.js`。
+- **匯入真實銷售資料**：預測頁右上「匯入銷售資料」，上傳 Excel／CSV（月份、門市、型號或坪數級距、銷售台數；每日或每筆交易也可以，會加總成每月；至少 24 個月）。先檢查、預覽再匯入，可隨時「還原模擬資料」。驗證邏輯在 `server/src/forecast/salesImport.js`。
+  - 本機版（預設 `db` 模式）：寫進資料庫，取代模擬的冷氣銷售。
+  - 公開線上版（`DEMO_RESET_ON_START=true` 時自動用 `browser` 模式）：資料只存在使用者自己的瀏覽器，每次計算時送給後端，不寫進共用資料庫。可用環境變數 `FORECAST_IMPORT_MODE=db|browser` 指定。
 - 計算：`server/src/forecast/engine.js`。季節指數與成長率用區域總量估計；各門市 × 級距用指數平滑估目前水準；預測再乘上已排定事件、氣溫情境與（選用）3D 試算領先指標。
 - 回測：只用前 30 個月建模、預測最後 6 個月，跟「去年同月」比較 WAPE。
 - 備貨：安全庫存依當月預測與交期變異逐月計算；推算 12 個月月底庫存，找出預計不足月份與最晚下單日；同區先調撥再下單。
@@ -160,6 +163,11 @@ npm run dev
 | POST | `/api/service-requests/:no/convert` | 轉成待確認訂單 |
 | GET | `/api/analytics/demand?days=` | 前台需求訊號彙整 |
 | GET | `/api/forecast?region=&store=&temp_delta=&leading=` | 冷氣需求預測、回測、補貨與調撥建議 |
+| POST | `/api/forecast` | 同上，body 帶 `history`（瀏覽器模式的匯入資料） |
+| POST | `/api/import/sales/preview` | 檢查要匯入的銷售資料（不寫入） |
+| POST | `/api/import/sales/commit` | 匯入銷售資料（`skip_errors` 可略過有問題的列） |
+| POST | `/api/forecast/restore-demo` | 冷氣銷售改回模擬資料 |
+| GET | `/api/forecast/export.csv` | 下載目前的冷氣月銷售（也是完整的匯入範例） |
 | GET | `/api/assistant/status` | 導購模式（目前為 `keyword`） |
 | POST | `/api/assistant/ask` | 導購問答：`{ question, store_id?, context? }` → 理解的需求、回答、推薦商品（理由與不符合處） |
 | POST | `/api/demo/reset` | 重置示範資料 |

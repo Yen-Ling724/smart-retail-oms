@@ -1,23 +1,46 @@
 // 06 需求預測與補貨 API（目前做冷氣）
 import { Router } from 'express';
-import { query } from '../db/index.js';
-import { AC_TIERS } from '../db/demoHistory.js';
+import { query, transaction } from '../db/index.js';
+import { AC_TIERS, addMonths, createDemoHistory } from '../db/demoHistory.js';
 import { backtest, classify, plan, runForecast, SERVICE_LEVEL, transfers } from '../forecast/engine.js';
+import { checkHistory, validateSales } from '../forecast/salesImport.js';
 import { STORE_ORDER_SQL } from '../regions.js';
 
 const router = Router();
 const sum = (a) => a.reduce((s, x) => s + x, 0);
 
-async function loadData() {
-  const stores = await query(`SELECT store_id, name, region, city, store_type FROM stores s ORDER BY ${STORE_ORDER_SQL('s')}`);
-  const hist = await query(`SELECT month, store_id, tier, units FROM sales_history WHERE category = '冷氣' ORDER BY month`);
-  const months = [...new Set(hist.map((h) => h.month))].sort();
+// 匯入的資料存在哪裡：
+// db      ＝ 寫進資料庫（本機版；資料只在自己的電腦）
+// browser ＝ 只存在使用者自己的瀏覽器，每次計算時送來（公開的線上版：真實資料不進共用資料庫，也不會蓋掉別人看到的畫面）
+export const IMPORT_MODE = process.env.FORECAST_IMPORT_MODE || (process.env.DEMO_RESET_ON_START === 'true' ? 'browser' : 'db');
+
+// override：瀏覽器模式送來的 { history: [[month, store_id, tier, units]], source }
+async function loadData(override) {
+  const allStores = await query(`SELECT store_id, name, region, city, store_type FROM stores s ORDER BY ${STORE_ORDER_SQL('s')}`);
+  let hist;
+  let source;
+  if (override) {
+    hist = override.history.map(([month, store_id, tier, units]) => ({ month, store_id, tier, units }));
+    const o = override.source ?? {};
+    source = { kind: 'browser', filename: String(o.filename ?? '').slice(0, 120), imported_at: o.imported_at ?? null };
+  } else {
+    hist = await query(`SELECT month, store_id, tier, units FROM sales_history WHERE category = '冷氣' ORDER BY month`);
+    const [row] = await query(`SELECT * FROM forecast_sources WHERE category = '冷氣'`);
+    source = row ? { kind: 'db', filename: row.filename, imported_at: row.imported_at } : { kind: 'demo' };
+  }
+  // 匯入的資料只算有出現的門市（沒資料的門市不要出現一堆 0）
+  const present = new Set(hist.map((h) => h.store_id));
+  const stores = source.kind === 'demo' ? allStores : allStores.filter((s) => present.has(s.store_id));
+  // 月份補成連續（中間缺的月份是 0）
+  const seen = [...new Set(hist.map((h) => h.month))].sort();
+  const months = [];
+  if (seen.length) for (let m = seen[0]; m <= seen.at(-1); m = addMonths(m, 1)) months.push(m);
   const mi = new Map(months.map((m, i) => [m, i]));
   const history = new Map();
+  for (const s of stores) for (const tier of AC_TIERS) history.set(`${s.store_id}|${tier}`, months.map(() => 0));
   for (const h of hist) {
-    const key = `${h.store_id}|${h.tier}`;
-    if (!history.has(key)) history.set(key, months.map(() => 0));
-    history.get(key)[mi.get(h.month)] = h.units;
+    const arr = history.get(`${h.store_id}|${h.tier}`);
+    if (arr) arr[mi.get(h.month)] += h.units;
   }
   const weather = new Map((await query('SELECT month, region, avg_temp FROM weather_monthly')).map((w) => [`${w.month}|${w.region}`, Number(w.avg_temp)]));
   const events = await query('SELECT id, name, type, category, start_month, end_month, uplift, note FROM demand_events ORDER BY start_month, id');
@@ -57,13 +80,14 @@ async function loadData() {
   const leadingRows = lead.map((l) => ({ ...l, ratio: Math.round(((l.recent + 1) / (l.prior + 1)) * 100) / 100 }));
 
   const leadTimes = await query('SELECT brand, lead_days, lead_sd_days, note FROM brand_lead_times ORDER BY lead_days, brand');
-  return { stores, months, history, weather, events, position, priceByTier, leadByTier, leading, leadingRows, tierInfo, leadTimes, tiers: AC_TIERS };
+  return { stores, months, history, weather, events, position, priceByTier, leadByTier, leading, leadingRows, tierInfo, leadTimes, tiers: AC_TIERS, source };
 }
 
-router.get('/forecast', async (req, res) => {
-  const data = await loadData();
+async function forecastHandler(req, res) {
+  const override = req.method === 'POST' && req.body?.history ? { history: await checkHistory(req.body.history), source: req.body.source } : null;
+  const data = await loadData(override);
   if (data.months.length < 24) {
-    return res.json({ ok: true, empty: true, message: '銷售歷史不足 24 個月，無法建立季節性預測' });
+    return res.json({ ok: true, empty: true, source: data.source, import_mode: IMPORT_MODE, message: '銷售歷史不足 24 個月，無法建立季節性預測' });
   }
   const tempDelta = Math.max(-3, Math.min(3, Number(req.query.temp_delta) || 0));
   const useLeading = req.query.leading === '1';
@@ -106,7 +130,9 @@ router.get('/forecast', async (req, res) => {
   res.json({
     ok: true,
     category: '冷氣',
-    simulated: true,
+    simulated: data.source.kind === 'demo',
+    source: { ...data.source, month_from: data.months[0], month_to: data.months.at(-1), store_count: data.stores.length },
+    import_mode: IMPORT_MODE,
     months: data.months,
     future: run.future,
     stores: data.stores,
@@ -150,6 +176,70 @@ router.get('/forecast', async (req, res) => {
     tier_info: data.tierInfo,
     history_end: data.months[T - 1],
   });
+}
+router.get('/forecast', forecastHandler);
+router.post('/forecast', forecastHandler); // 瀏覽器模式：帶著匯入的資料來算
+
+// ===== 匯入真實銷售資料 =====
+// 前端讀好試算表後送來 { rows: [{ row, month, store, model, tier, units, category }] }
+router.post('/import/sales/preview', async (req, res) => {
+  const { history, ...result } = await validateSales(req.body?.rows);
+  res.json({ ok: true, import_mode: IMPORT_MODE, ...result });
+});
+
+router.post('/import/sales/commit', async (req, res) => {
+  const result = await validateSales(req.body?.rows);
+  if (!result.can_import) return res.status(400).json({ ok: false, error: result.block_reason });
+  if (result.summary.error_rows && !req.body.skip_errors) {
+    return res.status(400).json({ ok: false, error: `有 ${result.summary.error_rows} 列資料有問題，請修正，或勾選「略過有問題的列」` });
+  }
+  const filename = String(req.body.filename ?? '').slice(0, 120);
+  const s = result.summary;
+  const message = `已匯入 ${s.month_from}～${s.month_to}（${s.month_count} 個月）、${s.store_count} 間門市、共 ${s.total_units.toLocaleString()} 台`;
+  if (IMPORT_MODE === 'browser') {
+    // 不存進共用資料庫，整理好的資料交給瀏覽器保存
+    return res.json({ ok: true, mode: 'browser', message, history: result.history, source: { filename, imported_at: new Date().toISOString() } });
+  }
+  await transaction(async (tx) => {
+    await tx.query(`DELETE FROM sales_history WHERE category = '冷氣'`);
+    const cols = [0, 1, 2, 3].map((i) => result.history.map((h) => h[i]));
+    await tx.query(
+      `INSERT INTO sales_history (month, store_id, category, tier, units)
+       SELECT m, s, '冷氣', t, u FROM unnest($1::text[], $2::text[], $3::text[], $4::int[]) AS x(m, s, t, u)`,
+      cols,
+    );
+    await tx.query(
+      `INSERT INTO forecast_sources (category, filename, rows_used, month_from, month_to, store_count, imported_at)
+       VALUES ('冷氣', $1, $2, $3, $4, $5, now())
+       ON CONFLICT (category) DO UPDATE SET filename = $1, rows_used = $2, month_from = $3, month_to = $4, store_count = $5, imported_at = now()`,
+      [filename, s.used_rows, s.month_from, s.month_to, s.store_count],
+    );
+  });
+  res.json({ ok: true, mode: 'db', message });
+});
+
+// 還原成示範用的模擬銷售資料（資料庫模式）
+router.post('/forecast/restore-demo', async (req, res) => {
+  if (IMPORT_MODE !== 'db') return res.json({ ok: true, message: '線上版的匯入資料只存在你的瀏覽器，清除後就是模擬資料' });
+  await transaction(async (tx) => {
+    await tx.query(`DELETE FROM sales_history WHERE category = '冷氣'`);
+    await tx.query(`DELETE FROM forecast_sources WHERE category = '冷氣'`);
+    await createDemoHistory(tx, { salesOnly: true });
+  });
+  res.json({ ok: true, message: '已還原成模擬資料' });
+});
+
+// 下載目前資料庫裡的銷售資料（也是一份完整的匯入範例）
+router.get('/forecast/export.csv', async (req, res) => {
+  const rows = await query(
+    `SELECT h.month, h.store_id, s.name, h.tier, h.units FROM sales_history h JOIN stores s ON s.store_id = h.store_id
+     WHERE h.category = '冷氣' ORDER BY h.month, h.store_id, array_position($1::text[], h.tier)`,
+    [AC_TIERS],
+  );
+  const lines = ['月份,門市代碼,門市名稱,坪數級距,銷售台數', ...rows.map((r) => [r.month, r.store_id, r.name, r.tier, r.units].join(','))];
+  res.setHeader('content-type', 'text/csv; charset=utf-8');
+  res.setHeader('content-disposition', `attachment; filename*=UTF-8''${encodeURIComponent('冷氣月銷售資料.csv')}`);
+  res.send('﻿' + lines.join('\r\n'));
 });
 
 export default router;

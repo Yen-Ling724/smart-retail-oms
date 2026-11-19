@@ -1,5 +1,18 @@
 import { useEffect, useMemo, useState } from 'react'
 import { api, formatPrice } from '../api.js'
+import { Modal } from '../components/common.jsx'
+import ImportSales from '../components/ImportSales.jsx'
+
+// 線上版（瀏覽器模式）匯入的資料存在這台電腦的瀏覽器
+const LOCAL_KEY = 'ccc-forecast-import'
+function loadLocal() {
+  try {
+    const v = JSON.parse(localStorage.getItem(LOCAL_KEY))
+    return Array.isArray(v?.history) ? v : null
+  } catch {
+    return null
+  }
+}
 
 const fmt = (n) => Math.round(Number(n)).toLocaleString('zh-TW')
 const wan = (n) => (n >= 100000 ? `${(n / 10000).toLocaleString('zh-TW', { maximumFractionDigits: 0 })} 萬` : fmt(n))
@@ -144,17 +157,54 @@ export default function Forecast() {
   const [showTable, setShowTable] = useState(false)
   const [planLimit, setPlanLimit] = useState(20)
   const [result, setResult] = useState({ key: null, data: null, error: '' })
+  const [importing, setImporting] = useState(false)
+  const [local, setLocal] = useState(loadLocal)
+  const [version, setVersion] = useState(0) // 資料庫模式匯入／還原後重新計算
+  const [notice, setNotice] = useState('')
 
   const [kind, id] = scope.split(':')
-  const key = new URLSearchParams({ ...(kind === 'r' ? { region: id } : kind === 's' ? { store: id } : {}), temp_delta: tempDelta, leading: leading ? 1 : 0 }).toString()
+  const query = new URLSearchParams({ ...(kind === 'r' ? { region: id } : kind === 's' ? { store: id } : {}), temp_delta: tempDelta, leading: leading ? 1 : 0 }).toString()
+  const key = `${query}|${local?.source?.imported_at ?? ''}|${version}`
   const loading = result.key !== key
   useEffect(() => {
     let cancelled = false
-    api(`/forecast?${key}`)
+    api(`/forecast?${query}`, local ? { method: 'POST', body: { history: local.history, source: local.source } } : undefined)
       .then((d) => { if (!cancelled) setResult({ key, data: d, error: '' }) })
       .catch((e) => { if (!cancelled) setResult((r) => ({ ...r, key, error: e.message })) })
     return () => { cancelled = true }
-  }, [key])
+  }, [key, query, local])
+
+  function imported(res) {
+    setScope('')
+    setNotice('')
+    if (res.mode === 'browser') {
+      const v = { history: res.history, source: res.source }
+      try {
+        localStorage.setItem(LOCAL_KEY, JSON.stringify(v))
+      } catch {
+        setNotice('瀏覽器無法保存匯入的資料（可能是無痕模式），關掉頁面後需要重新匯入')
+      }
+      setLocal(v)
+    } else setVersion((n) => n + 1)
+  }
+
+  async function restoreDemo() {
+    if (!window.confirm('確定要改回示範用的模擬銷售資料嗎？' + (local ? '（會清除這個瀏覽器裡的匯入資料）' : '（匯入的資料會被刪除）'))) return
+    setScope('')
+    if (local) {
+      try { localStorage.removeItem(LOCAL_KEY) } catch { /* 無法存取就算了 */ }
+      setLocal(null)
+    } else {
+      try {
+        await api('/forecast/restore-demo', { method: 'POST' })
+        setVersion((n) => n + 1)
+      } catch (e) {
+        setNotice(e.message)
+        return
+      }
+    }
+    setNotice('已改回模擬資料')
+  }
 
   const d = result.data
   const scopeName = useMemo(() => {
@@ -168,10 +218,12 @@ export default function Forecast() {
     return (
       <section className="page">
         <p className="muted">{result.error ? `載入失敗：${result.error}` : '計算中…'}</p>
+        {result.error && local && <button type="button" className="btn ghost" onClick={restoreDemo}>清除匯入的資料，改回模擬資料</button>}
       </section>
     )
   }
   if (d.empty) return <section className="page"><p className="muted">{d.message}</p></section>
+  const isDemo = d.source.kind === 'demo'
 
   const T = d.months.length
   const next12 = sum(d.chart.forecast)
@@ -197,11 +249,35 @@ export default function Forecast() {
           <p className="eyebrow">MODULE 06</p>
           <h1 id="forecast-heading">需求預測與補貨</h1>
           <p className="muted">
-            冷氣季節性需求預測與備貨建議：依 36 個月銷售、氣溫、補助與促銷，預測各門市 × 坪數級距未來 12 個月的需求，
-            算出安全庫存、最晚下單日與跨店調撥。<span className="badge warn">銷售歷史為模擬資料</span>
+            冷氣季節性需求預測與備貨建議：依 {T} 個月銷售、氣溫、補助與促銷，預測各門市 × 坪數級距未來 12 個月的需求，
+            算出安全庫存、最晚下單日與跨店調撥。
+          </p>
+          <p className="fc-source">
+            {isDemo ? (
+              <span className="badge warn">銷售歷史為模擬資料</span>
+            ) : (
+              <>
+                <span className="badge info">使用匯入的銷售資料</span>
+                <span>
+                  {d.source.filename || '匯入檔案'}・{d.source.month_from}～{d.source.month_to}・{d.source.store_count} 間門市
+                  {d.source.kind === 'browser' ? '・只存在這個瀏覽器' : ''}
+                </span>
+                <span className="muted">（氣溫、補助事件、交期仍為示範設定）</span>
+              </>
+            )}
           </p>
         </div>
+        <div className="head-actions">
+          <button type="button" className="btn" onClick={() => setImporting(true)}>⬆ 匯入銷售資料</button>
+          {!isDemo && <button type="button" className="btn ghost" onClick={restoreDemo}>還原模擬資料</button>}
+        </div>
       </div>
+      {notice && <p className="success-note">{notice}</p>}
+      {importing && (
+        <Modal title="匯入冷氣銷售資料" wide onClose={() => setImporting(false)}>
+          <ImportSales mode={d.import_mode} onImported={imported} onClose={() => setImporting(false)} />
+        </Modal>
+      )}
 
       <div className="toolbar fc-toolbar">
         <select value={scope} onChange={(e) => setScope(e.target.value)} aria-label="範圍">
@@ -446,7 +522,11 @@ export default function Forecast() {
             <li><b>再訂購點</b> ＝ 日需求 × 交期 ＋ 安全庫存；<b>經濟訂購量 EOQ</b> ＝ √(2 × 年需求 × 每次下單成本 800 ÷ (年持有成本率 20% × 單價))。</li>
             <li><b>補貨時機</b>：用預測推算每月月底庫存，第一個低於安全庫存的月份就是「預計不足」；建議量足以撐過之後 3 個月，至少一個 EOQ。</li>
           </ol>
-          <p className="hint">本頁的銷售歷史、氣溫、事件倍數與交期都是示範用的模擬資料；接上真實銷售資料後，計算方式不變。</p>
+          <p className="hint">
+            {isDemo
+              ? '本頁的銷售歷史、氣溫、事件倍數與交期都是示範用的模擬資料；按「匯入銷售資料」換成真實資料後，計算方式不變。'
+              : '銷售歷史來自匯入的檔案；氣溫、事件倍數與交期仍是示範設定。'}
+          </p>
         </Card>
       </div>
     </section>

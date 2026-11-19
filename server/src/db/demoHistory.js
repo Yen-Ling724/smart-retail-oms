@@ -71,7 +71,8 @@ function eventFactor(month, category) {
     ((!cat || cat === category) && month >= start && month <= end ? f * uplift : f), 1);
 }
 
-export async function createDemoHistory(tx) {
+// salesOnly：只重建冷氣銷售（「還原模擬資料」用；氣溫、事件、交期保留）
+export async function createDemoHistory(tx, { salesOnly = false } = {}) {
   const stores = await tx.query('SELECT store_id, region, store_type FROM stores ORDER BY store_id');
   const regions = Object.keys(CLIMATE);
 
@@ -83,17 +84,17 @@ export async function createDemoHistory(tx) {
     for (const r of regions) {
       const t = CLIMATE[r][monthIndex(month)] + shared + normal(`anom${month}${r}`) * 0.3;
       temps[`${month}|${r}`] = Math.round(t * 10) / 10;
-      await tx.query('INSERT INTO weather_monthly (month, region, avg_temp) VALUES ($1, $2, $3)', [month, r, temps[`${month}|${r}`]]);
+      if (!salesOnly) await tx.query('INSERT INTO weather_monthly (month, region, avg_temp) VALUES ($1, $2, $3)', [month, r, temps[`${month}|${r}`]]);
     }
   }
 
-  for (const [name, type, category, start, end, uplift, note] of DEMO_EVENTS) {
+  for (const [name, type, category, start, end, uplift, note] of salesOnly ? [] : DEMO_EVENTS) {
     await tx.query(
       'INSERT INTO demand_events (name, type, category, start_month, end_month, uplift, note) VALUES ($1, $2, $3, $4, $5, $6, $7)',
       [name, type, category, start, end, uplift, note],
     );
   }
-  for (const [brand, days, sd, note] of DEMO_LEAD_TIMES) {
+  for (const [brand, days, sd, note] of salesOnly ? [] : DEMO_LEAD_TIMES) {
     await tx.query('INSERT INTO brand_lead_times (brand, lead_days, lead_sd_days, note) VALUES ($1, $2, $3, $4)', [brand, days, sd, note]);
   }
 

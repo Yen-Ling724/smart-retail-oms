@@ -16,6 +16,9 @@ const app = express();
 const PORT = Number(process.env.PORT) || 3001;
 
 // 匯入的資料比較大（最多 1000 列），放寬到 2MB；其他 API 維持預設 100KB
+// 冷氣銷售資料可能是每筆交易（數萬列），另外放寬
+app.use('/api/import/sales', express.json({ limit: '20mb' }));
+app.use('/api/forecast', express.json({ limit: '5mb' }));
 app.use('/api/import', express.json({ limit: '2mb' }));
 app.use(express.json());
 
