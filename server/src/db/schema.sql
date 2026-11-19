@@ -9,6 +9,13 @@ CREATE TABLE IF NOT EXISTS stores (
 );
 -- 區域（北區／中區／南區／東區），舊資料庫啟動時會依縣市自動補上
 ALTER TABLE stores ADD COLUMN IF NOT EXISTS region text;
+-- 全國電子官網門市據點資料（門市代碼、行政區、電話、營業時間、門市類型、地圖連結）
+ALTER TABLE stores ADD COLUMN IF NOT EXISTS store_code text;
+ALTER TABLE stores ADD COLUMN IF NOT EXISTS district text;
+ALTER TABLE stores ADD COLUMN IF NOT EXISTS phone text;
+ALTER TABLE stores ADD COLUMN IF NOT EXISTS hours text;
+ALTER TABLE stores ADD COLUMN IF NOT EXISTS store_type text;
+ALTER TABLE stores ADD COLUMN IF NOT EXISTS map_link text;
 
 CREATE TABLE IF NOT EXISTS products (
   product_id  text PRIMARY KEY,

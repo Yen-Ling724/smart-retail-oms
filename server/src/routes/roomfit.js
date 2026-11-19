@@ -34,7 +34,7 @@ const numOrNull = (v, min, max) => {
 
 // ---- 商品目錄 ----
 router.get('/room-fit/catalog', async (req, res) => {
-  const stores = await query(`SELECT store_id, name, region FROM stores s ORDER BY ${STORE_ORDER_SQL('s')}`);
+  const stores = await query(`SELECT store_id, name, region, city, district, store_type FROM stores s ORDER BY ${STORE_ORDER_SQL('s')}`);
   const rows = await query(
     `SELECT p.product_id, p.category, p.brand, p.model, p.name, p.specs, p.meta, p.source_code,
             pr.sale_price AS price, pr.list_price,

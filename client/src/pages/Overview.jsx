@@ -40,7 +40,7 @@ export default function Overview() {
 
       <section className="notice" aria-label="模擬資料聲明">
         <span className="notice-icon" aria-hidden="true">i</span>
-        <p><strong>個人作品集模擬專案</strong><br />商品型號、品名與價格取自全國電子官網公開商品列表（2026/11/18 擷取），實際以官網為準；規格由品名解析，可能不完整。門市、庫存、訂單與顧客資料皆為模擬。本系統為課程／作品集原型，非全國電子官方系統，也不連接任何企業內部系統。</p>
+        <p><strong>個人作品集模擬專案</strong><br />商品型號、品名與價格取自全國電子官網公開商品列表（2026/11/18 擷取），實際以官網為準；規格由品名解析，可能不完整。門市名稱與地址取自官網門市據點（精選 20 間）；各門市庫存、訂單與顧客資料皆為模擬。本系統為課程／作品集原型，非全國電子官方系統，也不連接任何企業內部系統。</p>
       </section>
 
       <section className="overview-section" aria-labelledby="snapshot-heading">

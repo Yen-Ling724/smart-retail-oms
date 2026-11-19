@@ -1,7 +1,7 @@
 // 示範資料：
-// - 冷氣、除濕機、空氣清淨機：全國電子官網公開商品（型號、品名、網路價、原價，見 data/elifemall-products.json）
-// - 其他分類：虛構示範商品（型號 DM- 開頭）
-// - 門市、庫存、訂單、顧客：全部模擬
+// - 商品：全國電子官網公開商品（型號、品名、網路價、原價，見 data/elifemall-products.json）
+// - 門市：全國電子官網門市據點中精選 20 間（名稱、代碼、地址、電話、營業時間，見 data/elifemall-stores.json）
+// - 庫存、訂單、顧客、需求訊號：全部模擬
 import { readFileSync } from 'node:fs';
 import { regionForCity } from '../regions.js';
 import { LEGACY_AC_PING, SPEC_TEMPLATES, validateBrand, validateSpecs } from '../specTemplates.js';
@@ -12,13 +12,51 @@ const ELIFE = JSON.parse(readFileSync(new URL('./data/elifemall-products.json', 
 // 這些分類改用官網商品，不再放虛構商品
 export const REAL_CATEGORIES = new Set(ELIFE.products.map((p) => p.category));
 
-export const STORES = [
-  ['TN01', '台南中西店', '台南市', '台南市中西區示範路 101 號（虛構）'],
-  ['TN02', '台南永康店', '台南市', '台南市永康區示範路 202 號（虛構）'],
-  ['KH01', '高雄左營店', '高雄市', '高雄市左營區示範路 303 號（虛構）'],
-  ['TC01', '台中西屯店', '台中市', '台中市西屯區示範路 404 號（虛構）'],
-  ['TP01', '台北內湖店', '台北市', '台北市內湖區示範路 505 號（虛構）'],
-];
+// 門市：前 5 間沿用舊版的代號（TN01、TN02、KH01、TC01、TP01），對到同一區的真實門市，舊訂單不受影響
+export const STORES = JSON.parse(readFileSync(new URL('./data/elifemall-stores.json', import.meta.url), 'utf8')).stores;
+
+async function upsertStore(tx, s) {
+  await tx.query(
+    `INSERT INTO stores (store_id, name, city, address, region, store_code, district, phone, hours, store_type, map_link)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+     ON CONFLICT (store_id) DO UPDATE SET name = EXCLUDED.name, city = EXCLUDED.city, address = EXCLUDED.address,
+       region = EXCLUDED.region, store_code = EXCLUDED.store_code, district = EXCLUDED.district, phone = EXCLUDED.phone,
+       hours = EXCLUDED.hours, store_type = EXCLUDED.store_type, map_link = EXCLUDED.map_link`,
+    [s.store_id, s.name, s.city, s.address, regionForCity(s.city), s.store_code, s.district, s.phone, s.hours, s.store_type, s.map_link],
+  );
+}
+
+// 舊資料庫升級：5 間虛構門市換成真實門市資料，並加入其他門市（新門市的每項上架商品都建立模擬庫存）。只做一次
+async function syncStores(db) {
+  const [{ n }] = await db.query('SELECT count(*)::int AS n FROM stores WHERE store_code IS NOT NULL');
+  if (n >= STORES.length) return null;
+  return db.transaction(async (tx) => {
+    const existing = new Set((await tx.query('SELECT store_id FROM stores')).map((r) => r.store_id));
+    const products = await tx.query('SELECT product_id, category, model FROM products ORDER BY product_id');
+    let added = 0;
+    for (const s of STORES) {
+      await upsertStore(tx, s);
+      if (existing.has(s.store_id)) continue;
+      added++;
+      for (const p of products) {
+        const st = stockFor(s.store_id, p);
+        await tx.query(
+          `INSERT INTO inventory (store_id, product_id, on_hand, reserved, display, damaged, in_transit) VALUES ($1, $2, $3, 0, $4, $5, $6)
+           ON CONFLICT DO NOTHING`,
+          [s.store_id, p.product_id, st.onHand, st.display, st.damaged, st.inTransit],
+        );
+        if (st.inTransit > 0) {
+          await tx.query(
+            `INSERT INTO stock_transfers (product_id, from_store_id, to_store_id, qty, status, note, created_at, updated_at)
+             VALUES ($1, NULL, $2, $3, 'in_transit', '總倉例行補貨', now() - interval '2 days', now() - interval '2 days')`,
+            [p.product_id, s.store_id, st.inTransit],
+          );
+        }
+      }
+    }
+    return { added, updated: STORES.length - added };
+  });
+}
 
 // [分類, 品牌, 型號, 品名, 保固, 原價, 售價, 規格]
 // 品牌為真實品牌名稱，僅作情境示範；型號一律用 DM-（Demo）開頭，價格、規格、庫存皆為虛構。
@@ -419,6 +457,8 @@ export async function seed({ reset = false } = {}) {
     await backfillReservations(db);
     const synced = await syncElifemallProducts(db);
     if (synced) console.log(`已加入全國電子官網商品：新增 ${synced.added}、更新 ${synced.updated}、下架虛構商品 ${synced.hidden}`);
+    const stores = await syncStores(db);
+    if (stores) console.log(`門市改用官網資料：更新 ${stores.updated} 間、新增 ${stores.added} 間`);
     // 舊資料庫還沒有任何需求訊號：補上示範資料（只做一次）
     const [{ n }] = await db.query('SELECT (SELECT count(*) FROM fit_sessions) + (SELECT count(*) FROM service_requests) AS n');
     if (Number(n) === 0) await db.transaction((tx) => createDemoDemand(tx));
@@ -426,14 +466,9 @@ export async function seed({ reset = false } = {}) {
   }
 
   await db.transaction(async (tx) => {
-    for (const [storeId, name, city, address] of STORES) {
-      await tx.query(
-        'INSERT INTO stores (store_id, name, city, address, region) VALUES ($1, $2, $3, $4, $5)',
-        [storeId, name, city, address, regionForCity(city)],
-      );
-    }
+    for (const s of STORES) await upsertStore(tx, s);
     const idByModel = Object.fromEntries(ALL_PRODUCTS.map((p, i) => [p.model, productId(i)]));
-    const storeIds = STORES.map(([id]) => id);
+    const storeIds = STORES.map((s) => s.store_id);
     for (const [i, p] of ALL_PRODUCTS.entries()) {
       await insertProduct(tx, productId(i), p, storeIds, { oldPrice: !p.source_code && i % 2 === 0 });
     }

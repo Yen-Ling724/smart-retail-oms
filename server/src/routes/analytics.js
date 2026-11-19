@@ -133,7 +133,7 @@ router.get('/analytics/demand', async (req, res) => {
     GROUP BY 1
     ORDER BY array_position(ARRAY['北區','中區','南區','東區','未指定門市']::text[], COALESCE(s.region, '未指定門市'))`);
 
-  // 被看最多的機型 + 目前 5 店庫存 + 報價／預約次數：看得多、庫存少 → 備貨提醒
+  // 被看最多的機型 + 目前全部門市庫存 + 報價／預約次數：看得多、庫存少 → 備貨提醒
   const topViewed = await query(`
     SELECT f.product_id, p.name, p.category, count(*)::int AS views,
            (SELECT COALESCE(SUM(GREATEST(i.on_hand - i.reserved - i.display - i.damaged, 0)), 0)::int

@@ -107,7 +107,7 @@ function Card({ title, sub, children, wide }) {
 
 const REQ_TYPE = { quote: '請門市報價', survey: '到府場勘', visit: '到店諮詢' }
 const REQ_OPEN = ['new', 'contacted', 'scheduled']
-// 看得多、庫存少：5 店可售 ≤ 5 台，或少於被看次數的一半
+// 看得多、庫存少：全部門市可售 ≤ 5 台，或少於被看次數的一半
 const needsStock = (p) => p.available <= 5 || p.available < p.views / 2
 const pct = (a, b) => `${Math.round((a / Math.max(b, 1)) * 100)}%`
 
@@ -175,11 +175,11 @@ function DemandSection({ d }) {
           />
         </Card>
 
-        <Card title="最常被看的機型 vs 庫存" sub="5 店可售 ≤ 5 台、或少於被看次數一半的機型，建議提前補貨" wide>
+        <Card title="最常被看的機型 vs 庫存" sub="全部門市可售 ≤ 5 台、或少於被看次數一半的機型，建議提前補貨" wide>
           {d.top_viewed.length ? (
             <div className="table-wrap">
               <table className="data-table compact">
-                <thead><tr><th>機型</th><th>類別</th><th className="num">被看次數</th><th className="num">報價／預約</th><th className="num">5 店可售</th><th>提醒</th></tr></thead>
+                <thead><tr><th>機型</th><th>類別</th><th className="num">被看次數</th><th className="num">報價／預約</th><th className="num">全部門市可售</th><th>提醒</th></tr></thead>
                 <tbody>
                   {d.top_viewed.map((p) => (
                     <tr key={p.product_id}>

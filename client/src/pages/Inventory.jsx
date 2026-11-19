@@ -56,6 +56,11 @@ function StockTab({ stores, regions, categories, onAdjust, onTransfer, refreshKe
   const [q, setQ] = useState('')
   const [query, setQuery] = useState('')
   const [onlyLow, setOnlyLow] = useState(false)
+  // 門市多（超過 8 間）時預設「依區域」，表格才不會太寬；使用者自己切換過就不再改
+  const [viewTouched, setViewTouched] = useState(false)
+  useEffect(() => {
+    if (!viewTouched && stores.length > 8) setView('region')
+  }, [stores.length, viewTouched])
 
   useEffect(() => {
     const t = setTimeout(() => setQuery(q), 250)
@@ -97,10 +102,12 @@ function StockTab({ stores, regions, categories, onAdjust, onTransfer, refreshKe
   // 從區域檢視點進某區 → 切到依門市，只看那個區域的門市
   function drillInto(r) {
     setRegion(r)
+    setViewTouched(true)
     setView('store')
   }
 
   function changeView(next) {
+    setViewTouched(true)
     setView(next)
     setStore('')
   }
@@ -474,7 +481,7 @@ export default function Inventory() {
         <div>
           <p className="eyebrow">MODULE 02</p>
           <h1 id="inventory-heading">門市庫存</h1>
-          <p className="muted">查看 5 家門市的可售數量，進貨、展示機、瑕疵、盤點與門市調貨都在這裡處理。</p>
+          <p className="muted">查看各門市的可售數量，進貨、展示機、瑕疵、盤點與門市調貨都在這裡處理。</p>
         </div>
         <button className="btn" onClick={() => setTransfer({})}>＋ 新增調貨</button>
       </div>
