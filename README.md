@@ -10,6 +10,13 @@
 5. AI 智慧導購（Claude API，只根據資料庫回答）
 6. 營運分析儀表板（含 3D 坪數選購的前台需求訊號）
 7. 3D 坪數選購（`/room-fit.html`）：依坪數與房間條件，用 3D 房間看冷氣／清淨機／除濕機能否涵蓋整間；讀 CCC 的商品與各店庫存，報價與場勘預約會送進「訂單管理 → 報價／預約」
+8. 需求預測與補貨（`#forecast`，對應課程痛點表「冷氣季節性需求預測與備貨最佳化」）：季節分解＋門市水準指數平滑，計入補助／促銷事件與氣溫；回測準確度、ABC／XYZ、安全庫存、再訂購點、EOQ、最晚下單日與跨店調撥建議
+
+### 需求預測與補貨的資料與方法
+- 資料（**全部為模擬**）：`sales_history`（2023-11～2026-10，20 間門市 × 8 個坪數級距的冷氣月銷量）、`weather_monthly`（各區月均溫）、`demand_events`（補助、促銷）、`brand_lead_times`（品牌交期）。產生規則見 `server/src/db/demoHistory.js`。
+- 計算：`server/src/forecast/engine.js`。季節指數與成長率用區域總量估計；各門市 × 級距用指數平滑估目前水準；預測再乘上已排定事件、氣溫情境與（選用）3D 試算領先指標。
+- 回測：只用前 30 個月建模、預測最後 6 個月，跟「去年同月」比較 WAPE。
+- 備貨：安全庫存依當月預測與交期變異逐月計算；推算 12 個月月底庫存，找出預計不足月份與最晚下單日；同區先調撥再下單。
 
 ### 3D 坪數選購如何接進 CCC
 - 頁面是單一 HTML 檔 `client/public/room-fit.html`（Three.js），打包時會原樣複製到網站根目錄；`/room-fit` 會轉到這個頁面。
@@ -152,6 +159,7 @@ npm run dev
 | PATCH | `/api/service-requests/:no` | 更新狀態（新進→已聯絡→已排定→已完成／取消）或門市備註 |
 | POST | `/api/service-requests/:no/convert` | 轉成待確認訂單 |
 | GET | `/api/analytics/demand?days=` | 前台需求訊號彙整 |
+| GET | `/api/forecast?region=&store=&temp_delta=&leading=` | 冷氣需求預測、回測、補貨與調撥建議 |
 | GET | `/api/assistant/status` | 導購模式（目前為 `keyword`） |
 | POST | `/api/assistant/ask` | 導購問答：`{ question, store_id?, context? }` → 理解的需求、回答、推薦商品（理由與不符合處） |
 | POST | `/api/demo/reset` | 重置示範資料 |

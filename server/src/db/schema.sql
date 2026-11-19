@@ -206,3 +206,39 @@ CREATE TABLE IF NOT EXISTS fit_sessions (
   created_at    timestamptz NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS fit_sessions_time ON fit_sessions (created_at DESC);
+
+-- ===== 06 需求預測與補貨（示範資料皆為模擬）=====
+-- 月銷售歷史：門市 × 分類 × 規格級距（冷氣為坪數級距）
+CREATE TABLE IF NOT EXISTS sales_history (
+  month      text NOT NULL,              -- 'YYYY-MM'
+  store_id   text NOT NULL REFERENCES stores(store_id),
+  category   text NOT NULL,
+  tier       text NOT NULL,
+  units      integer NOT NULL CHECK (units >= 0),
+  PRIMARY KEY (month, store_id, category, tier)
+);
+-- 各區域月均溫
+CREATE TABLE IF NOT EXISTS weather_monthly (
+  month      text NOT NULL,
+  region     text NOT NULL,
+  avg_temp   numeric NOT NULL,
+  PRIMARY KEY (month, region)
+);
+-- 需求事件：補助、促銷、改款；uplift = 需求倍數（1.15 = 多 15%）
+CREATE TABLE IF NOT EXISTS demand_events (
+  id          bigserial PRIMARY KEY,
+  name        text NOT NULL,
+  type        text NOT NULL CHECK (type IN ('subsidy', 'promotion', 'model_change')),
+  category    text,                      -- 空白＝全部分類
+  start_month text NOT NULL,
+  end_month   text NOT NULL,
+  uplift      numeric NOT NULL CHECK (uplift > 0),
+  note        text
+);
+-- 品牌（供應商）交期：平均天數與標準差
+CREATE TABLE IF NOT EXISTS brand_lead_times (
+  brand          text PRIMARY KEY,
+  lead_days      numeric NOT NULL,
+  lead_sd_days   numeric NOT NULL,
+  note           text
+);

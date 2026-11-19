@@ -5,6 +5,7 @@ import { api } from './api.js'
 import { modules } from './modules.js'
 import Analytics from './pages/Analytics.jsx'
 import Assistant from './pages/Assistant.jsx'
+import Forecast from './pages/Forecast.jsx'
 import Inventory from './pages/Inventory.jsx'
 import Orders from './pages/Orders.jsx'
 import Overview from './pages/Overview.jsx'
@@ -17,6 +18,7 @@ const PAGES = {
   inventory: { title: '門市庫存', Component: Inventory },
   orders: { title: '訂單管理', Component: Orders },
   assistant: { title: '智慧導購', Component: Assistant },
+  forecast: { title: '需求預測與補貨', Component: Forecast },
 }
 
 const backendLabels = {

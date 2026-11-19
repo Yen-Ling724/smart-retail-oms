@@ -5,6 +5,7 @@
 import { readFileSync } from 'node:fs';
 import { regionForCity } from '../regions.js';
 import { LEGACY_AC_PING, SPEC_TEMPLATES, validateBrand, validateSpecs } from '../specTemplates.js';
+import { createDemoHistory } from './demoHistory.js';
 import { getDb } from './index.js';
 
 const SCHEMA = readFileSync(new URL('./schema.sql', import.meta.url), 'utf8');
@@ -445,7 +446,7 @@ async function backfillRegions(db) {
 export async function seed({ reset = false } = {}) {
   const db = await getDb();
   if (reset) {
-    await db.exec(`DROP TABLE IF EXISTS fit_sessions, service_requests, import_batches, order_status_history, order_items, orders, customers,
+    await db.exec(`DROP TABLE IF EXISTS sales_history, weather_monthly, demand_events, brand_lead_times, fit_sessions, service_requests, import_batches, order_status_history, order_items, orders, customers,
       inventory_transactions, stock_transfers, inventory, product_prices, products, stores CASCADE;`);
   }
   await db.exec(SCHEMA);
@@ -462,6 +463,9 @@ export async function seed({ reset = false } = {}) {
     // 舊資料庫還沒有任何需求訊號：補上示範資料（只做一次）
     const [{ n }] = await db.query('SELECT (SELECT count(*) FROM fit_sessions) + (SELECT count(*) FROM service_requests) AS n');
     if (Number(n) === 0) await db.transaction((tx) => createDemoDemand(tx));
+    // 舊資料庫還沒有銷售歷史：補上 06 需求預測用的模擬資料（只做一次）
+    const [{ h }] = await db.query('SELECT count(*)::int AS h FROM sales_history');
+    if (h === 0) await db.transaction((tx) => createDemoHistory(tx));
     return false;
   }
 
@@ -477,6 +481,7 @@ export async function seed({ reset = false } = {}) {
     }
     await createDemoOrders(tx);
     await createDemoDemand(tx);
+    await createDemoHistory(tx);
   });
   return true;
 }

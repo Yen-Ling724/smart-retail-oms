@@ -10,6 +10,7 @@ import inventoryRoutes from './routes/inventory.js';
 import orderRoutes from './routes/orders.js';
 import productRoutes from './routes/products.js';
 import roomFitRoutes from './routes/roomfit.js';
+import forecastRoutes from './routes/forecast.js';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3001;
@@ -32,6 +33,7 @@ app.use('/api', assistantRoutes);
 app.use('/api', analyticsRoutes);
 app.use('/api', importRoutes);
 app.use('/api', roomFitRoutes);
+app.use('/api', forecastRoutes);
 
 // 3D 坪數選購頁的短網址（頁面本身是 client/public/room-fit.html）
 app.get('/room-fit', (req, res) => res.redirect(302, '/room-fit.html' + (req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '')));

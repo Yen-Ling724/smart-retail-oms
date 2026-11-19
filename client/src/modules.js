@@ -5,4 +5,5 @@ export const modules = [
   { number: '03', title: '訂單管理', detail: '購物車建立多商品訂單，預留門市庫存並追蹤出貨，防止超賣。', status: '可使用', href: '#orders' },
   { number: '04', title: '智慧導購', detail: '一句話描述需求，依預算、坪數、人數與實際庫存推薦商品並說明理由。', status: '可使用', href: '#assistant' },
   { number: '05', title: '3D 坪數選購', detail: '依房間坪數與條件，用 3D 房間看冷氣、清淨機、除濕機能否涵蓋整間；查門市庫存、送出報價與場勘預約。', status: '可使用', href: '/room-fit.html?view=staff', external: true },
+  { number: '06', title: '需求預測與補貨', detail: '冷氣季節性預測（含補助、促銷、氣溫）、回測準確度、安全庫存、最晚下單日與跨店調撥建議。', status: '可使用', href: '#forecast' },
 ]
