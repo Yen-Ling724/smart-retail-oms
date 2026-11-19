@@ -8,7 +8,15 @@
 3. 多門市庫存管理（WMS）
 4. 訂單管理（OMS）＋多商品購物車
 5. AI 智慧導購（Claude API，只根據資料庫回答）
-6. 營運分析儀表板
+6. 營運分析儀表板（含 3D 坪數選購的前台需求訊號）
+7. 3D 坪數選購（`/room-fit.html`）：依坪數與房間條件，用 3D 房間看冷氣／清淨機／除濕機能否涵蓋整間；讀 CCC 的商品與各店庫存，報價與場勘預約會送進「訂單管理 → 報價／預約」
+
+### 3D 坪數選購如何接進 CCC
+- 頁面是單一 HTML 檔 `client/public/room-fit.html`（Three.js），打包時會原樣複製到網站根目錄；`/room-fit` 會轉到這個頁面。
+- 商品、價格、各門市可售數量：`GET /api/room-fit/catalog`，不再寫死在頁面裡。
+- 顧客／店員送出的報價、到府場勘、到店諮詢 → `service_requests` 資料表；門市可更新狀態或「轉成訂單」。
+- 每次試算的條件（不含個資）→ `fit_sessions` 資料表，在營運分析的「前台需求訊號」彙整（每週試算量、冷氣需求坪數、區域、熱門機型 vs 庫存）。
+- 原型裡的跨通路比價已拿掉（只保留全國電子官網價格）。
 
 ## 技術架構
 | 層 | 技術 |
@@ -137,6 +145,13 @@ npm run dev
 | POST | `/api/import/products/commit` | 確認匯入（全有或全無），寫入匯入紀錄 |
 | GET | `/api/import/batches?type=products` | 最近 10 次匯入紀錄（`can_undo` 標示可復原的那一筆） |
 | POST | `/api/import/batches/:id/undo` | 復原最近一次匯入 |
+| GET | `/api/room-fit/catalog` | 3D 頁用：冷氣／清淨機／除濕機 + 各門市可售 |
+| POST | `/api/fit-sessions` | 記錄一次坪數試算（需求訊號，不含個資） |
+| POST | `/api/service-requests` | 建立報價／場勘／到店諮詢單 |
+| GET | `/api/service-requests?status=&type=&store_id=` | 報價／預約單列表，附各狀態數量 |
+| PATCH | `/api/service-requests/:no` | 更新狀態（新進→已聯絡→已排定→已完成／取消）或門市備註 |
+| POST | `/api/service-requests/:no/convert` | 轉成待確認訂單 |
+| GET | `/api/analytics/demand?days=` | 前台需求訊號彙整 |
 | GET | `/api/assistant/status` | 導購模式（目前為 `keyword`） |
 | POST | `/api/assistant/ask` | 導購問答：`{ question, store_id?, context? }` → 理解的需求、回答、推薦商品（理由與不符合處） |
 | POST | `/api/demo/reset` | 重置示範資料 |

@@ -148,3 +148,54 @@ CREATE TABLE IF NOT EXISTS order_status_history (
   note        text,
   created_at  timestamptz NOT NULL DEFAULT now()
 );
+
+-- ===== 3D 坪數選購：報價／預約單 =====
+-- type：quote 請門市報價、survey 冷氣到府場勘、visit 到店諮詢
+-- status：new 新進 → contacted 已聯絡 → scheduled 已排定 → done 已完成；也可以 cancelled 取消
+CREATE TABLE IF NOT EXISTS service_requests (
+  request_no      text PRIMARY KEY,
+  type            text NOT NULL CHECK (type IN ('quote', 'survey', 'visit')),
+  status          text NOT NULL DEFAULT 'new' CHECK (status IN ('new', 'contacted', 'scheduled', 'done', 'cancelled')),
+  source          text NOT NULL DEFAULT 'customer' CHECK (source IN ('customer', 'staff')),
+  product_id      text NOT NULL REFERENCES products(product_id),
+  store_id        text NOT NULL REFERENCES stores(store_id),
+  customer_name   text NOT NULL,
+  phone           text NOT NULL,
+  county          text,
+  floor           integer,
+  preferred_date  date,
+  slot            text,
+  memo            text,
+  room            jsonb NOT NULL DEFAULT '{}'::jsonb,   -- 坪數、房間用途、西曬等試算條件
+  quoted_price    integer,                              -- 下單當下的官網網路價
+  order_no        text REFERENCES orders(order_no),     -- 轉成訂單後的訂單編號
+  staff_note      text,
+  created_at      timestamptz NOT NULL DEFAULT now(),
+  updated_at      timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS service_requests_status ON service_requests (status, created_at DESC);
+
+-- ===== 3D 坪數選購：試算紀錄（需求訊號，不含個資）=====
+CREATE TABLE IF NOT EXISTS fit_sessions (
+  id            bigserial PRIMARY KEY,
+  session       text,
+  view          text,
+  category      text NOT NULL CHECK (category IN ('ac', 'ap', 'dh')),
+  store_id      text REFERENCES stores(store_id),
+  ping          numeric NOT NULL,
+  room          text,
+  ceil          numeric,
+  west          boolean NOT NULL DEFAULT false,
+  top_floor     boolean NOT NULL DEFAULT false,
+  people        integer,
+  eff_ping      numeric NOT NULL,
+  budget        integer,
+  brand         text,
+  product_id    text REFERENCES products(product_id),
+  fit           text CHECK (fit IN ('ok', 'big', 'low')),
+  coverage      numeric,
+  result_count  integer,
+  ok_count      integer,
+  created_at    timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS fit_sessions_time ON fit_sessions (created_at DESC);

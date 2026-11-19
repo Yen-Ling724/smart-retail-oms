@@ -84,4 +84,72 @@ router.get('/analytics', async (req, res) => {
   });
 });
 
+// 前台需求訊號：3D 坪數選購頁的試算紀錄與報價／預約單
+const CAT_LABEL = { ac: '冷氣', ap: '空氣清淨機', dh: '除濕機' };
+// 冷氣修正後需求坪數 → 官網級距（與 3D 頁、商品規格一致）
+const AC_BUCKETS = ['3-4 坪', '4-5 坪', '5-6 坪', '6-7 坪', '7-8 坪', '8-10 坪', '11-12 坪', '13 坪以上'];
+const AC_BUCKET_SQL = `CASE
+  WHEN eff_ping <= 4 THEN '3-4 坪' WHEN eff_ping <= 5 THEN '4-5 坪' WHEN eff_ping <= 6 THEN '5-6 坪'
+  WHEN eff_ping <= 7 THEN '6-7 坪' WHEN eff_ping <= 8 THEN '7-8 坪' WHEN eff_ping <= 10 THEN '8-10 坪'
+  WHEN eff_ping <= 12 THEN '11-12 坪' ELSE '13 坪以上' END`;
+
+router.get('/analytics/demand', async (req, res) => {
+  const days = Math.min(Math.max(Math.round(Number(req.query.days)) || 56, 7), 365);
+  const since = `now() - make_interval(days => ${days})`;
+
+  const [totals] = await query(`
+    SELECT count(*)::int AS records,
+           count(DISTINCT session)::int AS sessions,
+           count(*) FILTER (WHERE fit = 'low')::int AS low,
+           count(*) FILTER (WHERE category = 'ac' AND (west OR top_floor))::int AS ac_harsh,
+           count(*) FILTER (WHERE category = 'ac')::int AS ac
+    FROM fit_sessions WHERE created_at >= ${since}`);
+
+  // 每週各類別試算次數（看趨勢）
+  const weekly = await query(`
+    SELECT to_char(date_trunc('week', created_at AT TIME ZONE 'Asia/Taipei'), 'MM/DD') AS week,
+           count(*) FILTER (WHERE category = 'ac')::int AS ac,
+           count(*) FILTER (WHERE category = 'ap')::int AS ap,
+           count(*) FILTER (WHERE category = 'dh')::int AS dh
+    FROM fit_sessions WHERE created_at >= ${since}
+    GROUP BY date_trunc('week', created_at AT TIME ZONE 'Asia/Taipei'), 1
+    ORDER BY date_trunc('week', created_at AT TIME ZONE 'Asia/Taipei')`);
+
+  // 冷氣需求坪數分布（修正後），依級距順序補齊
+  const acRows = await query(`
+    SELECT ${AC_BUCKET_SQL} AS bucket, count(*)::int AS count, count(*) FILTER (WHERE fit = 'low')::int AS low
+    FROM fit_sessions WHERE category = 'ac' AND created_at >= ${since}
+    GROUP BY 1`);
+  const acBuckets = AC_BUCKETS.map((b) => acRows.find((r) => r.bucket === b) ?? { bucket: b, count: 0, low: 0 });
+
+  // 各區域（依顧客選的門市；沒選門市的歸「未指定門市」）
+  const regions = await query(`
+    SELECT COALESCE(s.region, '未指定門市') AS region,
+           count(*) FILTER (WHERE f.category = 'ac')::int AS ac,
+           count(*) FILTER (WHERE f.category = 'ap')::int AS ap,
+           count(*) FILTER (WHERE f.category = 'dh')::int AS dh
+    FROM fit_sessions f LEFT JOIN stores s ON s.store_id = f.store_id
+    WHERE f.created_at >= ${since}
+    GROUP BY 1
+    ORDER BY array_position(ARRAY['北區','中區','南區','東區','未指定門市']::text[], COALESCE(s.region, '未指定門市'))`);
+
+  // 被看最多的機型 + 目前 5 店庫存 + 報價／預約次數：看得多、庫存少 → 備貨提醒
+  const topViewed = await query(`
+    SELECT f.product_id, p.name, p.category, count(*)::int AS views,
+           (SELECT COALESCE(SUM(GREATEST(i.on_hand - i.reserved - i.display - i.damaged, 0)), 0)::int
+              FROM inventory i WHERE i.product_id = f.product_id) AS available,
+           (SELECT count(*)::int FROM service_requests r WHERE r.product_id = f.product_id AND r.created_at >= ${since}) AS requests
+    FROM fit_sessions f JOIN products p ON p.product_id = f.product_id
+    WHERE f.created_at >= ${since}
+    GROUP BY f.product_id, p.name, p.category
+    ORDER BY views DESC, f.product_id LIMIT 8`);
+
+  const requests = await query(`
+    SELECT type, status, count(*)::int AS count, count(order_no)::int AS converted
+    FROM service_requests WHERE created_at >= ${since}
+    GROUP BY type, status`);
+
+  res.json({ ok: true, days, category_labels: CAT_LABEL, totals, weekly, ac_buckets: acBuckets, regions, top_viewed: topViewed, requests });
+});
+
 export default router;

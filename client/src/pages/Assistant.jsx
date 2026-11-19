@@ -27,7 +27,15 @@ function StockLine({ product, storeName }) {
   )
 }
 
-function ProductCard({ product, rank, storeName }) {
+// 冷氣、清淨機、除濕機可以在 3D 房間裡看涵蓋範圍
+const ROOM_FIT = new Set(['冷氣', '空氣清淨機', '除濕機'])
+function roomFitHref(product, need) {
+  const q = new URLSearchParams({ id: product.product_id, view: 'staff' })
+  if (need?.ping) q.set('ping', need.ping)
+  return `/room-fit.html?${q}`
+}
+
+function ProductCard({ product, rank, storeName, need }) {
   return (
     <article className="rec-card">
       <div className="rec-head">
@@ -52,6 +60,9 @@ function ProductCard({ product, rank, storeName }) {
           {product.misses.map((r) => <li key={r}>{r}</li>)}
         </ul>
       )}
+      {ROOM_FIT.has(product.category) && (
+        <a className="rec-3d" href={roomFitHref(product, need)} target="_blank" rel="noopener">在 3D 房間看看 ↗</a>
+      )}
     </article>
   )
 }
@@ -69,7 +80,7 @@ function AssistantMessage({ msg, storeName }) {
       <p>{msg.answer}</p>
       {msg.products?.length > 0 && (
         <div className="rec-list">
-          {msg.products.map((p, i) => <ProductCard key={p.product_id} product={p} rank={i + 1} storeName={storeName} />)}
+          {msg.products.map((p, i) => <ProductCard key={p.product_id} product={p} rank={i + 1} storeName={storeName} need={msg.need} />)}
         </div>
       )}
       {msg.products?.length > 0 && <p className="hint">以上推薦只根據系統內的商品、價格與庫存資料，不會推薦沒有庫存的商品。</p>}

@@ -91,7 +91,7 @@ export default function Overview() {
           {modules.map((module) => {
             const Tag = module.href ? 'a' : 'article'
             return (
-              <Tag className={`module-card ${module.href ? 'module-card-link' : ''}`} key={module.number} href={module.href}>
+              <Tag className={`module-card ${module.href ? 'module-card-link' : ''}`} key={module.number} href={module.href} {...(module.external ? { target: '_blank', rel: 'noopener' } : {})}>
                 <div className="module-card-top">
                   <span className="module-number">{module.number}</span>
                   <span className={`module-status ${module.href ? 'ready' : ''}`}>{module.status}</span>

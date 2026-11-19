@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { api, formatPrice } from '../api.js'
 import OrderForm from '../components/OrderForm.jsx'
+import ServiceRequests from '../components/ServiceRequests.jsx'
 import { Modal, Toast } from '../components/common.jsx'
 import { useEscape, useToast } from '../hooks.js'
 import { formatDateTime } from '../inventoryLabels.js'
@@ -136,6 +137,9 @@ function OrderDetail({ orderNo, notice: initialNotice, onClose, onChanged }) {
 
 // ===== 訂單管理頁 =====
 export default function Orders() {
+  // 網址 #orders?tab=requests 直接開「報價／預約」
+  const [section, setSection] = useState(() => (new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('tab') === 'requests' ? 'requests' : 'orders'))
+  const [requestCounts, setRequestCounts] = useState(null)
   const [status, setStatus] = useState('open')
   const [store, setStore] = useState('')
   const [q, setQ] = useState('')
@@ -155,7 +159,10 @@ export default function Orders() {
 
   useEffect(() => {
     api('/stores').then((d) => { setStores(d.stores); setRegions(d.regions ?? []) }).catch(() => {})
+    // 「報價／預約」待處理數量（顯示在切換按鈕上）
+    api('/service-requests').then((d) => setRequestCounts(d.counts)).catch(() => {})
   }, [])
+  const openRequests = requestCounts ? (requestCounts.new ?? 0) + (requestCounts.contacted ?? 0) + (requestCounts.scheduled ?? 0) : null
 
   const key = new URLSearchParams({ status, store, q: query }).toString()
   const loading = result.key !== key
@@ -198,6 +205,24 @@ export default function Orders() {
         <button className="btn" onClick={() => setCreating(true)}>＋ 建立訂單</button>
       </div>
 
+      <div className="section-switch" role="group" aria-label="切換訂單或報價預約">
+        <button type="button" className={section === 'orders' ? 'active' : ''} aria-pressed={section === 'orders'} onClick={() => setSection('orders')}>訂單</button>
+        <button type="button" className={section === 'requests' ? 'active' : ''} aria-pressed={section === 'requests'} onClick={() => setSection('requests')}>
+          報價／預約{openRequests != null && <span className="tab-count">{openRequests}</span>}
+        </button>
+      </div>
+
+      {section === 'requests' && (
+        <ServiceRequests
+          stores={stores}
+          regions={regions}
+          onToast={setToast}
+          onCounts={setRequestCounts}
+          onOpenOrder={(orderNo) => { setSection('orders'); setStatus(''); reload(); setSelected({ orderNo }) }}
+        />
+      )}
+
+      {section === 'orders' && (<>
       <div className="tabs" role="tablist">
         {ORDER_TABS.map((t) => (
           <button key={t.key} type="button" role="tab" aria-selected={status === t.key} className={`tab ${status === t.key ? 'active' : ''}`} onClick={() => setStatus(t.key)}>
@@ -251,6 +276,7 @@ export default function Orders() {
           </tbody>
         </table>
       </div>
+      </>)}
 
       {selected && (
         <OrderDetail key={selected.orderNo} orderNo={selected.orderNo} notice={selected.notice} onClose={closeDetail} onChanged={reload} />

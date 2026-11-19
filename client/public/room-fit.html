@@ -1,0 +1,1575 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>坪數 3D 選購｜CCC家電</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f4f0; --surface:#ffffff; --surface-2:#f2f0eb; --text:#1d2126; --muted:#5f666e; --line:#e2ded6;
+  --accent:#0d6bd8; --accent-soft:#e7f0fb; --accent-text:#ffffff;
+  --ok:#1b7f47; --ok-soft:#e3f3e9; --big:#9a5b00; --big-soft:#fbefd9; --low:#b93a12; --low-soft:#fce6dc;
+  --price:#c62828; --scene-bg:#e6e2da; --bar:#0d6bd8; --bar-ghost:#d9e5f4; --bar-best:#1b7f47;
+  --viewer-bg:linear-gradient(180deg,#dfe5ec,#c3ccd6);
+  --shadow:0 1px 2px rgba(20,24,30,.06),0 4px 16px rgba(20,24,30,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121417; --surface:#1b1e22; --surface-2:#22262b; --text:#e7e9ec; --muted:#9aa2ab; --line:#2f343a;
+    --accent:#5aa2ff; --accent-soft:#1b2a3d; --accent-text:#0b1220;
+    --ok:#53c787; --ok-soft:#173326; --big:#f0b04a; --big-soft:#3a2c14; --low:#ff8a65; --low-soft:#3d2018;
+    --price:#ff6b6b; --scene-bg:#1e2125; --bar:#5aa2ff; --bar-ghost:#26364a; --bar-best:#53c787;
+    --viewer-bg:linear-gradient(180deg,#2b3038,#1d2126);
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121417; --surface:#1b1e22; --surface-2:#22262b; --text:#e7e9ec; --muted:#9aa2ab; --line:#2f343a;
+  --accent:#5aa2ff; --accent-soft:#1b2a3d; --accent-text:#0b1220;
+  --ok:#53c787; --ok-soft:#173326; --big:#f0b04a; --big-soft:#3a2c14; --low:#ff8a65; --low-soft:#3d2018;
+  --price:#ff6b6b; --scene-bg:#1e2125; --bar:#5aa2ff; --bar-ghost:#26364a; --bar-best:#53c787;
+  --viewer-bg:linear-gradient(180deg,#2b3038,#1d2126);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font-family:"Noto Sans TC",system-ui,-apple-system,"Microsoft JhengHei",sans-serif;font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+button,select,input{font:inherit;color:inherit}
+a{color:var(--accent)}
+header.top{max-width:1600px;margin:0 auto;padding:18px 20px 6px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 20px;justify-content:space-between}
+header.top h1{margin:0;font-size:22px;font-weight:700;letter-spacing:.02em}
+header.top p{margin:2px 0 0;color:var(--muted)}
+.notice{font-size:12px;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+.app{max-width:1600px;margin:0 auto;padding:12px 20px 16px;display:grid;grid-template-columns:290px minmax(0,1fr) 320px;gap:16px;align-items:stretch}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+.controls{padding:16px;display:flex;flex-direction:column;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field>.lbl{display:flex;justify-content:space-between;align-items:baseline;font-weight:500}
+.field>.lbl small{color:var(--muted);font-weight:400}
+.big-num{font-size:26px;font-weight:700;color:var(--accent);line-height:1}
+.big-num em{font-style:normal;font-size:14px;color:var(--muted);margin-left:4px;font-weight:500}
+.seg{display:flex;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:3px;gap:3px}
+.seg button{flex:1;border:0;background:transparent;border-radius:7px;padding:7px 6px;cursor:pointer;color:var(--muted);font-weight:500;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.seg.cat button{padding:9px 6px;font-size:15px}
+.seg.cat button[aria-pressed="true"]{background:var(--accent);color:var(--accent-text)}
+input[type=range]{width:100%;accent-color:var(--accent);margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 10px;cursor:pointer;font-size:12px;color:var(--muted)}
+.chips button:hover{border-color:var(--accent);color:var(--accent)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.toggle{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:7px 10px;cursor:pointer;user-select:none;background:var(--surface)}
+.toggle input{accent-color:var(--accent);width:16px;height:16px;margin:0}
+.toggle span small{display:block;color:var(--muted);font-size:11px;line-height:1.2}
+.stepper{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden;width:max-content}
+.stepper button{border:0;background:var(--surface-2);width:34px;height:32px;cursor:pointer;font-size:16px}
+.stepper output{min-width:58px;text-align:center}
+select{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:7px 10px;width:100%}
+.calc{background:var(--accent-soft);border-radius:10px;padding:10px 12px;font-size:13px}
+.calc b{color:var(--accent)}
+.calc .f{color:var(--muted);font-size:12px;margin-top:4px}
+.hidden{display:none!important}
+.divider{height:1px;background:var(--line);margin:2px 0}
+
+.stage{position:relative;min-height:620px;align-self:stretch;border-radius:14px;overflow:hidden;background:var(--scene-bg);border:1px solid var(--line)}
+.stage canvas{display:block;touch-action:none;cursor:grab;position:absolute;left:0;top:0}
+.stage canvas:active{cursor:grabbing}
+.ov{position:absolute;pointer-events:none}
+.status{top:12px;left:12px;right:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start}
+.pill{pointer-events:auto;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:12px;padding:8px 12px;box-shadow:var(--shadow)}
+.pill .t{font-weight:700;font-size:15px}
+.pill .s{color:var(--muted);font-size:12px}
+.verdict{font-weight:700}
+.verdict.ok{color:var(--ok)}.verdict.big{color:var(--big)}.verdict.low{color:var(--low)}
+.legend{left:12px;bottom:12px;display:flex;gap:6px;flex-wrap:wrap}
+.legend .pill{display:flex;align-items:center;gap:6px;padding:5px 10px;font-size:12px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.hint{right:12px;bottom:12px;display:flex;gap:6px;align-items:center}
+.hint .pill{font-size:12px;color:var(--muted);padding:5px 10px}
+.btn{pointer-events:auto;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 12px;cursor:pointer;font-weight:500}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-text);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.06);color:var(--accent-text)}
+.lbl3d{position:absolute;transform:translate(-50%,-50%);font-size:12px;font-weight:600;color:#2b2f35;background:rgba(255,255,255,.85);border-radius:6px;padding:1px 7px;white-space:nowrap;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.lbl3d.unit{background:#1d2126;color:#fff}
+.lbl3d.sun{background:#ffb15c;color:#3b2100}
+
+.viewer{padding:14px;display:flex;flex-direction:column;gap:10px}
+.viewer h2,.results h2{margin:0;font-size:16px}
+.vhead{display:flex;justify-content:space-between;align-items:center}
+.vhead small{color:var(--muted)}
+#viewer3d{height:250px;border-radius:12px;background:var(--viewer-bg);border:1px solid var(--line);position:relative;overflow:hidden}
+#viewer3d canvas{display:block;cursor:grab;touch-action:none;position:absolute;left:0;top:0}
+.vdim{position:absolute;left:8px;bottom:6px;font-size:11px;color:var(--muted)}
+.pi-brand{font-size:12px;color:var(--muted);font-weight:500}
+.pi-title{font-size:17px;font-weight:700;line-height:1.3}
+.pi-model{font-size:12px;color:var(--muted);word-break:break-all}
+.price{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.price .now{color:var(--price);font-weight:700;font-size:22px}
+.price s{color:var(--muted);font-size:13px}
+.off{background:var(--low-soft);color:var(--low);font-size:12px;border-radius:6px;padding:0 6px;font-weight:700}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:11px;border:1px solid var(--line);border-radius:6px;padding:0 6px;color:var(--muted);background:var(--surface-2)}
+.fit{font-size:12px;font-weight:700;border-radius:6px;padding:1px 7px;white-space:nowrap}
+.fit.ok{background:var(--ok-soft);color:var(--ok)}.fit.big{background:var(--big-soft);color:var(--big)}.fit.low{background:var(--low-soft);color:var(--low)}
+dl.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:13px}
+dl.kv dt{color:var(--muted)}dl.kv dd{margin:0;font-weight:500}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.actions a.btn{text-decoration:none;color:var(--text)}
+.note{font-size:11px;color:var(--muted);margin:0}
+
+.results{max-width:1600px;margin:0 auto;padding:0 20px 20px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;align-items:start}
+.results .card{padding:16px}
+.lhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.lhead .cnt{color:var(--muted);font-size:12px;font-weight:400;margin-left:6px}
+.lhead select{width:auto}
+.list{display:flex;flex-direction:column;gap:8px}
+.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;background:var(--surface);transition:border-color .15s,box-shadow .15s}
+.item:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.item.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.item .nm{font-weight:700;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.item .md{font-size:12px;color:var(--muted);word-break:break-all}
+.item .pr{text-align:right}
+.item .pr .now{color:var(--price);font-weight:700;font-size:16px}
+.item .pr s{display:block;color:var(--muted);font-size:11px}
+.item .meta{grid-column:1/-1;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.item .cmp{margin-left:auto;font-size:12px;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:2px 8px;cursor:pointer}
+.item .cmp[aria-pressed="true"]{background:var(--accent);color:var(--accent-text);border-color:var(--accent)}
+.empty{color:var(--muted);text-align:center;padding:30px 10px;border:1px dashed var(--line);border-radius:12px}
+.more{margin-top:10px;width:100%}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:8px;margin:10px 0 14px}
+.stat{background:var(--surface-2);border-radius:10px;padding:8px 10px}
+.stat .k{font-size:11px;color:var(--muted)}
+.stat .v{font-weight:700;font-size:15px;white-space:nowrap}
+.chart{display:flex;flex-direction:column;gap:6px}
+.crow{display:grid;grid-template-columns:150px minmax(0,1fr) 84px;gap:8px;align-items:center;font-size:12px;cursor:pointer;border-radius:8px;padding:2px 4px}
+.crow:hover{background:var(--surface-2)}
+.crow.sel{background:var(--accent-soft)}
+.crow .cl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.crow .cl small{color:var(--muted)}
+.track{position:relative;height:16px}
+.track .ghost,.track .fill{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
+.track .ghost{background:var(--bar-ghost)}
+.track .fill{background:var(--bar)}
+.crow.best .fill{background:var(--bar-best)}
+.track .med{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--text);opacity:.45}
+.crow .cv{text-align:right;font-weight:700}
+.chart-legend{display:flex;gap:12px;font-size:11px;color:var(--muted);margin-top:8px;flex-wrap:wrap}
+.chart-legend span{display:inline-flex;align-items:center;gap:4px}
+h3{font-size:14px;margin:18px 0 8px}
+.ctable{width:100%;border-collapse:collapse;font-size:12px}
+.ctable th,.ctable td{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left;vertical-align:top}
+.ctable th{color:var(--muted);font-weight:500;white-space:nowrap;width:76px}
+.ctable td.best{color:var(--ok);font-weight:700}
+.ctable .x{border:0;background:none;color:var(--muted);cursor:pointer;font-size:12px;padding:0}
+.cwrap{overflow-x:auto}
+h3 .cnt{color:var(--muted);font-size:12px;font-weight:400;margin-left:6px}
+.xsum{border-radius:10px;padding:8px 12px;font-size:13px;margin-bottom:8px;background:var(--surface-2)}
+.xsum b{font-size:15px}
+.xsum.win{background:var(--ok-soft);color:var(--ok)}
+.xsum.lose{background:var(--big-soft);color:var(--big)}
+.xtable{width:100%;border-collapse:collapse;font-size:13px}
+.xtable td{border-bottom:1px solid var(--line);padding:7px 6px;vertical-align:middle}
+.xtable tr:last-child td{border-bottom:0}
+.xtable .sh{font-weight:500;white-space:nowrap}
+.xtable .rk{color:var(--muted);width:22px;font-size:12px}
+.xtable .pv{text-align:right;font-weight:700;white-space:nowrap}
+.xtable .df{color:var(--muted);font-size:11px;font-weight:400;white-space:nowrap}
+.xtable .sh .xmark{display:inline-block}
+.xtable .df.lower{color:var(--big);font-weight:500}
+.xtable .go{text-align:right;white-space:nowrap;font-size:12px}
+.xtable .go a{text-decoration:none}
+.xtable tr.self td{background:var(--accent-soft)}
+.xtable tr.self td:first-child{border-radius:8px 0 0 8px}.xtable tr.self td:last-child{border-radius:0 8px 8px 0}
+.xtable tr.na td{color:var(--muted);font-weight:400}
+.xmark{font-size:11px;font-weight:700;border-radius:6px;padding:0 6px;margin-left:6px;background:var(--ok-soft);color:var(--ok)}
+.xb{font-size:11px;font-weight:700;border-radius:6px;padding:0 6px;white-space:nowrap}
+.xb.win{background:var(--ok-soft);color:var(--ok)}
+.xb.lose{background:var(--surface-2);color:var(--muted);font-weight:500;border:1px solid var(--line)}
+.xctl{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.seg.sm button{padding:5px 8px;font-size:13px}
+.needs{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:var(--muted)}
+.chk{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--surface);color:var(--text);cursor:pointer;font-size:12px}
+.chk input{accent-color:var(--accent);margin:0}
+.chk:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.xtable .bd{font-size:11px;color:var(--muted);font-weight:400}
+@media (max-width:560px){ .xtable .sh{white-space:normal} .xtable .pv{white-space:normal} }
+.cta{display:flex;flex-direction:column;gap:6px;margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--accent-soft)}
+.cta p{margin:0;font-size:13px}
+.cta .row{display:flex;gap:8px;flex-wrap:wrap}
+.costbox{margin-top:10px;border:1px solid var(--line);border-radius:10px;padding:0 12px;font-size:12px}
+.costbox summary{cursor:pointer;padding:8px 0;color:var(--muted);font-weight:500}
+.costbox table{width:100%;border-collapse:collapse;margin-bottom:8px}
+.costbox th,.costbox td{padding:4px 4px;text-align:left;border-bottom:1px solid var(--line);font-weight:400}
+.costbox th{color:var(--muted)}
+.costbox input{width:84px;border:1px solid var(--line);border-radius:8px;padding:4px 6px;background:var(--surface);text-align:right}
+.costbox .ft{display:flex;justify-content:space-between;align-items:center;gap:8px;padding-bottom:10px;flex-wrap:wrap}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:6px}
+.svc{border:1px solid var(--line);border-radius:10px;padding:7px 10px;background:var(--surface)}
+.svc .t{font-weight:700;font-size:13px;display:flex;justify-content:space-between;gap:6px;align-items:baseline}
+.svc .d{font-size:12px;color:var(--muted);line-height:1.45}
+.svc .src{font-size:10px;font-weight:500;border-radius:5px;padding:0 5px;white-space:nowrap;background:var(--surface-2);color:var(--muted)}
+.svc.plan{border-style:dashed}
+.svc.plan .src{background:var(--big-soft);color:var(--big)}
+dialog#reqDlg{border:1px solid var(--line);border-radius:16px;padding:0;width:min(560px,calc(100vw - 32px));max-height:calc(100vh - 32px);background:var(--surface);color:var(--text);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+dialog#reqDlg::backdrop{background:rgba(10,12,16,.45)}
+.dlg{padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.dlg h2{margin:0;font-size:18px}
+.dlg .sub{margin:0;color:var(--muted);font-size:12px}
+.dlg .sumbox{background:var(--surface-2);border-radius:10px;padding:10px 12px}
+.dlg .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dlg label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:500}
+.dlg label.f small{color:var(--muted);font-weight:400}
+.dlg input[type=text],.dlg input[type=tel],.dlg input[type=date],.dlg input[type=number],.dlg textarea{border:1px solid var(--line);border-radius:10px;padding:7px 10px;background:var(--surface);width:100%;font:inherit;color:inherit}
+.dlg textarea{min-height:60px;resize:vertical}
+.dlg .consent{display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--muted)}
+.dlg .consent input{margin-top:3px;accent-color:var(--accent)}
+.dlg .acts{display:flex;justify-content:flex-end;gap:8px}
+.dlg .okmsg{color:var(--ok);font-weight:700;font-size:15px}
+@media (max-width:560px){ .dlg .grid2{grid-template-columns:1fr} }
+/* 檢視模式 */
+.hdr-r{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.vmode{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+.vmode .seg{min-width:250px}
+.modehint{max-width:1600px;margin:0 auto;padding:4px 20px 0;font-size:13px;color:var(--muted)}
+.modehint b{color:var(--text)}
+body:not([data-view="internal"]) .int-only{display:none!important}
+body[data-view="customer"] .costbox{display:none!important}
+body:not([data-view="internal"]) .svc .src{display:none}
+body:not([data-view="internal"]) .svc.plan{border-style:solid}
+.costbox input:disabled{background:var(--surface-2);color:var(--muted)}
+.tips{margin-top:10px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:8px 12px 8px 10px;font-size:13px}
+.tips:empty{display:none}
+.tips b{display:block;margin-bottom:2px}
+.tips ul{margin:0;padding-left:18px}
+.tips li{margin:2px 0}
+.results .card.wide{grid-column:1/-1}
+.itable{width:100%;border-collapse:collapse;font-size:12px;min-width:620px}
+.itable th,.itable td{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left;vertical-align:top}
+.itable th{color:var(--muted);font-weight:500;white-space:nowrap}
+.itable td.n{text-align:right;white-space:nowrap}
+.itable tr[data-id]{cursor:pointer}
+.itable tr[data-id]:hover td{background:var(--surface-2)}
+.itable .hi{color:var(--low);font-weight:700}
+.itable .win{color:var(--ok);font-weight:700}
+@media (max-width:860px){ .hdr-r{align-items:flex-start} .modehint{padding:4px 16px 0} .vmode .seg{min-width:0;flex:1} .vmode{width:100%} }
+footer{max-width:1600px;margin:0 auto;padding:0 20px 28px;color:var(--muted);font-size:12px}
+footer ul{margin:6px 0 0;padding-left:18px}
+
+@media (max-width:1240px){
+  .app{grid-template-columns:270px minmax(0,1fr)}
+  .viewer{grid-column:1/-1;display:grid;grid-template-columns:340px minmax(0,1fr);align-items:start}
+  .viewer .vbox{grid-row:span 2}
+}
+@media (max-width:860px){
+  .app{grid-template-columns:minmax(0,1fr);padding:10px 16px}
+  .stage{height:460px;min-height:0}
+  .viewer{grid-template-columns:minmax(0,1fr)}
+  .results{grid-template-columns:minmax(0,1fr);padding:0 16px 16px}
+  header.top{padding:14px 16px 4px}
+  footer{padding:0 16px 24px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .crow{grid-template-columns:110px minmax(0,1fr) 74px}
+}
+.stk{display:inline-block;font-size:12px;padding:2px 7px;border-radius:999px;font-weight:600}
+.stk.ok{background:var(--ok-soft);color:var(--ok)}
+.stk.warn{background:var(--big-soft);color:var(--big)}
+.stk.out{background:var(--low-soft);color:var(--low)}
+.dlg .sub.warn{color:var(--big);font-weight:600}
+.dlg .sub.err{color:var(--low);font-weight:600;min-height:0}
+.dlg .sub.err:empty{display:none}
+.notice a{color:inherit;text-decoration:underline}
+</style>
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>坪數 3D 選購助手</h1>
+    <p>輸入房間坪數，直接看冷氣、清淨機、除濕機能不能「吹到、淨到、除到」整個房間，並查詢門市庫存、預約場勘或請門市報價。</p>
+  </div>
+  <div class="hdr-r">
+    <div class="vmode"><span>檢視模式</span>
+      <div class="seg sm" id="viewSw" role="group" aria-label="檢視模式">
+        <button data-view="customer" aria-pressed="true">顧客</button>
+        <button data-view="staff" aria-pressed="false">門市店員</button>
+        <button data-view="internal" aria-pressed="false">內部</button>
+      </div>
+    </div>
+    <div class="notice">全國電子營運提案原型（課程專題）・非全國電子官方工具・商品與價格取自全國電子官網（2026/11/18），門市與庫存為模擬・<a href="/#overview">CCC 營運系統</a></div>
+  </div>
+  <p class="modehint" id="modeHint"></p>
+</header>
+
+<main class="app">
+  <aside class="card controls" aria-label="條件設定">
+    <div class="seg cat" id="catSeg" role="group" aria-label="商品類別">
+      <button data-cat="ac" aria-pressed="true">冷氣</button>
+      <button data-cat="ap" aria-pressed="false">空氣清淨機</button>
+      <button data-cat="dh" aria-pressed="false">除濕機</button>
+    </div>
+
+    <div class="field">
+      <div class="lbl"><span>門市</span></div>
+      <select id="store" aria-label="門市"></select>
+      <label class="toggle" style="margin-top:6px"><input type="checkbox" id="inStock" checked><span>只顯示有貨的機型<small id="inStockHint">任一門市有貨</small></span></label>
+    </div>
+
+    <div class="field">
+      <div class="lbl"><span>房間坪數</span><span class="big-num" id="pingOut">6<em>坪</em></span></div>
+      <input type="range" id="ping" min="1" max="30" step="0.5" value="6" aria-label="房間坪數">
+      <div class="chips" id="pingChips"></div>
+    </div>
+
+    <div class="field">
+      <div class="lbl"><span>房間用途</span></div>
+      <div class="seg" id="roomSeg" role="group" aria-label="房間用途">
+        <button data-room="bedroom" aria-pressed="true">臥室</button>
+        <button data-room="living" aria-pressed="false">客廳</button>
+        <button data-room="study" aria-pressed="false">書房</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="lbl"><span>天花板高度</span><small id="ceilOut">2.8 m</small></div>
+      <input type="range" id="ceil" min="2.4" max="4" step="0.1" value="2.8" aria-label="天花板高度">
+    </div>
+
+    <div id="acOpts" class="field">
+      <div class="row2">
+        <label class="toggle"><input type="checkbox" id="west"><span>西曬<small>需求 +15%</small></span></label>
+        <label class="toggle"><input type="checkbox" id="top"><span>頂樓<small>需求 +20%</small></span></label>
+      </div>
+      <div class="lbl" style="margin-top:4px"><span>常駐人數</span><small>超過 2 人每人 +0.3 坪</small></div>
+      <div class="stepper"><button id="pMinus" aria-label="減少人數">−</button><output id="peopleOut">2 人</output><button id="pPlus" aria-label="增加人數">＋</button></div>
+      <div class="lbl" style="margin-top:4px"><span>機型</span></div>
+      <div class="seg" id="kindSeg" role="group" aria-label="機型">
+        <button data-kind="all" aria-pressed="true">全部</button>
+        <button data-kind="split" aria-pressed="false">分離式</button>
+        <button data-kind="window" aria-pressed="false">窗型</button>
+      </div>
+      <div class="seg" id="modeSeg" role="group" aria-label="冷暖功能">
+        <button data-mode="all" aria-pressed="true">全部</button>
+        <button data-mode="冷暖" aria-pressed="false">冷暖</button>
+        <button data-mode="冷專" aria-pressed="false">冷專</button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="field">
+      <div class="lbl"><span>品牌</span></div>
+      <select id="brand" aria-label="品牌"></select>
+    </div>
+    <div class="field">
+      <div class="lbl"><span>預算上限</span><small id="budgetOut">不限</small></div>
+      <input type="range" id="budget" min="0" max="100" step="500" aria-label="預算上限">
+    </div>
+    <div class="calc" id="calc"></div>
+  </aside>
+
+  <section class="stage" id="stage" aria-label="3D 房間模擬">
+    <div class="ov status" id="status"></div>
+    <div class="ov legend" id="legend"></div>
+    <div class="ov hint"><span class="pill">拖曳旋轉・滾輪或雙指縮放</span><button class="btn primary" id="replay">重播氣流</button></div>
+    <div id="labels"></div>
+  </section>
+
+  <aside class="card viewer" aria-label="商品建模">
+    <div class="vbox">
+      <div class="vhead"><h2>商品建模</h2><small>可拖曳轉動</small></div>
+      <div id="viewer3d" style="margin-top:8px"><div class="vdim" id="vdim"></div></div>
+    </div>
+    <div id="prodInfo"></div>
+  </aside>
+</main>
+
+<section class="results">
+  <div class="card">
+    <div class="lhead">
+      <h2>推薦商品<span class="cnt" id="countInfo"></span></h2>
+      <select id="sort" aria-label="排序">
+        <option value="rec">推薦排序（適合優先・低價優先）</option>
+        <option value="price">價格低到高</option>
+        <option value="discount">折扣幅度</option>
+        <option value="cap">能力由小到大</option>
+        <option value="stock">庫存多到少</option>
+      </select>
+    </div>
+    <div class="list" id="list"></div>
+    <button class="btn more hidden" id="moreBtn">顯示全部</button>
+  </div>
+  <div class="card">
+    <h2>門市庫存與預約</h2>
+    <h3 id="stockTitle" style="margin-top:12px">各門市庫存</h3>
+    <div id="stockBox"></div>
+    <div class="tips" id="xpTips"></div>
+    <div class="cta" id="xpCta"></div>
+    <h3>門市服務<span class="cnt">依全國電子 2026 年活動報導整理；標「提案」者為本專案建議新增</span></h3>
+    <div class="svc-grid" id="svc"></div>
+    <h3>同級價格（官網網路價）</h3>
+    <div class="stats" id="stats"></div>
+    <div class="chart" id="chart"></div>
+    <div class="chart-legend"><span><i class="sw" style="background:var(--bar)"></i>網路價</span><span><i class="sw" style="background:var(--bar-ghost)"></i>原價</span><span><i class="sw" style="background:var(--bar-best)"></i>同級最低價</span><span><i class="sw" style="background:var(--text);opacity:.45;width:3px"></i>同級中位數</span></div>
+    <h3>我的比較清單（最多 3 款）</h3>
+    <div class="cwrap" id="compare"></div>
+  </div>
+  <div class="card wide int-only" id="intCard">
+    <div class="lhead"><h2>庫存警示<span class="cnt">內部檢視・目前條件下「適合」但 5 家門市合計 3 台以下的機型</span></h2>
+      <a class="btn" href="/#analytics">到 CCC 看需求訊號 ↗</a></div>
+    <div class="stats" id="intStats"></div>
+    <div class="cwrap" id="intTable"></div>
+    <button class="btn more hidden" id="intMore">顯示全部</button>
+  </div>
+</section>
+
+<dialog id="reqDlg" aria-labelledby="reqTitle"><div id="reqBody"></div></dialog>
+
+<footer>
+  <b>資料與計算說明</b>
+  <ul>
+    <li>商品、網路價與原價取自全國電子官網公開商品列表（elifemall.com.tw，2026/11/18），由 CCC 系統的商品主檔提供；門市與各店庫存為模擬資料，實際價格與庫存以官網為準。</li>
+    <li>冷氣適用坪數依官網「找空調坪數」級距換算（例：≦2.3kW 為 3-4 坪、≦3.9kW 為 5-6 坪），13 坪以上以每坪約 0.615kW 推估。西曬、頂樓、挑高、人數為經驗修正，實際仍需現場評估。</li>
+    <li>清淨機坪數取自官網坪數分類或品名標示；除濕機以「日除濕量 × 1.25」估算適用坪數（經驗值）。</li>
+    <li>「請門市報價」與「預約場勘」會送進 CCC 系統的「訂單管理 → 報價／預約」，由門市追蹤處理。這是示範系統，請勿填寫真實姓名與電話；示範資料會定期清除。</li>
+    <li>每次試算的條件（類別、坪數、房間條件、選看的機型，不含個人資料）會匿名記錄，作為 CCC 營運分析的需求訊號。</li>
+    <li>頁首可切換「顧客／門市店員／內部」三種檢視；網址後加上 <code>?view=staff</code> 或 <code>?view=internal</code> 可直接開在該模式，<code>?store=TN01</code> 可指定門市。</li>
+    <li>3D 外型為依產品類型、品牌風格與能力大小的示意建模，並非原廠尺寸或外觀。</li>
+  </ul>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(async function(){
+'use strict';
+/* ============================== 資料 ============================== */
+// 商品、價格、各門市庫存都從 CCC 系統讀取（/api/room-fit/catalog），不再寫死在這個檔案裡
+let CATALOG;
+try {
+  const res = await fetch('/api/room-fit/catalog');
+  CATALOG = await res.json();
+  if(!res.ok || !CATALOG.ok) throw new Error(CATALOG.error || res.status);
+} catch(err){
+  document.querySelector('main.app').innerHTML = '<div class="card" style="grid-column:1/-1;padding:24px">無法連線到 CCC 系統讀取商品資料，請稍後重新整理。（' + String(err.message || err).replace(/[<>&]/g, '') + '）</div>';
+  return;
+}
+const STORES = CATALOG.stores;   // [{store_id, name, region}]
+const STORE_NAME = Object.fromEntries(STORES.map(s => [s.store_id, s.name]));
+
+/* ============================== 工具 ============================== */
+const PING_M2 = 3.3058;
+const $ = s => document.querySelector(s);
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+const fmt = n => 'NT$ ' + Math.round(n).toLocaleString('zh-TW');
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const median = a => { if(!a.length) return 0; const s=[...a].sort((x,y)=>x-y); const m=s.length>>1; return s.length%2 ? s[m] : (s[m-1]+s[m])/2; };
+const CAT_NAME = {ac:'冷氣', ap:'空氣清淨機', dh:'除濕機'};
+const ROOM_NAME = {bedroom:'臥室', living:'客廳', study:'書房'};
+
+/* ============================== 商品整理 ============================== */
+/* ---------- 品牌外觀 ---------- */
+const BRAND_STYLE = {
+  'Panasonic':{body:'#f4f5f6',panel:'#fbfbfb',accent:'#b9bfc6',led:'#4fc3f7'},
+  'LG':{body:'#f3f2ef',panel:'#ffffff',accent:null,led:'#ff6b8b'},
+  '日立':{body:'#f6f6f4',panel:'#ffffff',accent:'#d0d4d8',led:'#7bdcb5'},
+  '三菱電機':{body:'#f7f6f1',panel:'#fffdf7',accent:'#d8d8d8',led:'#66bb6a'},
+  '三菱重工':{body:'#f4f6f8',panel:'#ffffff',accent:'#a9bccf',led:'#42a5f5'},
+  '東元':{body:'#f5f4f1',panel:'#fffefb',accent:'#cdb57b',led:'#4dd0e1'},
+  '禾聯':{body:'#f5f5f5',panel:'#ffffff',accent:'#d4af37',led:'#29b6f6'},
+  'SHARP':{body:'#f5f6f7',panel:'#ffffff',accent:'#cfd3d7',led:'#4fc3f7'},
+  '聲寶':{body:'#f5f5f3',panel:'#ffffff',accent:'#c9ced3',led:'#4fc3f7'},
+  '瑞智':{body:'#f3f4f5',panel:'#ffffff',accent:'#9fb0c2',led:'#4fc3f7'},
+  '台灣三洋':{body:'#f6f6f6',panel:'#ffffff',accent:'#c7cdd3',led:'#26c6da'}
+};
+
+const AC_TIERS = [
+  {max:4,kw:2.3,label:'3-4坪（≦2.3kW）',range:'3–4'},{max:5,kw:2.9,label:'4-5坪（≦2.9kW）',range:'4–5'},
+  {max:6,kw:3.9,label:'5-6坪（≦3.9kW）',range:'5–6'},{max:7,kw:4.5,label:'6-7坪（≦4.5kW）',range:'6–7'},
+  {max:8,kw:5.6,label:'7-8坪（≦5.6kW）',range:'7–8'},{max:10,kw:6.4,label:'8-10坪（≦6.4kW）',range:'8–10'},
+  {max:12,kw:7.9,label:'11-12坪（≦7.9kW）',range:'11–12'}
+];
+function acMaxPing(kw){ for(const t of AC_TIERS) if(kw <= t.kw + 1e-9) return t.max; return Math.floor(kw/0.615); }
+function acRange(kw){ for(const t of AC_TIERS) if(kw <= t.kw + 1e-9) return t.range + ' 坪'; return '約 ' + acMaxPing(kw) + ' 坪'; }
+function acTierLabel(eff){ for(const t of AC_TIERS) if(eff <= t.max + 1e-9) return t.label; return '13坪以上（約 ' + (eff*0.615).toFixed(1) + 'kW 以上）'; }
+function parseKW(name){
+  const tok = name.trim().split(/\s+/).pop();
+  const m = tok.match(/(\d{2,3})/); if(!m) return null;
+  const n = parseInt(m[1],10);
+  return m[1].length === 3 ? (n >= 300 ? n/100 : n/10) : n/10;
+}
+function seriesOf(name){
+  let m = name.match(/(?<![A-Za-z])([A-Za-z]{1,3}\d?[一-鿿]{0,4}系列)/);
+  if(m) return m[1];
+  m = name.match(/(沉浸式精品|星幸福|靜音大師|尊爵|極致|頂級|典雅|精品型|旗艦型|豪華型|壁掛)/);
+  if(m) return m[1];
+  m = name.match(/([一-鿿]{2,3}\d?系列)/);
+  if(m) return m[1];
+  m = name.match(/(?<![A-Za-z])([A-Z]{2}\d)(?=[一-鿿])/);
+  if(m) return m[1] + '系列';
+  if(/窗/.test(name)) return '窗型';
+  return '';
+}
+const PRODUCTS = {ac:[], ap:[], dh:[]};
+const CAT_OF = {'冷氣':'ac', '空氣清淨機':'ap', '除濕機':'dh'};
+// CCC 品牌「Panasonic 國際」「HITACHI 日立」→ 建模用的品牌風格名稱
+const brandKey = b => Object.keys(BRAND_STYLE).find(k => b.includes(k)) || b;
+// 品名開頭的品牌字樣拿掉，當作短標題
+// 例：「JJPRO 家佳寶 新一級能效 12L」品牌是「JJPRO 家佳寶」→「新一級能效 12L」
+const shortTitle = (name, brand) => { let t = name.trim(); for(const w of brand.split(' ')){ if(t.toLowerCase().startsWith(w.toLowerCase())) t = t.slice(w.length).trim(); } return t || name; };
+for(const c of CATALOG.products){
+  const cat = CAT_OF[c.category]; if(!cat) continue;
+  const s = c.specs || {}, m = c.meta || {};
+  const stock = c.stock || {};
+  const base = {id:c.product_id, code:c.source_code, cat, brand:c.brand, bkey:brandKey(c.brand), model:c.model, price:c.price, orig:Math.max(c.list_price || c.price, c.price),
+    stock, stockTotal: Object.values(stock).reduce((t, n) => t + n, 0)};
+  if(cat === 'ac'){
+    const kw = s['冷房能力'] || m.kw || parseKW(c.model); if(!kw) continue;
+    const series = seriesOf(c.name);
+    PRODUCTS.ac.push({...base, name:c.name, series, kw, cover: acMaxPing(kw), coverLabel: acRange(kw),
+      kind: s['類型'] === '窗型' ? 'window' : 'split', mode: s['冷暖'] || '未標示', inverter: s['變頻'] || '變頻',
+      title: (series ? series + ' ' : '') + kw.toFixed(1) + 'kW', capText: kw.toFixed(1) + ' kW'});
+  } else if(cat === 'ap'){
+    const cover = +s['適用坪數'] || 0; if(!cover) continue;
+    PRODUCTS.ap.push({...base, name:c.name, title:shortTitle(c.name, c.brand), cover, coverLabel: m.coverLabel || cover + ' 坪',
+      shape: m.shape || 'box', color: m.color || '#f2f2f0', accent: m.accent || '#cfd3d8', capText: m.coverLabel || cover + ' 坪'});
+  } else {
+    const liters = +s['除濕量'] || 0; if(!liters) continue;
+    const cover = +s['適用坪數'] || Math.max(2, Math.round(liters*1.25));
+    PRODUCTS.dh.push({...base, name:c.name, title:shortTitle(c.name, c.brand), liters, cover, coverLabel:'約 ' + cover + ' 坪', color: m.color || '#f2f2f0', capText: liters + ' L/日'});
+  }
+}
+const ALL = [...PRODUCTS.ac, ...PRODUCTS.ap, ...PRODUCTS.dh];
+const BY_ID = Object.fromEntries(ALL.map(p => [p.id, p]));
+
+/* ============================== 狀態 ============================== */
+const state = {store:'all', inStock:true, cat:'ac', ping:6, room:'bedroom', ceil:2.8, west:false, top:false, people:2, kind:'all', mode:'all', brand:'all', budget:null, sort:'rec', showAll:false, selected:null, compare:[]};
+const QUICK = {ac:[3,5,6,8,10,12,15], ap:[5,8,10,15,20,25], dh:[4,6,8,12,15,20]};
+
+function effPing(){
+  if(state.cat !== 'ac') return state.ping;
+  let f = 1 + (state.west ? 0.15 : 0) + (state.top ? 0.2 : 0);
+  const hf = state.ceil > 2.8 ? state.ceil/2.8 : 1;
+  return Math.round((state.ping*f*hf + Math.max(0, state.people-2)*0.3)*10)/10;
+}
+function fitOf(p, eff){
+  if(p.cover < eff - 1e-9) return 'low';
+  if(p.cat === 'ac') return p.cover > eff + Math.max(2, eff*0.4) ? 'big' : 'ok';
+  return (p.cover >= eff*2.5 && p.cover - eff >= 6) ? 'big' : 'ok';
+}
+function fitText(f, cat){
+  if(f === 'ok') return '適合';
+  if(f === 'low') return '能力不足';
+  return cat === 'ac' ? '能力偏大' : '大坪數款';
+}
+// 目前門市（或全部門市）的可售數量
+function avail(p){ return state.store === 'all' ? p.stockTotal : (p.stock[state.store] || 0); }
+function coverage(p){ return p ? p.cover / effPing() : 0; }
+function filtered(){
+  let arr = PRODUCTS[state.cat];
+  if(state.brand !== 'all') arr = arr.filter(p => p.brand === state.brand);
+  if(state.inStock) arr = arr.filter(p => avail(p) > 0);
+  if(state.cat === 'ac'){
+    if(state.kind !== 'all') arr = arr.filter(p => p.kind === state.kind);
+    if(state.mode !== 'all') arr = arr.filter(p => p.mode === state.mode);
+  }
+  if(state.budget) arr = arr.filter(p => p.price <= state.budget);
+  const eff = effPing();
+  const rows = arr.map(p => ({p, fit: fitOf(p, eff)}));
+  const rank = {ok:0, big:1, low:2};
+  const disc = r => 1 - r.p.price / r.p.orig;
+  if(state.sort === 'price') rows.sort((a,b) => a.p.price - b.p.price);
+  else if(state.sort === 'discount') rows.sort((a,b) => disc(b) - disc(a) || a.p.price - b.p.price);
+  else if(state.sort === 'cap') rows.sort((a,b) => a.p.cover - b.p.cover || a.p.price - b.p.price);
+  else if(state.sort === 'stock') rows.sort((a,b) => avail(b.p) - avail(a.p) || a.p.price - b.p.price);
+  else rows.sort((a,b) => rank[a.fit] - rank[b.fit] || (a.fit === 'low' ? b.p.cover - a.p.cover : 0) || (a.fit === 'big' ? a.p.cover - b.p.cover : 0) || a.p.price - b.p.price);
+  return rows;
+}
+
+/* ============================== Three.js 共用 ============================== */
+const MATS = {};
+function M(color, o){ const k = color + JSON.stringify(o||{}); if(!MATS[k]) MATS[k] = new THREE.MeshStandardMaterial(Object.assign({color, roughness:.55, metalness:.04}, o||{})); return MATS[k]; }
+function mesh(geo, mat, cast){ const m = new THREE.Mesh(geo, mat); m.castShadow = cast !== false; m.receiveShadow = true; return m; }
+function box(w,h,d){ return new THREE.BoxGeometry(w,h,d); }
+function cyl(rt,rb,h,s){ return new THREE.CylinderGeometry(rt,rb,h,s||48); }
+// 圓角方塊：a×b 截面（XY），沿 Z 擠出 len
+function rbox(a,b,len,r){
+  const bv = Math.min(0.008, a*0.1, b*0.1, len*0.2);
+  const w = a-2*bv, h = b-2*bv; r = Math.max(0.001, Math.min(r, w/2-0.0005, h/2-0.0005));
+  const s = new THREE.Shape(), x = -w/2, y = -h/2;
+  s.moveTo(x+r,y); s.lineTo(x+w-r,y); s.quadraticCurveTo(x+w,y,x+w,y+r);
+  s.lineTo(x+w,y+h-r); s.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  s.lineTo(x+r,y+h); s.quadraticCurveTo(x,y+h,x,y+h-r);
+  s.lineTo(x,y+r); s.quadraticCurveTo(x,y,x+r,y);
+  const g = new THREE.ExtrudeGeometry(s, {depth:Math.max(0.0005,len-2*bv), bevelEnabled:true, bevelThickness:bv, bevelSize:bv, bevelSegments:2, curveSegments:10});
+  g.center(); return g;
+}
+// 直立圓角方塊（俯視圓角）
+function vbox(w,h,d,r){ return rbox(w,d,h,r).rotateX(-Math.PI/2); }
+function disposeTree(o){ o.traverse(c => { if(c.geometry) c.geometry.dispose(); }); }
+function led(color, w, h){ return new THREE.Mesh(box(w,h,0.004), new THREE.MeshBasicMaterial({color})); }
+
+function styleOf(p){
+  const s = Object.assign({}, BRAND_STYLE[p.bkey] || BRAND_STYLE['聲寶']);
+  if(/UX|VX|旗艦/.test(p.series||'')){ s.panel = '#e7e9ec'; s.accent = '#8b929b'; s.metal = .35; }
+  if(/極淨/.test(p.series||'')){ s.panel = '#2c2f34'; s.metal = .5; }
+  if(/極適/.test(p.series||'')){ s.panel = '#f1ede6'; }
+  if(p.bkey === '日立' && /旗艦|精品/.test(p.series||'')) s.accent = '#c8b27a';
+  if(/沉浸式精品/.test(p.series||'')) s.accent = '#cdb57b';
+  return s;
+}
+
+/* ---------- 冷氣：分離式室內機（原點在背面中央，往 +Z 凸出） ---------- */
+function buildSplit(p){
+  const g = new THREE.Group(), s = styleOf(p);
+  const w = clamp(0.72 + (p.kw-2.2)*0.06, 0.72, 1.12), h = p.kw > 5.6 ? 0.32 : 0.295, d = p.kw > 5.6 ? 0.26 : 0.235;
+  const body = mesh(rbox(d, h, w, 0.075).rotateY(Math.PI/2), M(s.body,{roughness:.4}));
+  body.position.z = d/2; g.add(body);
+  const panel = mesh(rbox(w*0.965, h*0.58, 0.012, 0.03), M(s.panel,{roughness:.32, metalness:s.metal||.05}));
+  panel.position.set(0, h*0.1, d+0.003); g.add(panel);
+  if(s.accent){ const a = mesh(box(w*0.965, 0.007, 0.006), M(s.accent,{metalness:.6, roughness:.3})); a.position.set(0, -h*0.215, d+0.002); g.add(a); }
+  const slot = mesh(box(w*0.86, 0.05, 0.05), M('#2f343a',{roughness:.85}), false); slot.position.set(0, -h/2+0.035, d-0.03); g.add(slot);
+  const lv = new THREE.Group(); const flap = mesh(box(w*0.84, 0.006, 0.075), M(s.body,{roughness:.4})); flap.position.z = 0.037; lv.add(flap);
+  lv.position.set(0, -h/2+0.012, d-0.06); lv.rotation.x = 0.15; g.add(lv);
+  const l = led(s.led, 0.05, 0.012); l.position.set(w*0.36, -h*0.1, d+0.008); g.add(l);
+  const mark = mesh(box(0.08, 0.013, 0.003), M('#9aa1a9'), false); mark.position.set(0, -h*0.1, d+0.006); g.add(mark);
+  g.userData = {kind:'split', w, h, d, louver:lv};
+  return g;
+}
+/* ---------- 冷氣：分離式室外機（原點在底部中央） ---------- */
+function buildOutdoor(p){
+  const g = new THREE.Group(), big = p.kw > 5.6;
+  const w = big ? 0.88 : 0.78, h = big ? 0.68 : 0.55, d = big ? 0.32 : 0.29;
+  const gold = /耀金/.test(p.name);
+  const body = mesh(vbox(w, h, d, 0.02), M('#e5e6e7',{roughness:.5})); body.position.y = h/2 + 0.03; g.add(body);
+  const cx = -w*0.13, cy = h/2 + 0.03, r = Math.min(h*0.4, 0.23);
+  const ringM = M('#575d64',{roughness:.6});
+  for(let i=1;i<=4;i++){ const t = mesh(new THREE.TorusGeometry(r*i/4, 0.005, 6, 56), ringM, false); t.position.set(cx, cy, d/2+0.012); g.add(t); }
+  [0, Math.PI/2].forEach(a => { const b = mesh(box(r*2, 0.008, 0.006), ringM, false); b.rotation.z = a; b.position.set(cx, cy, d/2+0.012); g.add(b); });
+  const hole = mesh(new THREE.CircleGeometry(r, 48), M('#25292e',{roughness:.9}), false); hole.position.set(cx, cy, d/2+0.002); g.add(hole);
+  const fan = new THREE.Group(); fan.position.set(cx, cy, d/2+0.006);
+  const hub = mesh(cyl(0.04,0.04,0.03,24).rotateX(Math.PI/2), M('#3a3f45'), false); fan.add(hub);
+  for(let i=0;i<3;i++){ const bl = mesh(box(r*0.85, 0.075, 0.006).translate(r*0.43,0,0), M('#6b7178',{roughness:.5}), false); bl.rotation.z = i*Math.PI*2/3; bl.rotation.x = 0.25; fan.add(bl); }
+  g.add(fan);
+  for(let i=0;i<8;i++){ const v = mesh(box(w*0.3, 0.006, 0.004), M('#c8cbcf'), false); v.position.set(w*0.27, cy - h*0.3 + i*h*0.085, d/2+0.004); g.add(v); }
+  const side = mesh(box(0.006, h*0.85, d*0.85), M(gold ? '#d4af37' : '#b9bdc2',{metalness:gold?.7:.3, roughness:.35}), false); side.position.set(-w/2-0.002, cy, 0); g.add(side);
+  [-1,1].forEach(sx => { const f = mesh(box(0.08, 0.03, d*1.05), M('#8c9196')); f.position.set(sx*w*0.36, 0.015, 0); g.add(f); });
+  g.userData = {fan, w, h, d};
+  return g;
+}
+/* ---------- 冷氣：窗型（原點在牆面中央，室內凸出 0.15m） ---------- */
+function buildWindowAC(p){
+  const g = new THREE.Group(), s = styleOf(p);
+  const w = clamp(0.5 + (p.kw-2.2)*0.045, 0.5, 0.72), h = p.kw > 4.2 ? 0.43 : 0.37, d = 0.6;
+  const body = mesh(rbox(w, h, d, 0.02), M('#e9eaeb',{roughness:.5})); body.position.z = 0.15 - d/2; g.add(body);
+  const face = mesh(rbox(w+0.02, h+0.02, 0.03, 0.025), M(s.panel,{roughness:.4})); face.position.z = 0.16; g.add(face);
+  const grill = mesh(box(w*0.62, h*0.42, 0.01), M('#2f343a',{roughness:.85}), false); grill.position.set(-w*0.14, h*0.17, 0.172); g.add(grill);
+  for(let i=0;i<6;i++){ const sl = mesh(box(w*0.62, 0.008, 0.03), M('#dfe2e5'), false); sl.position.set(-w*0.14, h*0.17 - h*0.18 + i*h*0.072, 0.18); sl.rotation.x = -0.45; g.add(sl); }
+  const intake = mesh(box(w*0.62, h*0.3, 0.006), M('#e4e7ea'), false); intake.position.set(-w*0.14, -h*0.25, 0.177); g.add(intake);
+  for(let i=0;i<9;i++){ const ln = mesh(box(0.004, h*0.26, 0.004), M('#c9cdd2'), false); ln.position.set(-w*0.14 - w*0.27 + i*w*0.0675, -h*0.25, 0.181); g.add(ln); }
+  const ctrl = mesh(box(w*0.2, h*0.72, 0.006), M('#f4f5f6'), false); ctrl.position.set(w*0.36, 0, 0.177); g.add(ctrl);
+  const l = led(s.led, 0.04, 0.012); l.position.set(w*0.36, h*0.22, 0.182); g.add(l);
+  g.userData = {kind:'window', w, h, d};
+  return g;
+}
+/* ---------- 空氣清淨機（原點在底部中央） ---------- */
+function loopGeo(a, b, tube){
+  const pts = [];
+  for(let i=0;i<72;i++){ const t = i/72*Math.PI*2, c = Math.cos(t), s = Math.sin(t);
+    pts.push(new THREE.Vector3(a*Math.sign(c)*Math.pow(Math.abs(c),0.5), b*Math.sign(s)*Math.pow(Math.abs(s),0.5), 0)); }
+  return new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, true), 120, tube, 12, true);
+}
+function buildPurifier(p){
+  const g = new THREE.Group();
+  const body = M(p.color,{roughness:.45}), acc = M(p.accent||'#cfd3d8',{roughness:.5}), dark = M('#383d44',{roughness:.75});
+  const glow = new THREE.MeshBasicMaterial({color:'#62c6ff'});
+  let w = .36, h = .6, d = .26;
+  const addCylUnit = (r, hh, y0, band) => {
+    const b = mesh(cyl(r, r, hh), body); b.position.y = y0 + hh/2; g.add(b);
+    if(band){ const m = mesh(cyl(r+0.003, r+0.003, hh*band), acc); m.position.y = y0 + hh*0.45; g.add(m); }
+    const top = mesh(cyl(r*0.86, r*0.86, 0.012), dark, false); top.position.y = y0 + hh + 0.004; g.add(top);
+  };
+  switch(p.shape){
+    case 'box': case 'box-s': case 'box-l': case 'box-round': case 'box-tall': case 'box-tall-l': {
+      const D = {'box':[.38,.64,.24,.04], 'box-s':[.31,.44,.2,.04], 'box-l':[.43,.74,.3,.05], 'box-round':[.37,.62,.3,.1], 'box-tall':[.32,.72,.32,.11], 'box-tall-l':[.36,.82,.36,.12]}[p.shape];
+      [w,h,d] = D; const r = D[3];
+      const b = mesh(vbox(w,h,d,r), body); b.position.y = h/2; g.add(b);
+      const top = mesh(vbox(w*0.84, 0.012, d*0.78, r*0.8), dark, false); top.position.y = h + 0.003; g.add(top);
+      const front = mesh(rbox(w*0.8, h*0.55, 0.008, 0.02), acc, false); front.position.set(0, h*0.36, d/2 + 0.002); g.add(front);
+      const ring = new THREE.Mesh(new THREE.TorusGeometry(0.028, 0.004, 8, 32), glow); ring.position.set(0, h*0.82, d/2 + 0.004); g.add(ring);
+      break; }
+    case 'cyl': case 'cyl-s': case 'cyl-l': {
+      const r = {cyl:.13, 'cyl-s':.11, 'cyl-l':.145}[p.shape]; h = {cyl:.55, 'cyl-s':.43, 'cyl-l':.62}[p.shape]; w = d = r*2;
+      addCylUnit(r, h, 0, 0.62);
+      const ring = new THREE.Mesh(new THREE.TorusGeometry(0.03, 0.004, 8, 32), glow); ring.rotation.x = -Math.PI/2; ring.position.y = h + 0.012; g.add(ring);
+      break; }
+    case 'speaker': {
+      const r = .14; h = .45; w = d = r*2; addCylUnit(r, h, 0, 0.66);
+      const ring = new THREE.Mesh(new THREE.TorusGeometry(r*0.8, 0.006, 8, 48), glow); ring.rotation.x = -Math.PI/2; ring.position.y = h + 0.012; g.add(ring);
+      break; }
+    case 'cyl-360-1': case 'cyl-360-2': {
+      const r = .165, uh = .56, n = p.shape === 'cyl-360-2' ? 2 : 1; w = d = r*2;
+      for(let i=0;i<n;i++) addCylUnit(r, uh, i*(uh+0.01), 0.6);
+      const boost = mesh(cyl(r*0.62, r*0.7, 0.1), body); boost.position.y = n*(uh+0.01) + 0.05; g.add(boost);
+      const bt = mesh(cyl(r*0.5, r*0.5, 0.01), dark, false); bt.position.y = n*(uh+0.01) + 0.104; g.add(bt);
+      h = n*(uh+0.01) + 0.11; break; }
+    case 'cyl-booster': {
+      const r = .15; h = .78; w = d = r*2; addCylUnit(r, h, 0, 0.55);
+      const dome = mesh(new THREE.SphereGeometry(r*0.85, 32, 16, 0, Math.PI*2, 0, Math.PI/2), body); dome.position.y = h + 0.01; g.add(dome);
+      h += r*0.85; break; }
+    case 'tower-fan': {
+      const r = .12; h = 1.06; w = d = r*2;
+      const b = mesh(cyl(r*0.9, r, h), body); b.position.y = h/2; g.add(b);
+      const slot = mesh(rbox(0.07, h*0.62, 0.02, 0.03), dark, false); slot.position.set(0, h*0.58, r*0.88); g.add(slot);
+      const base = mesh(cyl(r*1.25, r*1.35, 0.05), acc); base.position.y = 0.025; g.add(base);
+      break; }
+    case 'cyl-top': {
+      const r = .13; h = .62; w = d = r*2;
+      const b = mesh(cyl(r*0.92, r, h), body); b.position.y = h/2; g.add(b);
+      const band = mesh(cyl(r+0.003, r+0.003, h*0.45), acc); band.position.y = h*0.3; g.add(band);
+      const noz = mesh(cyl(0.05, 0.06, 0.12), body); noz.position.set(0, h + 0.05, 0.02); noz.rotation.x = 0.35; g.add(noz);
+      h += 0.11; break; }
+    case 'bp': {
+      h = .92; w = d = .34;
+      const b = mesh(cyl(0.1, 0.17, h), body); b.position.y = h/2; g.add(b);
+      const ringA = mesh(new THREE.TorusGeometry(0.1, 0.012, 10, 40), M(p.accent,{metalness:.7, roughness:.3})); ringA.rotation.x = Math.PI/2; ringA.position.y = h; g.add(ringA);
+      const noz = mesh(cyl(0.085, 0.1, 0.07), dark, false); noz.position.y = h + 0.03; g.add(noz);
+      h += 0.07; break; }
+    case 'loop': case 'loop-tall': {
+      const tall = p.shape === 'loop-tall';
+      const bh = tall ? .4 : .3, r = .1, a = tall ? .095 : .11, b = tall ? .3 : .2; w = d = r*2;
+      const base = mesh(cyl(r, r*1.05, bh), M(p.color,{metalness:.55, roughness:.35})); base.position.y = bh/2; g.add(base);
+      const holes = mesh(cyl(r+0.002, r*1.05+0.002, bh*0.55), M('#5b6168',{roughness:.8}), false); holes.position.y = bh*0.42; g.add(holes);
+      const loop = mesh(loopGeo(a, b, 0.032), M(p.accent,{metalness:.55, roughness:.35})); loop.position.y = bh + b + 0.02; g.add(loop);
+      h = bh + 2*b + 0.06; break; }
+    case 'table': {
+      h = .52; w = d = .52;
+      addCylUnit(.2, h - .04, 0, 0.55);
+      const top = mesh(cyl(.26, .26, .035), acc); top.position.y = h - .018; g.add(top);
+      const ring = new THREE.Mesh(new THREE.TorusGeometry(.21, .006, 8, 64), glow); ring.rotation.x = Math.PI/2; ring.position.y = h - .045; g.add(ring);
+      break; }
+    case 'cattower': {
+      h = .42; w = d = .46;
+      addCylUnit(.22, h, 0, 0.5);
+      const dome = mesh(new THREE.SphereGeometry(.22, 32, 16, 0, Math.PI*2, 0, Math.PI/2), acc); dome.position.y = h + .015; g.add(dome);
+      const holeM = mesh(new THREE.CircleGeometry(.08, 32), dark, false); holeM.position.set(0, h + .09, .19); holeM.rotation.x = -0.6; g.add(holeM);
+      h += .23; break; }
+  }
+  g.userData = {kind:'floor', w, h, d};
+  return g;
+}
+/* ---------- 除濕機（原點在底部中央） ---------- */
+function buildDehum(p){
+  const g = new THREE.Group(); const L = p.liters, k = Math.min(1, L/20);
+  let w = .27 + .1*k, h = .4 + .22*k, d = .21 + .08*k;
+  if(L < 3){ w = .2; h = .28; d = .15; }
+  const body = M(p.color,{roughness:.45}), dark = M('#383d44',{roughness:.75});
+  const b = mesh(vbox(w, h, d, 0.05), body); b.position.y = h/2 + 0.02; g.add(b);
+  const top = mesh(vbox(w*0.82, 0.012, d*0.7, 0.04), dark, false); top.position.set(0, h + 0.024, -d*0.05); g.add(top);
+  const tank = mesh(rbox(w*0.9, h*0.4, 0.014, 0.03), M('#dde2e7',{roughness:.35})); tank.position.set(0, h*0.24 + 0.02, d/2 + 0.004); g.add(tank);
+  const win = mesh(box(w*0.12, h*0.22, 0.004), new THREE.MeshStandardMaterial({color:'#5fb3e6', transparent:true, opacity:.75}), false); win.position.set(w*0.3, h*0.24 + 0.02, d/2 + 0.012); g.add(win);
+  const handle = mesh(new THREE.TorusGeometry(w*0.22, 0.012, 8, 24, Math.PI), M('#c9cdd2'), false); handle.position.set(0, h + 0.03, -d*0.32); g.add(handle);
+  const l = led('#38d39f', 0.05, 0.012); l.position.set(0, h*0.82, d/2 + 0.004); g.add(l);
+  [-1,1].forEach(sx => [-1,1].forEach(sz => { const wh = mesh(cyl(.018,.018,.02,16), dark, false); wh.position.set(sx*w*0.38, .01, sz*d*0.35); g.add(wh); }));
+  g.userData = {kind:'floor', w, h: h + 0.04, d};
+  return g;
+}
+function buildModel(p){
+  if(p.cat === 'ac') return p.kind === 'window' ? buildWindowAC(p) : buildSplit(p);
+  if(p.cat === 'ap') return buildPurifier(p);
+  return buildDehum(p);
+}
+
+/* ============================== 3D 房間場景 ============================== */
+const stage = $('#stage');
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+stage.prepend(renderer.domElement);
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(40, 1, 0.05, 200);
+scene.add(new THREE.HemisphereLight(0xffffff, 0xcfc6b8, 0.72));
+scene.add(new THREE.AmbientLight(0xffffff, 0.16));
+const sun = new THREE.DirectionalLight(0xffffff, 0.55); sun.castShadow = true; sun.shadow.mapSize.set(1024,1024); sun.shadow.bias = -0.0006;
+scene.add(sun); scene.add(sun.target);
+const westLight = new THREE.DirectionalLight(0xffb36b, 0); scene.add(westLight); scene.add(westLight.target);
+
+let roomGroup = null, unitGroup = null, floorGeo = null, floorDist = null, floorSorted = null;
+let R = {W:3, D:4, H:2.8};
+let unit = null; // {kind, x,y,z, w,h,d, outlet, inlet, origin:{x,z,ax,az}}
+const walls = [];
+const labels = [];
+const labelsEl = $('#labels');
+
+function setSceneBg(){ const c = getComputedStyle(document.documentElement).getPropertyValue('--scene-bg').trim() || '#e6e2da'; scene.background = new THREE.Color(c); }
+setSceneBg();
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setSceneBg);
+
+function addLabel(cls, pos, text){ const el = document.createElement('div'); el.className = 'lbl3d ' + (cls||''); el.textContent = text; labelsEl.appendChild(el); const L = {el, pos}; labels.push(L); return L; }
+function clearLabels(){ labels.length = 0; labelsEl.innerHTML = ''; }
+
+function buildRoom(){
+  if(roomGroup){ disposeTree(roomGroup); scene.remove(roomGroup); }
+  walls.length = 0; clearLabels();
+  const area = state.ping * PING_M2, H = state.ceil;
+  const W = Math.sqrt(area / 1.2), D = area / W;
+  R = {W, D, H};
+  roomGroup = new THREE.Group(); scene.add(roomGroup);
+  // 地板（頂點色呈現涵蓋範圍）
+  const seg = 64;
+  floorGeo = new THREE.PlaneGeometry(W, D, seg, seg); floorGeo.rotateX(-Math.PI/2);
+  floorGeo.setAttribute('color', new THREE.Float32BufferAttribute(new Float32Array(floorGeo.attributes.position.count*3), 3));
+  const floor = new THREE.Mesh(floorGeo, new THREE.MeshLambertMaterial({vertexColors:true})); floor.receiveShadow = true; roomGroup.add(floor);
+  const under = mesh(box(W+0.16, 0.06, D+0.16), M('#9c9286'), false); under.position.y = -0.031; roomGroup.add(under);
+  // 牆
+  const t = 0.08, wm = M('#efebe4',{roughness:.95}), bb = M('#ddd6ca');
+  const mk = (geo, pos, n, c, extra) => { const grp = new THREE.Group(); const m = mesh(geo, wm, false); m.position.copy(pos); grp.add(m); if(extra) extra(grp); roomGroup.add(grp); walls.push({grp, n, c}); return grp; };
+  mk(box(W+2*t, H, t), new THREE.Vector3(0, H/2, -D/2 - t/2), new THREE.Vector3(0,0,1), new THREE.Vector3(0,H/2,-D/2), g => { const b = mesh(box(W, .08, .012), bb, false); b.position.set(0,.04,-D/2+.006); g.add(b); });
+  mk(box(W+2*t, H, t), new THREE.Vector3(0, H/2, D/2 + t/2), new THREE.Vector3(0,0,-1), new THREE.Vector3(0,H/2,D/2));
+  mk(box(t, H, D), new THREE.Vector3(-W/2 - t/2, H/2, 0), new THREE.Vector3(1,0,0), new THREE.Vector3(-W/2,H/2,0), g => {
+    const b = mesh(box(.012, .08, D), bb, false); b.position.set(-W/2+.006,.04,0); g.add(b);
+    const ww = Math.min(1.6, D*0.42), wh = Math.min(1.2, H-1.3), wy = 0.95 + wh/2, wz = -D*0.08;
+    const frame = mesh(box(.05, wh+.08, ww+.08), M('#ffffff'), false); frame.position.set(-W/2+.012, wy, wz); g.add(frame);
+    const glass = new THREE.Mesh(box(.02, wh, ww), new THREE.MeshStandardMaterial({color: state.west ? '#ffd9a8' : '#bfe0f7', emissive: state.west ? '#ff9a3c' : '#6fb2e0', emissiveIntensity: state.west ? .55 : .25, roughness:.1})); glass.position.set(-W/2+.03, wy, wz); g.add(glass);
+    const mul = mesh(box(.03, wh, .03), M('#ffffff'), false); mul.position.set(-W/2+.04, wy, wz); g.add(mul);
+    const sill = mesh(box(.12, .03, ww+.16), M('#f7f7f5'), false); sill.position.set(-W/2+.06, wy-wh/2-.05, wz); g.add(sill);
+    R.win = {x:-W/2, y:wy, z:wz, ww, wh};
+  });
+  mk(box(t, H, D), new THREE.Vector3(W/2 + t/2, H/2, 0), new THREE.Vector3(-1,0,0), new THREE.Vector3(W/2,H/2,0), g => {
+    const b = mesh(box(.012, .08, D), bb, false); b.position.set(W/2-.006,.04,0); g.add(b);
+    if(D > 2.2){ const door = mesh(box(.04, 2.05, .88), M('#b58d63',{roughness:.7}), false); door.position.set(W/2-.02, 1.025, D/2-.75); g.add(door);
+      const knob = mesh(new THREE.SphereGeometry(.03, 12, 8), M('#c9b27a',{metalness:.8, roughness:.3}), false); knob.position.set(W/2-.05, 1.0, D/2-.42); g.add(knob); }
+  });
+  // 西曬光斑
+  if(state.west){
+    const patch = new THREE.Mesh(new THREE.PlaneGeometry(Math.min(1.6, W*0.5), R.win.ww).rotateX(-Math.PI/2), new THREE.MeshBasicMaterial({color:'#ffb067', transparent:true, opacity:.32, depthWrite:false}));
+    patch.position.set(-W/2 + Math.min(1.6, W*0.5)/2 + 0.05, 0.004, R.win.z); roomGroup.add(patch);
+    addLabel('sun', new THREE.Vector3(-W/2 + 0.05, R.win.y + R.win.wh/2 + 0.2, R.win.z), '西曬');
+  }
+  roomGroup.add(buildFurniture(W, D, H, state.room));
+  // 燈光
+  const S = Math.max(W, D) * 0.9 + 1;
+  sun.position.set(-W*0.6, H*3, D*0.9); sun.target.position.set(0,0,0);
+  Object.assign(sun.shadow.camera, {left:-S, right:S, top:S, bottom:-S, near:0.5, far:30}); sun.shadow.camera.updateProjectionMatrix();
+  westLight.intensity = state.west ? 0.55 : 0; westLight.position.set(-W*2.2, H*1.1, R.win.z); westLight.target.position.set(W/2, 0, R.win.z);
+  addLabel('', new THREE.Vector3(0, 0.02, D/2 + 0.25), W.toFixed(1) + ' m');
+  addLabel('', new THREE.Vector3(W/2 + 0.3, 0.02, 0), D.toFixed(1) + ' m');
+  orbit.base = Math.max(W, D, H) * 1.45 + 2.2;
+  orbit.target.set(0, H*0.32, 0);
+  initAmbient();
+}
+
+function buildFurniture(W, D, H, type){
+  const g = new THREE.Group();
+  const wood = M('#b98b5e',{roughness:.7}), woodL = M('#d9b98f',{roughness:.7}), fab = M('#8e9aab',{roughness:.9}), fab2 = M('#c9d1db',{roughness:.9}), white = M('#f4f4f2',{roughness:.7}), dark = M('#30353c',{roughness:.5}), rugM = M('#d4cbbe',{roughness:1}), green = M('#5f8f5a',{roughness:.9});
+  const add = (geo, mat, x, y, z) => { const m = mesh(geo, mat); m.position.set(x, y, z); g.add(m); return m; };
+  const L = -W/2, B = -D/2, F = D/2;
+  if(type === 'bedroom'){
+    const bw = W >= 3.0 ? 1.5 : (W >= 2.2 ? 1.05 : 0.9), bl = Math.min(1.95, D - 0.35);
+    const bx = L + bw/2 + Math.min(0.5, Math.max(0.05, (W - bw)*0.15)), bz = B + bl/2 + 0.05;
+    add(box(bw, .28, bl), wood, bx, .14, bz);
+    add(box(bw-.04, .2, bl-.06), white, bx, .38, bz+.02);
+    add(box(bw-.02, .07, bl*.62), fab, bx, .51, bz + bl*.18);
+    const np = bw > 1.2 ? 2 : 1; for(let i=0;i<np;i++) add(rbox(.5,.1,.32,.04), white, bx + (np === 2 ? (i ? .3 : -.3) : 0), .53, B + .3);
+    add(box(bw + .04, .95, .06), wood, bx, .475, B + .035);
+    if(bx + bw/2 + .55 < W/2 - .9) add(box(.45, .5, .4), woodL, bx + bw/2 + .3, .25, B + .22);
+    const remain = D - bl - .15;
+    if(remain > 1.1 && W > 1.9){ const wl = Math.min(1.2, remain - .5); add(box(.48, .85, wl), woodL, L + .25, .425, F - wl/2 - .15); for(let i=0;i<3;i++) add(box(.01, .2, wl*.9), wood, L + .495, .16 + i*.26, F - wl/2 - .15); }
+    add(box(Math.min(W*.45, 1.6), .01, Math.min(1.0, D*.25)), rugM, bx, .005, Math.min(F - .5, bz + bl/2 + .5));
+  } else if(type === 'living'){
+    const tw = Math.min(1.8, W*.45), tx = -W*.12;
+    add(box(tw, .45, .4), woodL, tx, .225, B + .21);
+    add(box(Math.min(1.25, tw*.9), .72, .05), dark, tx, .45 + .44, B + .12);
+    const sw = Math.min(2.1, W*.62), sz = Math.max(B + 1.9, F - .62);
+    if(sz < F - .3){
+      add(box(sw, .42, .85), fab, -W*.08, .21, sz);
+      add(box(sw, .45, .18), fab, -W*.08, .6, sz + .34);
+      [-1,1].forEach(s => add(box(.16, .58, .85), fab, -W*.08 + s*(sw/2 - .08), .29, sz));
+      add(box(.42, .12, .2), fab2, -W*.08 - sw*.25, .5, sz + .18);
+      const tz = (B + .45 + sz - .45)/2;
+      add(box(Math.min(1.0, sw*.5), .38, .5), wood, -W*.08, .19, tz);
+      add(box(Math.min(W*.55, 2.0), .01, Math.min(1.4, D*.35)), rugM, -W*.08, .005, tz);
+    }
+    if(W > 2.4){ add(cyl(.14, .11, .3), white, L + .3, .15, F - .35); const pl = mesh(new THREE.SphereGeometry(.26, 16, 12), green); pl.position.set(L + .3, .55, F - .35); g.add(pl); }
+  } else {
+    add(box(.9, 1.8, .32), woodL, L + .5, .9, B + .17);
+    const colors = ['#c0584b','#4f7cac','#e2b13c','#5f8f5a','#8a6fb0'];
+    for(let r=0;r<3;r++) for(let i=0;i<5;i++){ add(box(.1, .26, .22), M(colors[(i+r)%5],{roughness:.8}), L + .16 + i*.15, .32 + r*.55, B + .17); }
+    const dl = Math.min(1.4, D*.4), dz = Math.min(F - dl/2 - .3, B + .4 + .3 + dl/2);
+    add(box(.62, .04, dl), wood, L + .31, .74, dz);
+    [[-1,-1],[-1,1],[1,-1],[1,1]].forEach(([a,c]) => add(box(.04, .72, .04), dark, L + .31 + a*.27, .36, dz + c*(dl/2 - .04)));
+    add(box(.04, .34, .55), dark, L + .1, .74 + .26, dz);
+    add(box(.45, .06, .45), fab, L + .9, .46, dz);
+    add(box(.06, .45, .42), fab, L + 1.12, .72, dz);
+    add(cyl(.03, .03, .42, 12), dark, L + .9, .22, dz);
+    add(box(Math.min(W*.5, 1.6), .01, Math.min(1.2, D*.3)), rugM, L + .95, .005, dz);
+  }
+  return g;
+}
+
+function placeUnit(p){
+  if(unitGroup){ disposeTree(unitGroup); scene.remove(unitGroup); unitGroup = null; }
+  labels.filter(l => l.unit).forEach(l => l.el.remove());
+  for(let i = labels.length - 1; i >= 0; i--) if(labels[i].unit) labels.splice(i,1);
+  unit = null;
+  if(!p) { computeFloorDist(); return; }
+  const {W, D, H} = R;
+  const m = buildModel(p); const u = m.userData;
+  unitGroup = new THREE.Group(); unitGroup.add(m); scene.add(unitGroup);
+  if(p.cat === 'ac' && p.kind === 'split'){
+    const x = clamp(W*0.12, -W/2 + u.w/2 + .1, W/2 - u.w/2 - .1), y = H - .22 - u.h/2;
+    m.position.set(x, y, -D/2);
+    unit = {kind:'split', x, y, z:-D/2, w:u.w, h:u.h, d:u.d, louver:u.louver,
+      outlet: new THREE.Vector3(x, y - u.h/2 + .02, -D/2 + u.d - .02), origin:{x, z:-D/2, ax:1.15, az:1}};
+  } else if(p.cat === 'ac'){
+    const x = clamp(W/2 - u.w/2 - .3, -W/2 + u.w/2 + .1, W/2 - u.w/2 - .05), y = Math.min(1.5, H - .6);
+    m.position.set(x, y, -D/2);
+    unit = {kind:'window', x, y, z:-D/2, w:u.w, h:u.h, d:u.d,
+      outlet: new THREE.Vector3(x - u.w*.14, y + u.h*.17, -D/2 + .19), origin:{x, z:-D/2, ax:1.15, az:1}};
+  } else {
+    const x = W/2 - .3 - u.w/2, z = -D/2 + .28 + u.d/2;
+    m.position.set(x, 0, z);
+    unit = {kind:'floor', x, y:0, z, w:u.w, h:u.h, d:u.d,
+      outlet: new THREE.Vector3(x, u.h + .02, z), inlet: new THREE.Vector3(x, u.h*.45, z + u.d/2 + .05), origin:{x, z, ax:1, az:1}};
+  }
+  const top = p.cat === 'ac' ? new THREE.Vector3(unit.x, unit.y + unit.h/2 + .22, -D/2 + .2) : new THREE.Vector3(unit.x, unit.h + .25, unit.z);
+  const L = addLabel('unit', top, p.brand + ' ' + (p.cat === 'ac' ? p.capText : p.capText)); L.unit = true;
+  computeFloorDist();
+}
+
+function metric(x, z){ if(!unit) return 1e9; const o = unit.origin; const dx = (x - o.x)*o.ax, dz = (z - o.z)*o.az; return Math.sqrt(dx*dx + dz*dz); }
+function computeFloorDist(){
+  const pos = floorGeo.attributes.position, n = pos.count;
+  floorDist = new Float32Array(n);
+  for(let i=0;i<n;i++) floorDist[i] = metric(pos.getX(i), pos.getZ(i));
+  floorSorted = Float32Array.from(floorDist).sort();
+  zone.t = 0; zone.cov = coverage(selectedProduct());
+  zone.dirty = true;
+}
+
+/* ---------- 涵蓋範圍動畫 ---------- */
+const PAL = {
+  ac:{inC:'#3d9be9', edge:'#8cc8f5', out:'#f07b3f', pIn:'#7fc4ff', pOut:'#ff9b5e', stream:'#cfeeff', lin:'冷房涵蓋區', lout:'未涵蓋（悶熱）'},
+  ap:{inC:'#27a872', edge:'#9ddcbf', out:'#9a8468', pIn:'#dafff0', pOut:'#7d6448', stream:'#c9f5e3', lin:'已淨化區域', lout:'未淨化（粉塵）'},
+  dh:{inC:'#2aa6b8', edge:'#9fdde6', out:'#6f7f8f', pIn:'#e2f7ff', pOut:'#3d7fc4', stream:'#d4f3f7', lin:'已除濕區域', lout:'潮濕區域'}
+};
+const zone = {t:0, cov:0, thr:0, dirty:true};
+const WOOD = new THREE.Color('#d8c4a6');
+const _c1 = new THREE.Color(), _c2 = new THREE.Color(), _c3 = new THREE.Color();
+function quantile(f){ const n = floorSorted.length; if(f <= 0) return 0; if(f >= 1) return floorSorted[n-1] + 0.6; return floorSorted[Math.floor(f*(n-1))]; }
+function updateZone(dt){
+  if(zone.t < 1){ zone.t = Math.min(1, zone.t + dt/2.4); zone.dirty = true; }
+  if(!zone.dirty) return;
+  zone.dirty = false;
+  const ease = 1 - Math.pow(1 - zone.t, 3);
+  const f = Math.min(1, zone.cov) * ease;
+  zone.thr = unit ? quantile(zone.cov >= 1 && zone.t >= 1 ? 1 : f) : 0;
+  const pal = PAL[state.cat], thr = zone.thr;
+  const cIn = _c1.set(pal.inC), cEdge = new THREE.Color(pal.edge), cOut = new THREE.Color(pal.out);
+  const col = floorGeo.attributes.color, n = floorDist.length;
+  for(let i=0;i<n;i++){
+    const d = floorDist[i];
+    if(thr > 0 && d <= thr){ _c2.copy(cIn).lerp(cEdge, Math.min(1, d/thr)); _c3.copy(WOOD).lerp(_c2, .58); }
+    else { const e = thr > 0 ? clamp((d - thr)/0.4, 0, 1) : 1; _c2.copy(cEdge).lerp(cOut, e); _c3.copy(WOOD).lerp(_c2, .5); }
+    col.setXYZ(i, _c3.r, _c3.g, _c3.b);
+  }
+  col.needsUpdate = true;
+}
+
+/* ---------- 粒子 ---------- */
+function dotTex(){ const c = document.createElement('canvas'); c.width = c.height = 64; const x = c.getContext('2d'); const gr = x.createRadialGradient(32,32,0,32,32,32); gr.addColorStop(0,'rgba(255,255,255,1)'); gr.addColorStop(.45,'rgba(255,255,255,.65)'); gr.addColorStop(1,'rgba(255,255,255,0)'); x.fillStyle = gr; x.fillRect(0,0,64,64); return new THREE.CanvasTexture(c); }
+const TEX = dotTex();
+function makePoints(n, size){
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(n*3), 3));
+  geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(n*3), 3));
+  const pts = new THREE.Points(geo, new THREE.PointsMaterial({size, map:TEX, vertexColors:true, transparent:true, depthWrite:false, opacity:.9}));
+  pts.frustumCulled = false; scene.add(pts); return pts;
+}
+const AMB_N = 340, STR_N = 280;
+const amb = makePoints(AMB_N, 0.085), str = makePoints(STR_N, 0.075);
+const sv = {vx:new Float32Array(STR_N), vy:new Float32Array(STR_N), vz:new Float32Array(STR_N), age:new Float32Array(STR_N), life:new Float32Array(STR_N)};
+const rnd = Math.random;
+function initAmbient(){ const p = amb.geometry.attributes.position; for(let i=0;i<AMB_N;i++) respawnAmb(p, i); for(let i=0;i<STR_N;i++){ sv.age[i] = 99; sv.life[i] = 0; str.geometry.attributes.position.setXYZ(i, 0, -50, 0); } }
+function respawnAmb(p, i){ const {W,D,H} = R; p.setXYZ(i, (rnd()-.5)*(W-.2), .15 + rnd()*(H-.3), (rnd()-.5)*(D-.2)); }
+function spawnStream(i){
+  const p = str.geometry.attributes.position; const o = unit.outlet;
+  if(unit.kind === 'floor'){
+    p.setXYZ(i, o.x + (rnd()-.5)*unit.w*.5, o.y, o.z + (rnd()-.5)*unit.d*.4);
+    sv.vx[i] = (rnd()-.5)*.35; sv.vy[i] = .7 + rnd()*.5; sv.vz[i] = (rnd()-.5)*.35 + .08; sv.life[i] = 2 + rnd()*2.5;
+  } else {
+    const spread = unit.kind === 'split' ? unit.w*.8 : unit.w*.55;
+    p.setXYZ(i, o.x + (rnd()-.5)*spread, o.y, o.z);
+    sv.vx[i] = (rnd()-.5)*.55; sv.vy[i] = -(.2 + rnd()*.35); sv.vz[i] = .95 + rnd()*.7; sv.life[i] = 2 + rnd()*3;
+  }
+  sv.age[i] = 0;
+}
+const _ca = new THREE.Color(), _cb = new THREE.Color(), _cs = new THREE.Color();
+function updateParticles(dt, time){
+  const {W, D, H} = R, pal = PAL[state.cat], thr = zone.thr;
+  _ca.set(pal.pIn); _cb.set(pal.pOut); _cs.set(pal.stream);
+  const p = amb.geometry.attributes.position, c = amb.geometry.attributes.color;
+  for(let i=0;i<AMB_N;i++){
+    let x = p.getX(i), y = p.getY(i), z = p.getZ(i);
+    const inZ = thr > 0 && metric(x, z) <= thr;
+    if(state.cat === 'ac'){
+      x += Math.sin(time*.7 + i)*.05*dt; z += Math.cos(time*.6 + i*1.3)*.05*dt;
+      y += (inZ ? -.06 : .1)*dt;
+      if(y > H - .1) y = .15; if(y < .1) y = H - .2;
+      c.setXYZ(i, inZ ? _ca.r : _cb.r, inZ ? _ca.g : _cb.g, inZ ? _ca.b : _cb.b);
+    } else {
+      if(inZ && unit){
+        const dx = unit.inlet.x - x, dy = unit.inlet.y - y, dz = unit.inlet.z - z, L = Math.sqrt(dx*dx+dy*dy+dz*dz) || 1;
+        const sp = .55 + 1.2/(L + .4);
+        x += dx/L*sp*dt; y += dy/L*sp*dt; z += dz/L*sp*dt;
+        if(L < .18){ respawnAmb(p, i); x = p.getX(i); y = p.getY(i); z = p.getZ(i); }
+        const k = clamp(L/2, 0, 1); c.setXYZ(i, _ca.r*k + _cb.r*(1-k)*.3 + .2*(1-k), _ca.g*k + .2*(1-k), _ca.b*k + .2*(1-k));
+      } else {
+        x += Math.sin(time*.9 + i*2.1)*.06*dt; y += Math.cos(time*.7 + i)*.04*dt; z += Math.sin(time*.8 + i*.7)*.06*dt;
+        c.setXYZ(i, _cb.r, _cb.g, _cb.b);
+      }
+    }
+    x = clamp(x, -W/2+.05, W/2-.05); z = clamp(z, -D/2+.05, D/2-.05); y = clamp(y, .08, H-.08);
+    p.setXYZ(i, x, y, z);
+  }
+  p.needsUpdate = true; c.needsUpdate = true;
+  // 出風氣流
+  const sp = str.geometry.attributes.position, sc = str.geometry.attributes.color;
+  const active = unit && thr > 0.05;
+  for(let i=0;i<STR_N;i++){
+    if(!active){ sp.setXYZ(i, 0, -50, 0); continue; }
+    if(sv.age[i] >= sv.life[i]){ if(rnd() < dt*6) spawnStream(i); else { sp.setXYZ(i, 0, -50, 0); continue; } }
+    let x = sp.getX(i), y = sp.getY(i), z = sp.getZ(i);
+    sv.age[i] += dt;
+    if(unit.kind === 'floor'){
+      sv.vy[i] -= .22*dt;
+      if(y > H - .2){ sv.vy[i] = -Math.abs(sv.vy[i])*.2; sv.vx[i] *= 1.02; sv.vz[i] *= 1.02; }
+      sv.vx[i] += (x - unit.x)*.12*dt; sv.vz[i] += (z - unit.z)*.12*dt;
+    } else {
+      sv.vy[i] -= .12*dt;
+      if(y < .06){ y = .06; sv.vy[i] = 0; sv.vx[i] += (rnd()-.5)*.6*dt; }
+      sv.vz[i] *= (1 - .08*dt);
+    }
+    x += sv.vx[i]*dt; y += sv.vy[i]*dt; z += sv.vz[i]*dt;
+    if(metric(x, z) > thr || Math.abs(x) > W/2 || Math.abs(z) > D/2 || y > H){ sv.age[i] = sv.life[i]; sp.setXYZ(i, 0, -50, 0); continue; }
+    sp.setXYZ(i, x, y, z);
+    const k = 1 - sv.age[i]/sv.life[i]; sc.setXYZ(i, _cs.r*(.55+.45*k), _cs.g*(.55+.45*k), _cs.b*(.6+.4*k));
+  }
+  sp.needsUpdate = true; sc.needsUpdate = true;
+}
+
+/* ---------- 相機操作 ---------- */
+const orbit = {theta:.62, phi:1.0, base:9, zf:1, target:new THREE.Vector3()};
+function updateCam(){
+  // 畫面比設計比例（約 1.25:1）更窄或更高時，把相機拉遠，避免房間左右被裁掉
+  const af = Math.min(1.8, Math.max(1, 1.25 / (camera.aspect || 1.25)));
+  const {theta, phi, target} = orbit, r = orbit.base*orbit.zf*af; camera.position.set(target.x + r*Math.sin(phi)*Math.sin(theta), target.y + r*Math.cos(phi), target.z + r*Math.sin(phi)*Math.cos(theta)); camera.lookAt(target); }
+(function bindOrbit(el){
+  const pts = new Map(); let pd = 0;
+  el.addEventListener('pointerdown', e => { el.setPointerCapture(e.pointerId); pts.set(e.pointerId, {x:e.clientX, y:e.clientY}); if(pts.size === 2){ const [a,b] = [...pts.values()]; pd = Math.hypot(a.x-b.x, a.y-b.y); } });
+  el.addEventListener('pointermove', e => {
+    if(!pts.has(e.pointerId)) return; const prev = pts.get(e.pointerId);
+    if(pts.size === 1){ orbit.theta -= (e.clientX - prev.x)*.006; orbit.phi = clamp(orbit.phi - (e.clientY - prev.y)*.005, .2, 1.45); }
+    pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
+    if(pts.size === 2){ const [a,b] = [...pts.values()]; const nd = Math.hypot(a.x-b.x, a.y-b.y); if(pd) orbit.zf = clamp(orbit.zf*pd/nd, .35, 2.5); pd = nd; }
+  });
+  const up = e => { pts.delete(e.pointerId); pd = 0; };
+  el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+  el.addEventListener('wheel', e => { e.preventDefault(); orbit.zf = clamp(orbit.zf*(1 + Math.sign(e.deltaY)*.08), .35, 2.5); }, {passive:false});
+})(renderer.domElement);
+
+const _v = new THREE.Vector3(), _w = new THREE.Vector3();
+function updateWalls(){ for(const w of walls){ _w.copy(camera.position).sub(w.c); w.grp.visible = _w.dot(w.n) > 0; } }
+function updateLabels(){
+  const rect = renderer.domElement.getBoundingClientRect();
+  for(const L of labels){ _v.copy(L.pos).project(camera); if(_v.z > 1){ L.el.style.display = 'none'; continue; } L.el.style.display = ''; L.el.style.left = ((_v.x+1)/2*rect.width) + 'px'; L.el.style.top = ((1-_v.y)/2*rect.height) + 'px'; }
+}
+function resizeStage(){ const w = stage.clientWidth, h = stage.clientHeight; renderer.setSize(w, h, false); renderer.domElement.style.width = w + 'px'; renderer.domElement.style.height = h + 'px'; camera.aspect = w / h; camera.updateProjectionMatrix(); updateCam(); }
+new ResizeObserver(resizeStage).observe(stage);
+
+/* ============================== 商品建模檢視器 ============================== */
+const vEl = $('#viewer3d');
+const vRen = new THREE.WebGLRenderer({antialias:true, alpha:true}); vRen.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); vRen.setClearColor(0x000000, 0);
+vEl.prepend(vRen.domElement);
+const vScene = new THREE.Scene(), vCam = new THREE.PerspectiveCamera(30, 1, .01, 50);
+vScene.add(new THREE.HemisphereLight(0xffffff, 0xbdb5aa, .9));
+const vKey = new THREE.DirectionalLight(0xffffff, .65); vKey.position.set(2, 3, 4); vScene.add(vKey);
+const vRim = new THREE.DirectionalLight(0xdfe9ff, .3); vRim.position.set(-3, 2, -2); vScene.add(vRim);
+const vPivot = new THREE.Group(); vScene.add(vPivot);
+let vFan = null, vUser = 0, vYaw = 0, vDrag = null, vLouver = null;
+(function(el){
+  el.addEventListener('pointerdown', e => { el.setPointerCapture(e.pointerId); vDrag = e.clientX; });
+  el.addEventListener('pointermove', e => { if(vDrag === null) return; vYaw += (e.clientX - vDrag)*.01; vDrag = e.clientX; vUser = 3; });
+  const up = () => { vDrag = null; }; el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+})(vRen.domElement);
+function showInViewer(p){
+  disposeTree(vPivot); vPivot.clear(); vFan = null; vLouver = null; vYaw = 0; vPivot.rotation.set(0,0,0); vPivot.position.set(0,0,0);
+  if(!p){ $('#vdim').textContent = ''; return; }
+  const m = buildModel(p), u = m.userData; let dimText;
+  const cm = v => Math.round(v*100);
+  if(p.cat === 'ac' && p.kind === 'split'){
+    const out = buildOutdoor(p), ou = out.userData;
+    const plate = mesh(box(u.w + .16, u.h + .16, .02), M('#b9b2a7'), false);
+    const gap = .14;
+    m.position.set(-(ou.w/2 + gap/2), ou.h + .32 + u.h/2, -u.d/2); plate.position.set(m.position.x, m.position.y, -u.d/2 - .012);
+    out.position.set(u.w/2 + gap/2, 0, 0);
+    vPivot.add(plate, m, out); vFan = ou.fan; vLouver = u.louver;
+    dimText = `示意尺寸｜室內機 約 ${cm(u.w)}×${cm(u.h)}×${cm(u.d)} cm・室外機 約 ${cm(ou.w)}×${cm(ou.h)}×${cm(ou.d)} cm`;
+  } else if(p.cat === 'ac'){
+    m.position.set(0, .5, .15); const sleeve = mesh(box(u.w + .2, u.h + .2, .1), M('#e9e5de'), false); sleeve.position.set(0, .5, -.06); vPivot.add(sleeve, m);
+    dimText = `示意尺寸｜約 ${cm(u.w)}×${cm(u.h)}×${cm(u.d)} cm（寬×高×深）`;
+  } else {
+    vPivot.add(m); dimText = `示意尺寸｜約 ${cm(u.w)}×${cm(u.h)}×${cm(u.d)} cm（寬×高×深）`;
+  }
+  const bb = new THREE.Box3().setFromObject(vPivot), size = bb.getSize(new THREE.Vector3()), c = bb.getCenter(new THREE.Vector3());
+  vPivot.children.forEach(ch => { ch.position.x -= c.x; ch.position.z -= c.z; });
+  const disc = mesh(cyl(1, 1, .02, 64), M('#d8d2c8',{roughness:.9}), false); const rr = Math.max(size.x, size.z)*.55 + .06; disc.scale.set(rr, 1, rr); disc.position.set(0, -.012, 0); vPivot.add(disc);
+  vPivot.userData.size = size;
+  fitViewer();
+  $('#vdim').textContent = dimText;
+}
+function fitViewer(){
+  const s = vPivot.userData.size; if(!s) return;
+  const w = vEl.clientWidth, h = vEl.clientHeight; vRen.setSize(w, h, false); vRen.domElement.style.width = w + 'px'; vRen.domElement.style.height = h + 'px';
+  vCam.aspect = w / h; vCam.updateProjectionMatrix();
+  const span = Math.max(s.y, Math.max(s.x, s.z) / vCam.aspect) * 1.2;
+  const dist = span / 2 / Math.tan(THREE.MathUtils.degToRad(vCam.fov/2)) + Math.max(s.x, s.z)*.5;
+  const ty = s.y*.48;
+  vCam.position.set(0, ty + dist*.28, dist); vCam.lookAt(0, ty, 0);
+}
+new ResizeObserver(fitViewer).observe(vEl);
+
+/* ============================== 主迴圈 ============================== */
+let last = performance.now();
+function tick(now){
+  const dt = Math.min(.05, (now - last)/1000); last = now; const t = now/1000;
+  updateCam(); updateZone(dt); updateParticles(dt, t); updateWalls();
+  if(unit && unit.louver) unit.louver.rotation.x = .15 + .45*Math.min(1, zone.t*3) + Math.sin(t*1.2)*.05;
+  renderer.render(scene, camera); updateLabels();
+  if(vUser > 0) vUser -= dt; else vYaw += (Math.sin(t*.45)*.55 - vYaw)*Math.min(1, dt*1.5);
+  vPivot.rotation.y = vYaw;
+  if(vFan) vFan.rotation.z -= dt*6; if(vLouver) vLouver.rotation.x = .5 + Math.sin(t*1.4)*.2;
+  vRen.render(vScene, vCam);
+  requestAnimationFrame(tick);
+}
+
+/* ============================== 介面 ============================== */
+function selectedProduct(){ return state.selected ? BY_ID[state.selected] : null; }
+function setPressed(group, attr, val){ group.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset[attr] === val))); }
+
+function renderControls(){
+  $('#pingOut').innerHTML = (state.ping % 1 ? state.ping.toFixed(1) : state.ping) + '<em>坪 ≈ ' + (state.ping*PING_M2).toFixed(1) + ' m²</em>';
+  $('#ceilOut').textContent = state.ceil.toFixed(1) + ' m';
+  $('#peopleOut').textContent = state.people + ' 人';
+  $('#acOpts').classList.toggle('hidden', state.cat !== 'ac');
+  $('#pingChips').innerHTML = QUICK[state.cat].map(v => `<button data-v="${v}">${v} 坪</button>`).join('');
+  // 品牌
+  const counts = {}; PRODUCTS[state.cat].forEach(p => counts[p.brand] = (counts[p.brand]||0) + 1);
+  const brands = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
+  if(state.brand !== 'all' && !counts[state.brand]) state.brand = 'all';
+  $('#brand').innerHTML = `<option value="all">全部品牌（${PRODUCTS[state.cat].length}）</option>` + brands.map(b => `<option value="${esc(b)}"${b === state.brand ? ' selected' : ''}>${esc(b)}（${counts[b]}）</option>`).join('');
+  // 預算
+  const prices = PRODUCTS[state.cat].map(p => p.price), lo = Math.floor(Math.min(...prices)/1000)*1000, hi = Math.ceil(Math.max(...prices)/1000)*1000;
+  const bud = $('#budget'); bud.min = lo; bud.max = hi; bud.step = state.cat === 'ac' ? 1000 : 500; bud.value = state.budget || hi;
+  $('#budgetOut').textContent = state.budget ? fmt(state.budget) + ' 以下' : '不限';
+}
+function renderCalc(){
+  const eff = effPing();
+  if(state.cat === 'ac'){
+    const parts = [];
+    if(state.west) parts.push('西曬 +15%'); if(state.top) parts.push('頂樓 +20%');
+    if(state.ceil > 2.8) parts.push('挑高 ×' + (state.ceil/2.8).toFixed(2));
+    if(state.people > 2) parts.push('人數 +' + ((state.people-2)*0.3).toFixed(1) + ' 坪');
+    $('#calc').innerHTML = `修正後需求：<b>${eff} 坪</b><br>建議官網級距：<b>${acTierLabel(eff)}</b><div class="f">${parts.length ? '已計入：' + parts.join('、') : '基本條件（無西曬、非頂樓、2.8m 以下、2 人）'}</div>`;
+  } else if(state.cat === 'ap'){
+    $('#calc').innerHTML = `建議選擇適用坪數 <b>≧ ${eff} 坪</b> 的清淨機<div class="f">適用坪數愈大，淨化整間房所需時間愈短；放在空氣能流通的位置效果較好。</div>`;
+  } else {
+    $('#calc').innerHTML = `建議選擇適用 <b>≧ ${eff} 坪</b>，約日除濕量 <b>${Math.ceil(eff/1.25)} L</b> 以上<div class="f">以「日除濕量 × 1.25 ≈ 適用坪數」估算，梅雨季或地下室建議再加大。</div>`;
+  }
+}
+function fitBadge(fit){ return `<span class="fit ${fit}">${fitText(fit, state.cat)}</span>`; }
+const fmtS = n => fmt(n).replace('NT$ ', '$');
+const pct = (a, b) => (Math.abs(a) / b * 100).toFixed(1) + '%';
+/* ---------- 門市庫存 ---------- */
+function stockBadge(p){
+  const n = avail(p);
+  if(state.store === 'all') return n > 0 ? `<span class="stk ok">5 店共 ${n} 台</span>` : '<span class="stk out">各店缺貨</span>';
+  if(n > 0) return `<span class="stk ok">${esc(STORE_NAME[state.store])} ${n} 台</span>`;
+  return p.stockTotal > 0 ? `<span class="stk warn">本店缺貨・他店 ${p.stockTotal} 台</span>` : '<span class="stk out">各店缺貨</span>';
+}
+function stockText(p){
+  if(state.store === 'all') return p.stockTotal > 0 ? `5 家門市共 ${p.stockTotal} 台` : '各門市都缺貨';
+  const n = p.stock[state.store] || 0;
+  if(n > 0) return `${STORE_NAME[state.store]}有 ${n} 台`;
+  return p.stockTotal > 0 ? `${STORE_NAME[state.store]}缺貨，其他門市共 ${p.stockTotal} 台（可調貨）` : '各門市都缺貨';
+}
+/* 全國電子服務清單 */
+const STORE_SVC = [
+  {cats:['ac','ap','dh'], t:'門市諮詢', d:'到門市看實機，店員依房間條件建議機型'},
+  {cats:['ac'], t:'到府安裝', d:'冷氣由安裝人員到府施工，一站式服務'},
+  {cats:['ac'], t:'舊機回收', d:'安裝新機時一併回收舊冷氣'},
+  {cats:['ac','ap','dh'], t:'延長保固', d:'可加購延長保固，部分小家電最長延長至 4 年'},
+  {cats:['ac'], t:'冷氣室內機清洗', d:'活動期間每台 1,899 元，室外機加購 500 元，附 30 天保固'},
+  {cats:['ac','ap','dh'], t:'0 利率分期', d:'搭配檔期活動提供 0 利率分期'},
+  {cats:['ac','ap','dh'], t:'會員點數折抵', d:'滿額送點，點數可直接折抵消費'},
+  {cats:['ac'], t:'免費到府場勘', d:'安裝前評估管線、電源與室外機位置，避免現場加價', plan:true},
+  {cats:['ac'], t:'冷氣濾網清潔講座', d:'門市週末教學，順便帶顧客回店', plan:true},
+  {cats:['ap','dh'], t:'小家電健檢', d:'免費檢查濾網、水箱與運轉狀況，提醒更換耗材', plan:true}
+];
+function renderStores(){
+  $('#store').innerHTML = '<option value="all">全部門市</option>' + STORES.map(s => `<option value="${s.store_id}"${s.store_id === state.store ? ' selected' : ''}>${esc(s.name)}</option>`).join('');
+  $('#inStock').checked = state.inStock;
+  $('#inStockHint').textContent = state.store === 'all' ? '任一門市有貨' : '這家門市有貨';
+}
+function renderServices(){
+  $('#svc').innerHTML = STORE_SVC.filter(s => s.cats.includes(state.cat)).map(s => `
+    <div class="svc${s.plan ? ' plan' : ''}"><div class="t">${esc(s.t)}<span class="src">${s.plan ? '提案' : '活動報導'}</span></div><div class="d">${esc(s.d)}</div></div>`).join('');
+}
+
+function renderStock(){
+  const p = selectedProduct(), el = $('#stockBox');
+  if(!p){ $('#stockTitle').textContent = '各門市庫存'; el.innerHTML = ''; $('#xpCta').innerHTML = ''; $('#xpTips').innerHTML = ''; return; }
+  $('#stockTitle').innerHTML = `各門市庫存<span class="cnt">${esc(p.brand)} ${esc(p.title)}・${esc(p.model)}</span>`;
+  const rows = STORES.map(s => ({s, n: p.stock[s.store_id] || 0})).sort((a,b) => (b.s.store_id === state.store) - (a.s.store_id === state.store) || b.n - a.n);
+  const here = state.store !== 'all' ? (p.stock[state.store] || 0) : null;
+  let sum;
+  if(here === null) sum = p.stockTotal > 0 ? `<div class="xsum win"><b>5 家門市共 ${p.stockTotal} 台可售</b>・選擇門市可只看那家店的庫存</div>` : '<div class="xsum lose"><b>各門市目前都缺貨</b>・可請門市報價並安排到貨通知</div>';
+  else if(here > 0) sum = `<div class="xsum win"><b>${esc(STORE_NAME[state.store])}有 ${here} 台可售</b>・可預約後到店取貨或安排配送</div>`;
+  else sum = p.stockTotal > 0 ? `<div class="xsum lose"><b>${esc(STORE_NAME[state.store])}目前缺貨</b>・其他門市共 ${p.stockTotal} 台，門市可安排跨店調貨</div>` : '<div class="xsum lose"><b>各門市目前都缺貨</b>・可請門市報價並安排到貨通知</div>';
+  el.innerHTML = sum + '<table class="xtable">' + rows.map(({s, n}) => `<tr class="${s.store_id === state.store ? 'self' : ''}${n ? '' : ' na'}"><td class="sh">${esc(s.name)}${s.store_id === state.store ? '<span class="xmark">你選的門市</span>' : ''}</td>
+    <td class="pv">${n ? n + ' 台' : '<div class="df">缺貨</div>'}</td></tr>`).join('') + '</table><p class="note" style="margin-top:6px">庫存為 CCC 系統的模擬可售數量（實體 − 預留 − 展示 − 瑕疵），每次開啟頁面時更新。</p>';
+  $('#xpTips').innerHTML = isView('staff') ? `<b>銷售重點（店員看）</b><ul>${staffTips(p).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '';
+  const bookLbl = p.cat === 'ac' ? '預約免費到府場勘' : '預約到店諮詢';
+  $('#xpCta').innerHTML = `<p><b>${p.cat === 'ac' ? '冷氣裝得好不好，比價格更重要。' : '想先看實機？'}</b>${p.cat === 'ac' ? '先請師傅到府評估管線、電源與室外機位置，報價不會到現場才加價。' : '預約到門市看實機、問用法與耗材。'}</p>
+     <div class="row"><button class="btn primary" data-act="book">${bookLbl}</button><button class="btn" data-act="quote">請門市幫我報價</button></div>`;
+}
+
+/* ---------- 請門市報價／預約場勘（原型：資料只顯示在畫面上，不會送出） ---------- */
+const COUNTIES = ['臺北市','新北市','基隆市','桃園市','新竹市','新竹縣','苗栗縣','臺中市','彰化縣','南投縣','雲林縣','嘉義市','嘉義縣','臺南市','高雄市','屏東縣','宜蘭縣','花蓮縣','臺東縣','澎湖縣','金門縣','連江縣'];
+function roomText(){
+  const t = [`${state.ping} 坪${ROOM_NAME[state.room]}`, `天花板 ${state.ceil.toFixed(1)} m`];
+  if(state.cat === 'ac'){ if(state.west) t.push('西曬'); if(state.top) t.push('頂樓'); t.push(`常駐 ${state.people} 人`); }
+  return t.join('、');
+}
+function reqSummary(p, kind){
+  const rows = [['商品', `${esc(p.brand)} ${esc(p.title)}`], ['型號', esc(p.model)], ['官網網路價', fmt(p.price)], ['門市庫存', esc(stockText(p))]];
+  rows.push(['房間條件', esc(roomText())]);
+  if(p.cat === 'ac') rows.push(['修正後需求', `${effPing()} 坪・建議級距 ${esc(acTierLabel(effPing()))}`]);
+  return `<dl class="kv">${rows.map(([k,v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>`;
+}
+function openReq(kind){
+  const p = selectedProduct(); if(!p) return;
+  const book = kind === 'book', ac = p.cat === 'ac';
+  const staff = isView('staff');
+  const title = staff ? (kind === 'quote' ? '代客建立報價單' : ac ? '代客預約到府場勘' : '代客預約到店諮詢')
+    : kind === 'quote' ? '請門市幫我報價' : ac ? '預約免費到府場勘' : '預約到店諮詢';
+  const sub = staff ? '在門市幫顧客填寫，送出後會出現在門市的待辦清單。'
+    : kind === 'quote' ? '店員會依你需要的安裝與服務報出完整價格，並確認門市庫存。'
+    : ac ? '師傅到府評估安裝位置、管線長度與電源，現場確認後再報價。' : '預約時段到門市看實機、問用法與耗材。';
+  const d = new Date(); d.setDate(d.getDate() + 1); const minDate = d.toISOString().slice(0,10);
+  $('#reqBody').innerHTML = `<form class="dlg" id="reqForm" data-kind="${kind}">
+    <div><h2 id="reqTitle">${title}</h2><p class="sub">${sub}</p></div>
+    <div class="sumbox">${reqSummary(p, kind)}</div>
+    <div class="grid2">
+      <label class="f">稱呼<input type="text" name="name" required maxlength="20" autocomplete="name"></label>
+      <label class="f">手機<input type="tel" name="phone" required pattern="09[0-9]{8}" maxlength="10" inputmode="tel" placeholder="09xxxxxxxx" autocomplete="tel"></label>
+      <label class="f">縣市<select name="county" required><option value="">請選擇</option>${COUNTIES.map(c => `<option>${c}</option>`).join('')}</select></label>
+      <label class="f">服務門市<select name="store_id" required><option value="">請選擇</option>${STORES.map(s => `<option value="${s.store_id}"${s.store_id === state.store ? ' selected' : ''}>${esc(s.name)}（${p.stock[s.store_id] ? '有貨 ' + p.stock[s.store_id] + ' 台' : '缺貨'}）</option>`).join('')}</select></label>
+      ${book && ac ? `<label class="f">安裝樓層<small>選填</small><input type="number" name="floor" min="1" max="60" placeholder="例：5"></label>` : ''}
+      ${book ? `<label class="f">希望日期<input type="date" name="date" required min="${minDate}"></label>
+      <label class="f">時段<select name="slot" required><option value="">請選擇</option><option>上午 9–12 點</option><option>下午 1–5 點</option><option>晚上 6–8 點</option></select></label>`
+      : `<label class="f">方便聯絡時段<select name="slot"><option>平日白天</option><option>平日晚上</option><option>假日</option></select></label>`}
+    </div>
+    <label class="f">備註<small>選填</small><textarea name="memo" maxlength="200" placeholder="${ac ? '例：室外機要裝在陽台、想加購室外機架' : '例：家裡有養貓、想了解耗材價格'}"></textarea></label>
+    <label class="consent"><input type="checkbox" name="ok" required>${staff ? '顧客已同意門市依以上資料與其聯絡' : '我同意門市依以上資料與我聯絡'}</label>
+    <p class="sub warn">⚠ 示範系統：請勿填寫真實姓名與電話（可填 0912345678）。送出後會建立在 CCC 系統的「報價／預約」清單，示範資料會定期清除。</p>
+    <p class="sub err" id="reqErr" role="alert"></p>
+    <div class="acts"><button type="button" class="btn" data-close>取消</button><button type="submit" class="btn primary">${kind === 'quote' ? '送出報價需求' : '送出預約'}</button></div>
+  </form>`;
+  const dlg = $('#reqDlg'); if(typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+  setTimeout(() => { const f = $('#reqForm [name=name]'); if(f) f.focus(); }, 30);
+}
+function closeReq(){ const dlg = $('#reqDlg'); if(typeof dlg.close === 'function') dlg.close(); else dlg.removeAttribute('open'); }
+async function submitReq(form){
+  const p = selectedProduct(), kind = form.dataset.kind, fd = new FormData(form);
+  const get = k => (fd.get(k) || '').toString().trim();
+  const btn = form.querySelector('[type=submit]'); btn.disabled = true; $('#reqErr').textContent = '';
+  const body = {
+    type: kind === 'quote' ? 'quote' : p.cat === 'ac' ? 'survey' : 'visit',
+    source: isView('staff') ? 'staff' : 'customer',
+    product_id: p.id, store_id: get('store_id'), name: get('name'), phone: get('phone'), county: get('county'),
+    floor: get('floor') || null, preferred_date: get('date') || null, slot: get('slot') || null, memo: get('memo') || null,
+    room: {category: p.cat, ping: state.ping, room: state.room, ceil: state.ceil, west: state.west, top: state.top, people: state.people, eff_ping: effPing(), text: roomText()}
+  };
+  let data;
+  try {
+    const res = await fetch('/api/service-requests', {method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify(body)});
+    data = await res.json();
+    if(!res.ok || !data.ok) throw new Error(data.error || '送出失敗');
+  } catch(err){
+    $('#reqErr').textContent = '送出失敗：' + (err.message || err);
+    btn.disabled = false; return;
+  }
+  const ph = body.phone; const masked = ph.slice(0,4) + '-***-' + ph.slice(-3);
+  const extra = [['單號', esc(data.request.request_no)], ['服務門市', esc(STORE_NAME[body.store_id] || '')], ['聯絡人', esc(body.name) + '（' + masked + '）'], ['縣市', esc(body.county)]];
+  if(body.floor) extra.push(['安裝樓層', esc(body.floor) + ' 樓']);
+  if(body.preferred_date) extra.push(['希望日期', esc(body.preferred_date + ' ' + (body.slot || ''))]); else if(body.slot) extra.push(['聯絡時段', esc(body.slot)]);
+  if(body.memo) extra.push(['備註', esc(body.memo)]);
+  $('#reqBody').innerHTML = `<div class="dlg">
+    <div class="okmsg">✓ ${kind === 'quote' ? '已送出報價需求' : '已送出預約'}</div>
+    <p class="sub">已建立在 CCC 系統「訂單管理 → 報價／預約」，門市會依單號追蹤處理。</p>
+    <div class="sumbox">${reqSummary(p, kind)}<dl class="kv" style="margin-top:6px">${extra.map(([k,x]) => `<dt>${k}</dt><dd>${x}</dd>`).join('')}</dl></div>
+    <div class="acts">${isView('customer') ? '' : '<a class="btn" href="/#orders?tab=requests" target="_blank" rel="noopener">在 CCC 查看 ↗</a>'}<button type="button" class="btn primary" data-close>關閉</button></div></div>`;
+}
+
+/* ---------- 檢視模式：顧客／門市店員／內部 ---------- */
+const VIEWS = ['customer', 'staff', 'internal'];
+const VIEW_HINT = {
+  customer: '<b>顧客模式</b>：顧客在官網或 App 自己試算坪數、查詢門市庫存，並預約場勘或請門市報價。',
+  staff: '<b>門市店員模式</b>：店員用平板陪顧客操作，畫面會顯示銷售重點與各店庫存，表單改為代客預約。',
+  internal: '<b>內部模式</b>：給商品部與管理層，查看目前條件下的庫存警示；需求訊號彙整在 CCC 營運分析。'
+};
+const view = {mode:'customer', intAll:false};
+try {
+  const q = new URLSearchParams(location.search).get('view');
+  const saved = localStorage.getItem('rf3d-view');
+  view.mode = VIEWS.includes(q) ? q : VIEWS.includes(saved) ? saved : 'customer';
+} catch(e){}
+const isView = m => view.mode === m;
+function applyView(){
+  document.body.dataset.view = view.mode;
+  setPressed($('#viewSw'), 'view', view.mode);
+  $('#modeHint').innerHTML = VIEW_HINT[view.mode];
+}
+
+/* 店員銷售重點：依房間適配、跨通路價差與同級價格自動產生 */
+function staffTips(p){
+  const eff = effPing(), fit = fitOf(p, eff), st = peerStats(), t = [];
+  if(fit === 'low') t.push(`能力不足：只能涵蓋約 ${Math.round(coverage(p)*100)}% 的空間，建議改推適用 ${eff} 坪以上的機型。`);
+  else if(fit === 'big') t.push(p.cat === 'ac' ? '能力偏大：顧客在意預算的話，可推小一級的機型。' : '適用坪數較大，淨化／除濕更快，可當升級選項說明。');
+  else t.push(`適合顧客的 ${state.ping} 坪${ROOM_NAME[state.room]}${p.cat === 'ac' && eff !== state.ping ? `（修正後需求 ${eff} 坪）` : ''}。`);
+  const here = state.store !== 'all' ? (p.stock[state.store] || 0) : null;
+  if(here === 0 && p.stockTotal > 0){ const best = STORES.map(s => ({s, n:p.stock[s.store_id] || 0})).sort((a,b) => b.n - a.n)[0]; t.push(`本店缺貨，${best.s.name}有 ${best.n} 台，可在 CCC 建立跨店調貨。`); }
+  else if(here !== null && here > 0 && here <= 2) t.push(`本店只剩 ${here} 台，確定購買可先建立訂單預留庫存。`);
+  if(st.isOk && fit === 'ok' && p.price > st.min){ const alt = st.rows.find(r => r.p.price === st.min).p; t.push(`同級最低價是 ${alt.brand} ${alt.title}（${fmt(alt.price)}），顧客預算有限時可推薦。`); }
+  t.push(p.cat === 'ac' ? '主動提供免費到府場勘，先確認管線長度、電源與室外機位置，避免安裝當天加價。' : '提醒濾網等耗材的更換週期與價格，並邀請顧客參加門市的小家電健檢。');
+  return t;
+}
+
+/* 內部庫存警示：目前條件下「適合」但 5 店合計 3 台以下的機型 */
+function renderInternal(){
+  if(!isView('internal')) return;
+  const eff = effPing();
+  const okAll = PRODUCTS[state.cat].filter(p => fitOf(p, eff) === 'ok');
+  const arr = okAll.filter(p => p.stockTotal <= 3).sort((a,b) => a.stockTotal - b.stockTotal || a.price - b.price);
+  $('#intStats').innerHTML = [
+    ['適合的機型', okAll.length + ' 款'], ['低庫存（≦3 台）', arr.length + ' 款'],
+    ['全部缺貨', arr.filter(p => !p.stockTotal).length + ' 款'], ['適合機型總庫存', okAll.reduce((t, p) => t + p.stockTotal, 0) + ' 台']
+  ].map(([k,v]) => `<div class="stat"><div class="k">${k}</div><div class="v">${v}</div></div>`).join('');
+  const rows = view.intAll ? arr : arr.slice(0, 15);
+  $('#intTable').innerHTML = arr.length ? `<table class="itable"><tr><th>#</th><th>商品</th><th>型號</th><th>網路價</th>${STORES.map(s => `<th>${esc(s.name.replace(/店$/, ''))}</th>`).join('')}<th>合計</th></tr>` +
+    rows.map((p, i) => `<tr data-id="${p.id}"><td>${i + 1}</td><td>${esc(p.brand)} ${esc(p.title)}</td><td style="word-break:break-all">${esc(p.model)}</td><td class="n">${fmt(p.price)}</td>
+      ${STORES.map(s => `<td class="n">${p.stock[s.store_id] || '–'}</td>`).join('')}<td class="n ${p.stockTotal ? '' : 'hi'}">${p.stockTotal}</td></tr>`).join('') + '</table>' : '<div class="empty">目前條件下適合的機型庫存都充足</div>';
+  const more = $('#intMore'); more.classList.toggle('hidden', arr.length <= 15); more.textContent = view.intAll ? '收合' : `顯示全部 ${arr.length} 款`;
+}
+function off(p){ const o = Math.round((1 - p.price/p.orig)*100); return o > 0 ? `<span class="off">-${o}%</span>` : ''; }
+function tags(p){
+  const t = [];
+  if(p.cat === 'ac'){ t.push(p.kind === 'split' ? '分離式' : '窗型'); if(p.mode !== '未標示') t.push(p.mode); t.push(p.inverter); }
+  return t.map(x => `<span class="tag">${esc(x)}</span>`).join('');
+}
+
+let ROWS = [];
+function renderList(){
+  ROWS = filtered();
+  const ok = ROWS.filter(r => r.fit === 'ok').length;
+  $('#countInfo').textContent = `共 ${ROWS.length} 款・適合 ${ok} 款${state.inStock ? '・只列有貨' : ''}`;
+  if(!ROWS.length){ $('#list').innerHTML = `<div class="empty">沒有符合條件的商品，試著放寬品牌、機型、預算，或取消「只顯示有貨」。</div>`; $('#moreBtn').classList.add('hidden'); return; }
+  const limit = state.showAll ? ROWS.length : 12;
+  $('#list').innerHTML = ROWS.slice(0, limit).map(({p, fit}) => `
+    <div class="item${p.id === state.selected ? ' sel' : ''}" data-id="${p.id}" role="button" tabindex="0">
+      <div><div class="nm">${esc(p.brand)} ${esc(p.title)}</div><div class="md">${esc(p.model)}</div></div>
+      <div class="pr"><span class="now">${fmt(p.price)}</span>${p.orig > p.price ? `<s>${fmt(p.orig)}</s>` : ''}</div>
+      <div class="meta">${fitBadge(fit)}<span class="tag">適用 ${esc(p.coverLabel)}</span>${p.cat !== 'ap' ? `<span class="tag">${esc(p.capText)}</span>` : ''}${tags(p)}${off(p)}${stockBadge(p)}
+        <button class="cmp" data-cmp="${p.id}" aria-pressed="${state.compare.includes(p.id)}">${state.compare.includes(p.id) ? '已加入比較' : '＋比較'}</button></div>
+    </div>`).join('');
+  const more = $('#moreBtn'); more.classList.toggle('hidden', ROWS.length <= 12); more.textContent = state.showAll ? '收合' : `顯示全部 ${ROWS.length} 款`;
+}
+function peerStats(){
+  const okRows = ROWS.filter(r => r.fit === 'ok'); const base = okRows.length ? okRows : ROWS;
+  const prices = base.map(r => r.p.price);
+  return {rows: base, isOk: !!okRows.length, min: Math.min(...prices), max: Math.max(...prices), med: median(prices)};
+}
+function renderChart(){
+  if(!ROWS.length){ $('#stats').innerHTML = ''; $('#chart').innerHTML = '<div class="empty">沒有可比較的商品</div>'; return; }
+  const st = peerStats();
+  $('#stats').innerHTML = [
+    ['適合款數', st.isOk ? st.rows.length + ' 款' : '0 款'],
+    ['同級最低', fmt(st.min)], ['同級中位數', fmt(st.med)], ['每坪最低成本', fmt(st.min / state.ping)],
+  ].map(([k,v]) => `<div class="stat"><div class="k">${k}</div><div class="v">${v}</div></div>`).join('');
+  let rows = [...st.rows].sort((a,b) => a.p.price - b.p.price).slice(0, 12);
+  const sel = selectedProduct(); if(sel && !rows.find(r => r.p.id === sel.id)){ const r = st.rows.find(r => r.p.id === sel.id); if(r) rows = rows.slice(0, 11).concat([r]); }
+  const maxV = Math.max(...rows.map(r => r.p.orig));
+  $('#chart').innerHTML = (st.isOk ? '' : '<div class="note" style="margin-bottom:6px">沒有完全適合的款式，以下為篩選結果的價格。</div>') + rows.map(({p}) => `
+    <div class="crow${p.price === st.min ? ' best' : ''}${p.id === state.selected ? ' sel' : ''}" data-id="${p.id}">
+      <div class="cl" title="${esc(p.brand + ' ' + p.title)}">${esc(p.brand)} <small>${esc(p.title)}</small></div>
+      <div class="track"><div class="ghost" style="width:${p.orig/maxV*100}%"></div><div class="fill" style="width:${p.price/maxV*100}%"></div><div class="med" style="left:${st.med/maxV*100}%"></div></div>
+      <div class="cv">${fmt(p.price).replace('NT$ ','$')}</div>
+    </div>`).join('');
+}
+function renderInfo(){
+  const p = selectedProduct();
+  if(!p){ $('#prodInfo').innerHTML = '<div class="empty">沒有符合條件的商品</div>'; return; }
+  const fit = fitOf(p, effPing()); const st = peerStats();
+  let cmpText = '';
+  if(st.isOk && fit === 'ok'){ const diff = p.price - st.med; cmpText = diff <= 0 ? `比同級中位數便宜 ${fmt(-diff)}` : `比同級中位數貴 ${fmt(diff)}`; if(p.price === st.min) cmpText = '同級最低價 ・ ' + cmpText; }
+  const cov = coverage(p);
+  $('#prodInfo').innerHTML = `
+    <div class="pi-brand">${esc(p.brand)}</div>
+    <div class="pi-title">${esc(p.title)}</div>
+    <div class="pi-model">${esc(p.model)}</div>
+    <div class="price" style="margin-top:6px"><span class="now">${fmt(p.price)}</span>${p.orig > p.price ? `<s>${fmt(p.orig)}</s>` : ''}${off(p)}</div>
+    <div class="tags" style="margin:6px 0 8px">${fitBadge(fit)}${tags(p)}</div>
+    <dl class="kv">
+      <dt>適用坪數</dt><dd>${esc(p.coverLabel)}</dd>
+      ${p.cat !== 'ap' ? `<dt>${p.cat === 'ac' ? '冷房能力' : '日除濕量'}</dt><dd>${esc(p.capText)}</dd>` : ''}
+      <dt>房間涵蓋</dt><dd>${cov >= 1 ? '可涵蓋整個房間' : '約 ' + Math.round(cov*100) + '%'}</dd>
+      <dt>每坪成本</dt><dd>${fmt(p.price / state.ping)}</dd>
+      ${cmpText ? `<dt>同級比價</dt><dd>${cmpText}</dd>` : ''}
+      <dt>門市庫存</dt><dd>${esc(stockText(p))}</dd>
+    </dl>
+    <div class="actions" style="margin-top:10px">
+      <button class="btn primary" data-act="book">${p.cat === 'ac' ? '預約免費場勘' : '預約到店諮詢'}</button>
+      ${p.code ? `<a class="btn" href="https://www.elifemall.com.tw/product/${encodeURIComponent(p.code)}" target="_blank" rel="noopener">官網商品頁 ↗</a>` : ''}
+      <button class="btn" data-cmp="${p.id}">${state.compare.includes(p.id) ? '移出比較' : '加入比較'}</button>
+    </div>
+    <p class="note" style="margin-top:8px">3D 外型依類型、品牌風格與能力示意建模，非原廠尺寸。</p>`;
+}
+function renderCompare(){
+  const list = state.compare.map(id => BY_ID[id]).filter(p => p && p.cat === state.cat);
+  if(!list.length){ $('#compare').innerHTML = '<div class="note">在商品清單按「＋比較」，最多可並排 3 款。</div>'; return; }
+  const eff = effPing(), minP = Math.min(...list.map(p => p.price));
+  const row = (k, f, best) => `<tr><th>${k}</th>${list.map(p => `<td class="${best && best(p) ? 'best' : ''}">${f(p)}</td>`).join('')}</tr>`;
+  $('#compare').innerHTML = `<table class="ctable">
+    <tr><th></th>${list.map(p => `<td><b>${esc(p.brand)}</b><br>${esc(p.title)}<br><button class="x" data-cmp="${p.id}">移除 ×</button></td>`).join('')}</tr>
+    ${row('型號', p => `<span style="word-break:break-all">${esc(p.model)}</span>`)}
+    ${row('網路價', p => fmt(p.price), p => p.price === minP)}
+    ${row('門市庫存', p => esc(stockText(p)), p => avail(p) > 0)}
+    ${row('原價', p => fmt(p.orig))}
+    ${row('折扣', p => Math.round((1 - p.price/p.orig)*100) + '%')}
+    ${row('適用坪數', p => esc(p.coverLabel))}
+    ${state.cat !== 'ap' ? row(state.cat === 'ac' ? '能力' : '除濕量', p => esc(p.capText)) : ''}
+    ${state.cat === 'ac' ? row('機型', p => (p.kind === 'split' ? '分離式' : '窗型') + '・' + p.mode) : ''}
+    ${row('此房間', p => fitBadge(fitOf(p, eff)))}
+    ${row('每坪成本', p => fmt(p.price / state.ping), p => p.price === minP)}
+  </table>`;
+}
+function renderStatus(){
+  const p = selectedProduct(), eff = effPing(), {W, D, H} = R, pal = PAL[state.cat];
+  let v = '';
+  if(p){
+    const fit = fitOf(p, eff), cov = coverage(p);
+    const what = state.cat === 'ac' ? '冷房' : state.cat === 'ap' ? '淨化' : '除濕';
+    v = `<div class="pill"><div class="t">${esc(p.brand)} ${esc(p.title)}</div><div class="s">適用 ${esc(p.coverLabel)}・${fmt(p.price)}</div>
+      <div class="verdict ${fit}">${fit === 'low' ? `能力不足：約可${what} ${Math.round(cov*100)}% 的空間` : fit === 'big' ? (state.cat === 'ac' ? '可涵蓋整個房間，但能力偏大、購買成本較高' : '可涵蓋整個房間，淨化/除濕速度更快') : `可${what}整個房間`}</div></div>`;
+  }
+  $('#status').innerHTML = `<div class="pill"><div class="t">${state.ping} 坪 ${ROOM_NAME[state.room]}</div><div class="s">約 ${W.toFixed(1)} × ${D.toFixed(1)} m・高 ${H.toFixed(1)} m${state.cat === 'ac' && eff !== state.ping ? '・修正需求 ' + eff + ' 坪' : ''}</div></div>` + v;
+  $('#legend').innerHTML = `<span class="pill"><i class="sw" style="background:${pal.inC}"></i>${pal.lin}</span><span class="pill"><i class="sw" style="background:${pal.out}"></i>${pal.lout}</span>`;
+}
+
+function ensureSelection(){
+  const rows = filtered();
+  if(!rows.length){ state.selected = null; return; }
+  if(!state.selected || !rows.find(r => r.p.id === state.selected)) state.selected = rows[0].p.id;
+}
+function refresh(opts){
+  opts = opts || {};
+  if(opts.reselect) state.selected = null;
+  ensureSelection();
+  if(opts.room) buildRoom();
+  renderStores(); renderControls(); renderCalc(); renderServices(); renderList(); renderChart(); renderInfo(); renderStock(); renderCompare(); renderInternal();
+  logSoon();
+  const p = selectedProduct();
+  if(opts.room || opts.unit !== false){ placeUnit(p); showInViewer(p); }
+  renderStatus();
+}
+function select(id){ if(state.selected === id) return; state.selected = id; renderList(); renderChart(); renderInfo(); renderStock(); placeUnit(selectedProduct()); showInViewer(selectedProduct()); renderStatus(); logSoon(); }
+function toggleCompare(id){
+  const i = state.compare.indexOf(id);
+  if(i >= 0) state.compare.splice(i,1); else { state.compare = state.compare.filter(x => BY_ID[x].cat === state.cat); if(state.compare.length >= 3) state.compare.shift(); state.compare.push(id); }
+  renderList(); renderInfo(); renderCompare();
+}
+
+/* ---------- 事件 ---------- */
+$('#catSeg').addEventListener('click', e => { const b = e.target.closest('button'); if(!b || b.dataset.cat === state.cat) return; state.cat = b.dataset.cat; setPressed($('#catSeg'), 'cat', state.cat); state.brand = 'all'; state.budget = null; state.showAll = false; if(state.cat !== 'ac' && state.ping < 3) state.ping = 3; $('#ping').value = state.ping; refresh({reselect:true, room:true}); });
+$('#ping').addEventListener('input', e => { state.ping = parseFloat(e.target.value); refresh({reselect:true, room:true}); });
+$('#pingChips').addEventListener('click', e => { const b = e.target.closest('button'); if(!b) return; state.ping = parseFloat(b.dataset.v); $('#ping').value = state.ping; refresh({reselect:true, room:true}); });
+$('#roomSeg').addEventListener('click', e => { const b = e.target.closest('button'); if(!b) return; state.room = b.dataset.room; setPressed($('#roomSeg'), 'room', state.room); refresh({room:true}); });
+$('#ceil').addEventListener('input', e => { state.ceil = parseFloat(e.target.value); refresh({reselect:true, room:true}); });
+$('#west').addEventListener('change', e => { state.west = e.target.checked; refresh({reselect:true, room:true}); });
+$('#top').addEventListener('change', e => { state.top = e.target.checked; refresh({reselect:true}); });
+$('#pMinus').addEventListener('click', () => { state.people = Math.max(1, state.people - 1); refresh({reselect:true}); });
+$('#pPlus').addEventListener('click', () => { state.people = Math.min(10, state.people + 1); refresh({reselect:true}); });
+$('#kindSeg').addEventListener('click', e => { const b = e.target.closest('button'); if(!b) return; state.kind = b.dataset.kind; setPressed($('#kindSeg'), 'kind', state.kind); refresh({reselect:true}); });
+$('#modeSeg').addEventListener('click', e => { const b = e.target.closest('button'); if(!b) return; state.mode = b.dataset.mode; setPressed($('#modeSeg'), 'mode', state.mode); refresh({reselect:true}); });
+$('#brand').addEventListener('change', e => { state.brand = e.target.value; refresh({reselect:true}); });
+$('#budget').addEventListener('input', e => { const v = parseInt(e.target.value, 10); state.budget = v >= parseInt(e.target.max, 10) ? null : v; refresh({reselect:true}); });
+$('#sort').addEventListener('change', e => { state.sort = e.target.value; renderList(); });
+$('#moreBtn').addEventListener('click', () => { state.showAll = !state.showAll; renderList(); });
+$('#replay').addEventListener('click', () => { zone.t = 0; zone.dirty = true; initAmbient(); });
+$('#store').addEventListener('change', e => { state.store = e.target.value; refresh({reselect: state.inStock}); });
+$('#inStock').addEventListener('change', e => { state.inStock = e.target.checked; refresh({reselect:true}); });
+$('#reqDlg').addEventListener('submit', e => { e.preventDefault(); submitReq(e.target); });
+$('#viewSw').addEventListener('click', e => {
+  const b = e.target.closest('[data-view]'); if(!b || b.dataset.view === view.mode) return;
+  view.mode = b.dataset.view; try { localStorage.setItem('rf3d-view', view.mode); } catch(err){}
+  applyView(); refresh({unit:false});
+});
+$('#intMore').addEventListener('click', () => { view.intAll = !view.intAll; renderInternal(); });
+$('#reqDlg').addEventListener('click', e => {
+  if(e.target.closest('[data-close]') || e.target === $('#reqDlg')) closeReq();   // 按取消、關閉或點對話框外圍
+});
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-act]'); if(a){ openReq(a.dataset.act === 'quote' ? 'quote' : 'book'); return; }
+  const c = e.target.closest('[data-cmp]'); if(c){ e.stopPropagation(); toggleCompare(c.dataset.cmp); return; }
+  const it = e.target.closest('.item, .crow, .itable tr[data-id]'); if(it && it.dataset.id) select(it.dataset.id);
+});
+$('#list').addEventListener('keydown', e => { if((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('item')){ e.preventDefault(); select(e.target.dataset.id); } });
+
+/* ---------- 需求訊號：每次試算的條件（不含個資）匿名送到 CCC ---------- */
+const SESSION = (() => { try { let id = sessionStorage.getItem('rf3d-session'); if(!id){ id = Math.random().toString(36).slice(2, 12); sessionStorage.setItem('rf3d-session', id); } return id; } catch(e){ return Math.random().toString(36).slice(2, 12); } })();
+let logTimer = null, lastLog = '';
+function logSoon(){ clearTimeout(logTimer); logTimer = setTimeout(logNow, 2500); }
+function logNow(){
+  const p = selectedProduct(), eff = effPing();
+  const body = {session: SESSION, view: view.mode, category: state.cat, store_id: state.store === 'all' ? null : state.store,
+    ping: state.ping, room: state.room, ceil: state.ceil, west: state.cat === 'ac' && state.west, top: state.cat === 'ac' && state.top, people: state.cat === 'ac' ? state.people : null,
+    eff_ping: eff, budget: state.budget, brand: state.brand === 'all' ? null : state.brand,
+    product_id: p ? p.id : null, fit: p ? fitOf(p, eff) : null, coverage: p ? Math.round(coverage(p)*100)/100 : null,
+    result_count: ROWS.length, ok_count: ROWS.filter(r => r.fit === 'ok').length};
+  const key = JSON.stringify(body); if(key === lastLog) return; lastLog = key;
+  fetch('/api/fit-sessions', {method:'POST', headers:{'content-type':'application/json'}, body:key, keepalive:true}).catch(() => {});
+}
+
+/* ---------- 網址參數：?cat=ac&ping=8&id=P0123&store=TN01（智慧導購的「在 3D 房間看看」會帶這些） ---------- */
+try {
+  const q = new URLSearchParams(location.search);
+  if(q.get('store') && STORE_NAME[q.get('store')]) state.store = q.get('store');
+  const qp = BY_ID[q.get('id')];
+  const cat = qp ? qp.cat : q.get('cat');
+  if(PRODUCTS[cat]){ state.cat = cat; setPressed($('#catSeg'), 'cat', state.cat); }
+  const ping = parseFloat(q.get('ping'));
+  if(ping >= 1 && ping <= 30){ state.ping = ping; $('#ping').value = ping; }
+  else if(qp) { state.ping = clamp(Math.round(qp.cover), 1, 30); $('#ping').value = state.ping; }
+  if(qp){ state.selected = qp.id; if(avail(qp) <= 0) state.inStock = false; }
+} catch(e){}
+
+/* ---------- 啟動 ---------- */
+applyView();
+resizeStage();
+refresh({room:true});
+requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

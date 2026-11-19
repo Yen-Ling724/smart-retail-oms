@@ -791,3 +791,32 @@ a.stat-card:hover,
   .cat-bars.by-brand .cat-bar-label { font-size: 12px; }
 }
 @media (max-width: 640px) { .cat-tip { display: none; } } /* 手機沒有滑鼠，數字已經寫在右邊 */
+
+/* 訂單管理：訂單／報價預約切換 */
+.section-switch { display: flex; gap: 8px; margin-bottom: 14px; }
+.section-switch button { border: 1px solid var(--line, #e2e2e2); background: transparent; padding: 7px 14px; border-radius: 999px; font: inherit; font-weight: 600; cursor: pointer; color: inherit; }
+.section-switch button.active { background: var(--brand); border-color: var(--brand); color: #fff; }
+.section-switch .tab-count { margin-left: 6px; }
+.section-intro { margin: 0 0 12px; }
+.note-input { width: 100%; box-sizing: border-box; font: inherit; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line, #ddd); resize: vertical; }
+
+/* 營運分析：前台需求訊號 */
+.demand-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.hbar { display: grid; grid-template-columns: 92px 1fr 64px; gap: 8px; align-items: center; font-size: 13px; margin: 6px 0; }
+.hbar .track { height: 12px; border-radius: 6px; background: color-mix(in srgb, var(--brand) 10%, transparent); overflow: hidden; display: flex; }
+.hbar .fill { height: 100%; background: var(--brand); }
+.hbar .fill.low { background: #e0a23b; }
+.hbar .v { text-align: right; font-variant-numeric: tabular-nums; }
+.stack-legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; margin: 4px 0 8px; color: var(--muted, #666); }
+.stack-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+.week-bars { display: flex; align-items: flex-end; gap: 8px; height: 150px; padding-top: 8px; }
+.week-bars .col { flex: 1; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-end; height: 100%; min-width: 0; }
+.week-bars .seg { width: 100%; }
+.week-bars .lbl { font-size: 11px; text-align: center; margin-top: 4px; color: var(--muted, #666); white-space: nowrap; }
+.week-bars .tot { font-size: 11px; text-align: center; font-variant-numeric: tabular-nums; }
+.demand-head { margin-top: 32px; }
+.demand-head h2 { margin: 2px 0 4px; }
+.rec-3d { display: inline-block; margin-top: 8px; font-size: 13px; font-weight: 600; color: var(--brand-strong); }
+.section-switch button { font-size: 13px; padding: 6px 14px; }
+.req-table td:nth-child(-n+4), .req-table td:nth-child(7), .req-table td:nth-child(8) { white-space: nowrap; }
+.req-table td:nth-child(5) { min-width: 220px; }

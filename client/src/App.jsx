@@ -83,8 +83,9 @@ function App() {
               href={module.href}
               key={module.number}
               aria-current={page === key ? 'page' : undefined}
+              {...(module.external ? { target: '_blank', rel: 'noopener' } : {})}
             >
-              <span aria-hidden="true">{module.number}</span> {module.title}
+              <span aria-hidden="true">{module.number}</span> {module.title}{module.external && ' ↗'}
             </a>
           ) : (
             <span className="nav-link nav-link-disabled" key={module.number} aria-disabled="true">

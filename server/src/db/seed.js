@@ -221,6 +221,96 @@ async function createDemoOrders(tx) {
   }
 }
 
+// 示範的前台需求訊號：過去 8 週 3D 坪數選購頁的試算紀錄（模擬），讓營運分析有東西可看
+async function createDemoDemand(tx) {
+  const products = await tx.query(
+    `SELECT product_id, category, specs FROM products WHERE is_active AND category IN ('冷氣', '空氣清淨機', '除濕機') ORDER BY product_id`,
+  );
+  const stores = (await tx.query('SELECT store_id FROM stores ORDER BY store_id')).map((s) => s.store_id);
+  const CAT = { 冷氣: 'ac', 空氣清淨機: 'ap', 除濕機: 'dh' };
+  const AC_MAX = { '3-4 坪': 4, '4-5 坪': 5, '5-6 坪': 6, '6-7 坪': 7, '7-8 坪': 8, '8-10 坪': 10, '11-12 坪': 12, '13 坪以上': 99 };
+  const cover = (p) => (p.category === '冷氣' ? AC_MAX[p.specs.適用坪數] ?? 0 : Number(p.specs.適用坪數) || 0);
+  const byCat = { ac: [], ap: [], dh: [] };
+  for (const p of products) byCat[CAT[p.category]].push(p);
+
+  // 熱門機型：約 3 成的試算會看這幾款（其中有低庫存的，營運分析才看得到「看得多、庫存少」的提醒）
+  const hot = await tx.query(
+    `SELECT p.product_id FROM products p JOIN inventory i ON i.product_id = p.product_id
+     WHERE p.is_active AND p.category IN ('冷氣', '空氣清淨機', '除濕機')
+     GROUP BY p.product_id ORDER BY SUM(GREATEST(i.on_hand - i.reserved - i.display - i.damaged, 0)), p.product_id LIMIT 4`,
+  );
+  const hotIds = new Set(hot.map((h) => h.product_id));
+
+  // 相近的字串也要得到分散的亂數（先用 FNV 再打散位元）
+  const rand = (key) => {
+    let h = Math.floor(pseudoRandom(key) * 4294967296);
+    h ^= h >>> 16; h = Math.imul(h, 0x85ebca6b); h ^= h >>> 13; h = Math.imul(h, 0xc2b2ae35); h ^= h >>> 16;
+    return (h >>> 0) / 4294967296;
+  };
+  const rows = [];
+  const N = 420;
+  for (let i = 0; i < N; i++) {
+    const r = (k) => rand(`demand${i}-${k}`);
+    const daysAgo = Math.floor(r('d') ** 0.8 * 56); // 越近期越多
+    // 冬季：冷氣佔比較低、除濕機與清淨機較高
+    const c = r('c');
+    const cat = c < 0.48 ? 'ac' : c < 0.76 ? 'dh' : 'ap';
+    const room = ['bedroom', 'bedroom', 'living', 'study'][Math.floor(r('room') * 4)];
+    const ping = room === 'living' ? 6 + Math.round(r('p') * 10) : 3 + Math.round(r('p') * 5);
+    const west = cat === 'ac' && r('w') < 0.28;
+    const top = cat === 'ac' && r('t') < 0.12;
+    const people = cat === 'ac' ? 1 + Math.floor(r('pp') * 4) : null;
+    const eff = cat === 'ac'
+      ? Math.round((ping * (1 + (west ? 0.15 : 0) + (top ? 0.2 : 0)) + Math.max(0, (people ?? 2) - 2) * 0.3) * 10) / 10
+      : ping;
+    let list = byCat[cat];
+    if (!list.length) continue;
+    const hotHere = list.filter((p) => hotIds.has(p.product_id) && cover(p) >= eff);
+    if (hotHere.length && r('hot') < 0.3) list = hotHere;
+    // 多數人選到「夠用」的機型，約 15% 選了能力不足的
+    const fitting = list.filter((p) => cover(p) >= eff);
+    const pickLow = r('low') < 0.15 || !fitting.length;
+    const pool = pickLow ? list.filter((p) => cover(p) < eff) : fitting.sort((a, b) => cover(a) - cover(b)).slice(0, 12);
+    const p = (pool.length ? pool : list)[Math.floor(r('pick') * (pool.length || list.length))];
+    const cv = cover(p);
+    const fit = cv < eff ? 'low' : (cat === 'ac' ? cv > eff + Math.max(2, eff * 0.4) : cv >= eff * 2.5 && cv - eff >= 6) ? 'big' : 'ok';
+    const store = r('s') < 0.7 ? stores[Math.floor(r('st') * stores.length)] : null;
+    rows.push([`demo${Math.floor(i / 2)}`, r('v') < 0.8 ? 'customer' : 'staff', cat, store, ping, room, 2.8, west, top, people, eff,
+      p.product_id, fit, Math.min(3, Math.round((cv / eff) * 100) / 100), daysAgo, Math.floor(r('h') * 12)]);
+  }
+  for (const row of rows) {
+    await tx.query(
+      `INSERT INTO fit_sessions (session, view, category, store_id, ping, room, ceil, west, top_floor, people, eff_ping, product_id, fit, coverage, created_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, now() - make_interval(days => $15, hours => $16))`,
+      row,
+    );
+  }
+
+  // 示範報價／預約單（顧客資料為虛構）
+  const { createServiceRequest } = await import('../routes/roomfit.js');
+  const DEMO_REQUESTS = [
+    ['survey', 'new', 'TN01', '陳先生', '0912000101', '臺南市', 1], ['quote', 'new', 'KH01', '林小姐', '0912000102', '高雄市', 1],
+    ['survey', 'contacted', 'TP01', '王先生', '0912000103', '臺北市', 3], ['visit', 'scheduled', 'TC01', '張小姐', '0912000104', '臺中市', 4],
+    ['quote', 'contacted', 'TN02', '黃先生', '0912000105', '臺南市', 5], ['survey', 'scheduled', 'KH01', '吳小姐', '0912000106', '高雄市', 6],
+    ['visit', 'done', 'TP01', '劉先生', '0912000107', '新北市', 9], ['quote', 'cancelled', 'TC01', '蔡小姐', '0912000108', '彰化縣', 12],
+    ['survey', 'done', 'TN01', '鄭先生', '0912000109', '臺南市', 15], ['quote', 'new', 'TP01', '許小姐', '0912000110', '臺北市', 0],
+  ];
+  for (const [i, [type, status, store, name, phone, county, daysAgo]] of DEMO_REQUESTS.entries()) {
+    const cat = type === 'survey' ? 'ac' : ['ap', 'dh', 'ac'][i % 3];
+    const pick = rows.find((row, k) => k >= i * 7 && row[2] === cat && row[12] === 'ok') ?? rows.find((row) => row[2] === cat);
+    if (!pick) continue;
+    const created = new Date(Date.now() - daysAgo * 86400000 - (i + 1) * 3600000);
+    const date = new Date(created.getTime() + 3 * 86400000).toISOString().slice(0, 10);
+    const req = await createServiceRequest(tx, {
+      type, source: i % 3 === 0 ? 'staff' : 'customer', product_id: pick[11], store_id: store, name, phone, county,
+      preferred_date: type === 'quote' ? null : date, slot: type === 'quote' ? '平日晚上' : '上午 9–12 點',
+      memo: type === 'survey' ? '室外機要裝在陽台（示範資料）' : null,
+      room: { category: cat, ping: pick[4], room: pick[5], ceil: 2.8, west: pick[7], top: pick[8], people: pick[9], eff_ping: pick[10], text: `${pick[4]} 坪（示範資料）` },
+    }, { createdAt: created.toISOString() });
+    if (status !== 'new') await tx.query('UPDATE service_requests SET status = $2 WHERE request_no = $1', [req.request_no, status]);
+  }
+}
+
 // 刪除系統補建的 SO-LEGACY 訂單（釋放預留），並補上示範訂單。不動其他資料
 export async function replaceLegacyOrders() {
   const db = await getDb();
@@ -317,7 +407,7 @@ async function backfillRegions(db) {
 export async function seed({ reset = false } = {}) {
   const db = await getDb();
   if (reset) {
-    await db.exec(`DROP TABLE IF EXISTS import_batches, order_status_history, order_items, orders, customers,
+    await db.exec(`DROP TABLE IF EXISTS fit_sessions, service_requests, import_batches, order_status_history, order_items, orders, customers,
       inventory_transactions, stock_transfers, inventory, product_prices, products, stores CASCADE;`);
   }
   await db.exec(SCHEMA);
@@ -329,6 +419,9 @@ export async function seed({ reset = false } = {}) {
     await backfillReservations(db);
     const synced = await syncElifemallProducts(db);
     if (synced) console.log(`已加入全國電子官網商品：新增 ${synced.added}、更新 ${synced.updated}、下架虛構商品 ${synced.hidden}`);
+    // 舊資料庫還沒有任何需求訊號：補上示範資料（只做一次）
+    const [{ n }] = await db.query('SELECT (SELECT count(*) FROM fit_sessions) + (SELECT count(*) FROM service_requests) AS n');
+    if (Number(n) === 0) await db.transaction((tx) => createDemoDemand(tx));
     return false;
   }
 
@@ -348,6 +441,7 @@ export async function seed({ reset = false } = {}) {
       if (idByModel[oldModel] && idByModel[newModel]) await tx.query('UPDATE products SET replaced_by = $1 WHERE product_id = $2', [idByModel[newModel], idByModel[oldModel]]);
     }
     await createDemoOrders(tx);
+    await createDemoDemand(tx);
   });
   return true;
 }

@@ -9,6 +9,7 @@ import importRoutes from './routes/imports.js';
 import inventoryRoutes from './routes/inventory.js';
 import orderRoutes from './routes/orders.js';
 import productRoutes from './routes/products.js';
+import roomFitRoutes from './routes/roomfit.js';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3001;
@@ -30,6 +31,10 @@ app.use('/api', orderRoutes);
 app.use('/api', assistantRoutes);
 app.use('/api', analyticsRoutes);
 app.use('/api', importRoutes);
+app.use('/api', roomFitRoutes);
+
+// 3D 坪數選購頁的短網址（頁面本身是 client/public/room-fit.html）
+app.get('/room-fit', (req, res) => res.redirect(302, '/room-fit.html' + (req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '')));
 
 // 重置示範資料（公開展示時訪客可能改亂資料）。之後加入登入後只開放給 admin。
 app.post('/api/demo/reset', async (req, res) => {
